@@ -89,31 +89,35 @@ const Index = () => {
     }
   ];
 
-  // Awards and recognitions
+  // Awards and recognitions with enhanced interactivity
   const awards = [
     {
       year: "2025",
       title: "International Representative",
       description: "Represented Kenya at Open Dialogue Conference, Moscow",
-      icon: Award
+      icon: Award,
+      color: "from-yellow-400 to-orange-500"
     },
     {
       year: "2024",
       title: "Young Male Lawyer of the Year",
       description: "Paralegal Society of Kenya & Kituo Cha Sheria",
-      icon: Award
+      icon: Award,
+      color: "from-blue-400 to-purple-500"
     },
     {
       year: "2024",
       title: "Legal Columnist",
       description: "Kenya Times Columnist",
-      icon: FileText
+      icon: FileText,
+      color: "from-green-400 to-blue-500"
     },
     {
       year: "2024",
       title: "Vice Secretary",
       description: "LSK Thika Chapter",
-      icon: Users
+      icon: Users,
+      color: "from-red-400 to-pink-500"
     }
   ];
 
@@ -161,7 +165,7 @@ const Index = () => {
                   <Link to="/contact">Book a Consultation</Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-blue-900 font-bold text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 bg-white/10 backdrop-blur-sm">
-                  <a href="tel:0796985336">Call Now: 0796985336</a>
+                  <a href="tel:+254704780934">Call Now: +254 704 780 934</a>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-blue-900 font-bold text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 bg-white/10 backdrop-blur-sm">
                   <Link to="/contact">Send Us a Message</Link>
@@ -171,14 +175,14 @@ const Index = () => {
               {/* Social Media Icons */}
               <div className="flex justify-center lg:justify-start gap-4 sm:gap-6">
                 <a 
-                  href="tel:0796985336" 
+                  href="tel:+254704780934" 
                   className="group flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-white/20 backdrop-blur-sm rounded-full border-2 border-white/50 hover:bg-yellow-500 hover:border-yellow-500 transition-all duration-300 transform hover:scale-110 hover:animate-bounce shadow-lg"
                   aria-label="Call us"
                 >
                   <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-white group-hover:text-black transition-colors duration-300" />
                 </a>
                 <a 
-                  href="https://wa.me/254796985336" 
+                  href="https://wa.me/254704780934" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="group flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-white/20 backdrop-blur-sm rounded-full border-2 border-white/50 hover:bg-green-500 hover:border-green-500 transition-all duration-300 transform hover:scale-110 hover:animate-bounce shadow-lg"
@@ -187,7 +191,7 @@ const Index = () => {
                   <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 text-white group-hover:text-white transition-colors duration-300" />
                 </a>
                 <a 
-                  href="mailto:drfatush005@gmail.com"
+                  href="mailto:mwauramurokiadvocates@gmail.com"
                   className="group flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-white/20 backdrop-blur-sm rounded-full border-2 border-white/50 hover:bg-red-500 hover:border-red-500 transition-all duration-300 transform hover:scale-110 hover:animate-bounce shadow-lg"
                   aria-label="Email us"
                 >
@@ -205,7 +209,7 @@ const Index = () => {
             >
               <div className="relative">
                 {/* Glowing background effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/30 to-blue-400/30 rounded-full blur-2xl animate-pulse-glow"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/30 to-blue-400/30 rounded-full blur-2xl animate-pulse"></div>
                 
                 {/* Main image container */}
                 <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-white/30 shadow-2xl backdrop-blur-sm bg-white/10">
@@ -221,8 +225,8 @@ const Index = () => {
                 </div>
                 
                 {/* Floating elements around the image */}
-                <div className="absolute -top-4 -right-4 w-8 h-8 bg-yellow-400 rounded-full animate-bounce-subtle opacity-80"></div>
-                <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-blue-400 rounded-full animate-float opacity-60"></div>
+                <div className="absolute -top-4 -right-4 w-8 h-8 bg-yellow-400 rounded-full animate-bounce opacity-80"></div>
+                <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-blue-400 rounded-full animate-pulse opacity-60"></div>
                 <div className="absolute top-1/2 -left-8 w-4 h-4 bg-white rounded-full animate-pulse opacity-50"></div>
               </div>
             </motion.div>
@@ -231,7 +235,7 @@ const Index = () => {
       </section>
 
       {/* Brand Values Featured Quote Section */}
-      <section className="py-12 sm:py-16 bg-white/90 dark:bg-gray-900/90">
+      <section className="py-12 sm:py-16 bg-white dark:bg-gray-900">
         <div className="container mx-auto px-4">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 dark:text-white">Our Core Values</h2>
@@ -262,7 +266,7 @@ const Index = () => {
       </section>
 
       {/* Enhanced Services Overview Section */}
-      <section className="py-12 sm:py-16 bg-gray-50/90 dark:bg-gray-900/90">
+      <section className="py-12 sm:py-16 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 dark:text-white">Our Legal Services</h2>
@@ -280,7 +284,7 @@ const Index = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Card className="h-full hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-400/30 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 group bg-white/90 dark:bg-gray-800/90 border-gray-200 dark:border-gray-700 hover:border-blue-500/50 dark:hover:border-blue-400/50">
+                <Card className="h-full hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-400/30 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 group bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-blue-500/50 dark:hover:border-blue-400/50">
                   <CardHeader className="pb-4">
                     <service.icon className={`w-10 h-10 sm:w-12 sm:h-12 ${service.color} mb-4 group-hover:scale-110 transition-all duration-300`} />
                     <CardTitle className="text-lg sm:text-xl text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">{service.title}</CardTitle>
@@ -309,8 +313,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Awards and Recognition Section */}
-      <section className="py-12 sm:py-16 bg-white/90 dark:bg-gray-800/90">
+      {/* Enhanced Awards and Recognition Section with Hover Effects */}
+      <section className="py-12 sm:py-16 bg-white dark:bg-gray-800">
         <div className="container mx-auto px-4">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 dark:text-white">Awards & Recognition</h2>
@@ -327,16 +331,22 @@ const Index = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
+                className="group cursor-pointer"
               >
-                <Card className="text-center hover:shadow-lg transition-all duration-300 bg-white/95 dark:bg-gray-700/95">
-                  <CardHeader className="pb-4">
-                    <award.icon className="w-12 h-12 text-yellow-600 dark:text-yellow-400 mx-auto mb-4" />
-                    <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">{award.year}</div>
-                    <CardTitle className="text-lg text-gray-900 dark:text-white mb-2">{award.title}</CardTitle>
-                    <CardDescription className="text-gray-600 dark:text-gray-400 text-sm">
-                      {award.description}
-                    </CardDescription>
-                  </CardHeader>
+                <Card className="text-center hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 bg-white dark:bg-gray-700 relative overflow-hidden">
+                  {/* Animated gradient border on hover */}
+                  <div className={`absolute inset-0 bg-gradient-to-r ${award.color} opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-xl`}></div>
+                  <div className={`absolute inset-[1px] bg-gradient-to-r ${award.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
+                  <div className="relative bg-white dark:bg-gray-700 m-[1px] rounded-lg">
+                    <CardHeader className="pb-4">
+                      <award.icon className="w-12 h-12 text-yellow-600 dark:text-yellow-400 mx-auto mb-4 group-hover:scale-125 group-hover:rotate-12 transition-all duration-300" />
+                      <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-blue-600 group-hover:to-purple-600 transition-all duration-300">{award.year}</div>
+                      <CardTitle className="text-lg text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">{award.title}</CardTitle>
+                      <CardDescription className="text-gray-600 dark:text-gray-400 text-sm group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors duration-300">
+                        {award.description}
+                      </CardDescription>
+                    </CardHeader>
+                  </div>
                 </Card>
               </motion.div>
             ))}
@@ -351,7 +361,7 @@ const Index = () => {
       <DownloadsSection />
 
       {/* Enhanced Contact CTA Section */}
-      <section className="py-12 sm:py-16 bg-blue-900/95 dark:bg-blue-950/95 text-white">
+      <section className="py-12 sm:py-16 bg-blue-900 dark:bg-blue-950 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">Ready to Get Legal Help?</h2>
           <p className="text-lg sm:text-xl mb-6 sm:mb-8 max-w-2xl mx-auto">
@@ -365,7 +375,7 @@ const Index = () => {
             
             <div className="flex flex-col sm:flex-row items-center gap-4">
               <Button asChild size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-blue-900 bg-white/10 font-bold shadow-lg">
-                <a href="tel:0796985336" className="flex items-center gap-2">
+                <a href="tel:+254704780934" className="flex items-center gap-2">
                   <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
                   Call Now
                 </a>

@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Phone, Mail, MapPin, Clock, MessageCircle, CheckCircle, AlertCircle } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, MessageCircle, CheckCircle, AlertCircle, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
@@ -25,7 +25,6 @@ const Contact = () => {
       ...prev,
       [name]: value
     }));
-    // Reset status when user starts typing
     if (submitStatus !== 'idle') {
       setSubmitStatus('idle');
     }
@@ -201,21 +200,21 @@ const Contact = () => {
                 <CardContent>
                   <div className="space-y-4">
                     <div>
-                      <p className="font-semibold">Office Phone</p>
-                      <a href="tel:0796985336" className="text-blue-600 hover:underline text-lg">
-                        0796985336
+                      <p className="font-semibold">WhatsApp & Phone</p>
+                      <a href="tel:+254704780934" className="text-blue-600 hover:underline text-lg">
+                        +254 704 780 934
                       </a>
                     </div>
                     <div>
-                      <p className="font-semibold">WhatsApp</p>
+                      <p className="font-semibold">WhatsApp Chat</p>
                       <a 
-                        href="https://wa.me/254796985336" 
+                        href="https://wa.me/254704780934" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-blue-600 hover:underline text-lg"
                       >
                         <MessageCircle className="w-5 h-5" />
-                        0796985336
+                        Chat on WhatsApp
                       </a>
                     </div>
                   </div>
@@ -230,9 +229,14 @@ const Contact = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <a href="mailto:drfatush005@gmail.com" className="text-blue-600 hover:underline text-lg">
-                    drfatush005@gmail.com
-                  </a>
+                  <div className="space-y-2">
+                    <a href="mailto:mwauramurokiadvocates@gmail.com" className="block text-blue-600 hover:underline text-lg">
+                      mwauramurokiadvocates@gmail.com
+                    </a>
+                    <a href="mailto:mwaurafmuroki@yahoo.com" className="block text-blue-600 hover:underline text-lg">
+                      mwaurafmuroki@yahoo.com
+                    </a>
+                  </div>
                 </CardContent>
               </Card>
 
@@ -264,18 +268,87 @@ const Contact = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="mb-4">
-                    Nairobi Central Business District<br />
-                    Kenya
+                    Thika, Kenya
                   </p>
                   <div className="bg-muted rounded-lg p-4">
                     <p className="text-sm text-muted-foreground">
-                      Map integration would be added here with the exact office location
+                      Exact office location provided upon appointment booking
                     </p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Social Media Links */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Follow Us</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-wrap gap-4">
+                    <a 
+                      href="https://facebook.com/francis.muroki" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
+                    >
+                      <Facebook className="w-5 h-5" />
+                      Francis Muroki
+                    </a>
+                    <a 
+                      href="https://instagram.com/IamMwauraMuroki" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-pink-600 hover:text-pink-800 transition-colors"
+                    >
+                      <Instagram className="w-5 h-5" />
+                      @IamMwauraMuroki
+                    </a>
+                    <a 
+                      href="https://linkedin.com/in/mwaura-muroki" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-blue-700 hover:text-blue-900 transition-colors"
+                    >
+                      <Linkedin className="w-5 h-5" />
+                      Mwaura Muroki
+                    </a>
+                    <a 
+                      href="https://twitter.com/Iammwauramuroki" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-blue-400 hover:text-blue-600 transition-colors"
+                    >
+                      <Twitter className="w-5 h-5" />
+                      @Iammwauramuroki
+                    </a>
                   </div>
                 </CardContent>
               </Card>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Legal Disclaimer */}
+      <section className="py-8 bg-gray-50 dark:bg-gray-900">
+        <div className="container mx-auto px-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Legal Disclaimer</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                The information on this website is for informational purposes only and should not be relied upon as legal advice. 
+                We are not liable for any harm or injury resulting from reliance on the information herein. For specific legal 
+                advice regarding your situation, please schedule a consultation with our attorneys.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-4 text-sm">
+                <a href="/privacy-policy" className="text-blue-600 hover:underline">Privacy Policy</a>
+                <a href="/terms-conditions" className="text-blue-600 hover:underline">Terms & Conditions</a>
+                <a href="/legal-disclaimer" className="text-blue-600 hover:underline">Legal Disclaimer</a>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
     </div>

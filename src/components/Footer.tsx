@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { Scale, Phone, Mail, MapPin, MessageCircle, Youtube } from "lucide-react";
+import { Scale, Phone, Mail, MapPin, MessageCircle, Youtube, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -65,15 +65,15 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-2">
                 <Phone className="w-4 h-4 text-yellow-400" />
-                <a href="tel:0796985336" className="text-blue-100 hover:text-white transition-colors">
-                  0796985336
+                <a href="tel:+254704780934" className="text-blue-100 hover:text-white transition-colors">
+                  +254 704 780 934
                 </a>
               </div>
               
               <div className="flex items-center space-x-2">
                 <MessageCircle className="w-4 h-4 text-yellow-400" />
                 <a 
-                  href="https://wa.me/254796985336" 
+                  href="https://wa.me/254704780934" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-blue-100 hover:text-white transition-colors"
@@ -84,14 +84,62 @@ const Footer = () => {
               
               <div className="flex items-center space-x-2">
                 <Mail className="w-4 h-4 text-yellow-400" />
-                <a href="mailto:drfatush005@gmail.com" className="text-blue-100 hover:text-white transition-colors">
-                  drfatush005@gmail.com
-                </a>
+                <div className="flex flex-col">
+                  <a href="mailto:mwauramurokiadvocates@gmail.com" className="text-blue-100 hover:text-white transition-colors text-sm">
+                    mwauramurokiadvocates@gmail.com
+                  </a>
+                  <a href="mailto:mwaurafmuroki@yahoo.com" className="text-blue-100 hover:text-white transition-colors text-sm">
+                    mwaurafmuroki@yahoo.com
+                  </a>
+                </div>
               </div>
               
               <div className="flex items-center space-x-2">
                 <MapPin className="w-4 h-4 text-yellow-400" />
                 <span className="text-blue-100">Thika, Kenya</span>
+              </div>
+
+              {/* Social Media Links */}
+              <div className="mt-4">
+                <h4 className="font-semibold text-sm mb-2 text-yellow-400">Follow Us</h4>
+                <div className="flex flex-wrap gap-3">
+                  <a 
+                    href="https://facebook.com/francis.muroki" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-1 text-blue-100 hover:text-white transition-colors text-sm"
+                  >
+                    <Facebook className="w-4 h-4" />
+                    <span>Facebook</span>
+                  </a>
+                  <a 
+                    href="https://instagram.com/IamMwauraMuroki" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-1 text-blue-100 hover:text-white transition-colors text-sm"
+                  >
+                    <Instagram className="w-4 h-4" />
+                    <span>Instagram</span>
+                  </a>
+                  <a 
+                    href="https://linkedin.com/in/mwaura-muroki" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-1 text-blue-100 hover:text-white transition-colors text-sm"
+                  >
+                    <Linkedin className="w-4 h-4" />
+                    <span>LinkedIn</span>
+                  </a>
+                  <a 
+                    href="https://twitter.com/Iammwauramuroki" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-1 text-blue-100 hover:text-white transition-colors text-sm"
+                  >
+                    <Twitter className="w-4 h-4" />
+                    <span>Twitter</span>
+                  </a>
+                </div>
               </div>
 
               {/* YouTube Links */}
@@ -132,6 +180,11 @@ const Footer = () => {
           <p className="mt-2 text-sm">
             Licensed Advocate of the High Court of Kenya | Member of Law Society of Kenya (LSK)
           </p>
+          <div className="mt-4 flex flex-wrap justify-center gap-4 text-sm">
+            <a href="/privacy-policy" className="text-blue-100 hover:text-white transition-colors">Privacy Policy</a>
+            <a href="/terms-conditions" className="text-blue-100 hover:text-white transition-colors">Terms & Conditions</a>
+            <a href="/legal-disclaimer" className="text-blue-100 hover:text-white transition-colors">Legal Disclaimer</a>
+          </div>
         </div>
       </div>
     </footer>
