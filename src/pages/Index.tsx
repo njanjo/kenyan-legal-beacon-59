@@ -56,7 +56,7 @@ const Index = () => {
   ];
 
   // Core values data for better organization
-  const coreValues = [
+  const brandValues = [
     { 
       icon: Scale, 
       title: "Integrity", 
@@ -65,15 +65,27 @@ const Index = () => {
     },
     { 
       icon: Shield, 
-      title: "Professionalism", 
-      description: "Highest standards of legal practice with meticulous attention to detail",
+      title: "Service Delivery", 
+      description: "Timely and professional legal services with meticulous attention to detail",
       color: "text-green-600 dark:text-green-400"
     },
     { 
       icon: FileText, 
-      title: "Confidentiality", 
-      description: "Complete client confidentiality and discretion in all legal matters",
+      title: "Cost-Friendliness", 
+      description: "Affordable legal services without compromising on quality",
       color: "text-purple-600 dark:text-purple-400"
+    },
+    { 
+      icon: Users, 
+      title: "Accessibility", 
+      description: "Legal services accessible to all members of the community",
+      color: "text-orange-600 dark:text-orange-400"
+    },
+    { 
+      icon: Gavel, 
+      title: "Justice", 
+      description: "Dedicated commitment to achieving fair and just outcomes",
+      color: "text-red-600 dark:text-red-400"
     }
   ];
 
@@ -106,12 +118,9 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen relative">
-      {/* Global Transparent Blurred Background Overlay */}
-      <div className="fixed inset-0 z-0 bg-white/30 dark:bg-black/20 backdrop-blur-sm pointer-events-none" />
-      
-      {/* Hero Section with Enhanced Background and Owner Image */}
-      <section className="relative bg-gradient-to-r from-blue-900/90 to-blue-700/90 dark:from-blue-950/95 dark:to-blue-800/95 text-white py-12 sm:py-16 lg:py-20 min-h-[80vh] flex items-center overflow-hidden z-10">
+    <div className="min-h-screen">
+      {/* Hero Section with Company Slogan */}
+      <section className="relative bg-gradient-to-r from-blue-900/90 to-blue-700/90 dark:from-blue-950/95 dark:to-blue-800/95 text-white py-12 sm:py-16 lg:py-20 min-h-[80vh] flex items-center overflow-hidden">
         {/* Background Image Layer */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -135,9 +144,16 @@ const Index = () => {
                 <span className="text-yellow-400 font-extrabold">Mwaura Muroki</span><br />
                 <span className="text-2xl sm:text-3xl lg:text-4xl">Associates & Advocates</span>
               </h1>
-              <p className="text-lg sm:text-xl lg:text-xl mb-6 sm:mb-8 leading-relaxed font-medium">
-                Professional legal representation with integrity, expertise, and dedication to justice in Thika, Kenya
-              </p>
+              
+              {/* Company Slogan */}
+              <div className="bg-yellow-400/20 backdrop-blur-sm border border-yellow-400/30 rounded-lg p-4 mb-6">
+                <p className="text-xl sm:text-2xl font-bold text-yellow-300 mb-2">
+                  "To provide Timely and Affordable Legal Services"
+                </p>
+                <p className="text-sm sm:text-base text-blue-100">
+                  Professional legal representation with integrity, expertise, and dedication to justice in Thika, Kenya
+                </p>
+              </div>
               
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-8 sm:mb-12">
@@ -197,6 +213,7 @@ const Index = () => {
                     src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
                     alt="Francis Mwaura Muroki - Principal Advocate"
                     className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
                   />
                   
                   {/* Overlay gradient for better integration */}
@@ -213,8 +230,39 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Brand Values Featured Quote Section */}
+      <section className="py-12 sm:py-16 bg-white/90 dark:bg-gray-900/90">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 dark:text-white">Our Core Values</h2>
+            <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+              Guided by principles of <strong>Integrity, Service Delivery, Cost-Friendliness, Accessibility, and Justice</strong>
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 sm:gap-8">
+            {brandValues.map((value, index) => (
+              <motion.div
+                key={index}
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <value.icon className={`w-12 h-12 sm:w-16 sm:h-16 ${value.color} mx-auto mb-4 transition-transform duration-300 hover:scale-110`} />
+                <h3 className="text-xl sm:text-2xl font-semibold mb-3 text-gray-900 dark:text-white">{value.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
+                  {value.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Enhanced Services Overview Section */}
-      <section className="py-12 sm:py-16 bg-gray-50/80 dark:bg-gray-900/80 backdrop-blur-sm relative z-10">
+      <section className="py-12 sm:py-16 bg-gray-50/90 dark:bg-gray-900/90">
         <div className="container mx-auto px-4">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 dark:text-white">Our Legal Services</h2>
@@ -232,13 +280,21 @@ const Index = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Card className="h-full hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-400/30 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 group bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200 dark:border-gray-700 hover:border-blue-500/50 dark:hover:border-blue-400/50">
+                <Card className="h-full hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-400/30 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 group bg-white/90 dark:bg-gray-800/90 border-gray-200 dark:border-gray-700 hover:border-blue-500/50 dark:hover:border-blue-400/50">
                   <CardHeader className="pb-4">
                     <service.icon className={`w-10 h-10 sm:w-12 sm:h-12 ${service.color} mb-4 group-hover:scale-110 transition-all duration-300`} />
                     <CardTitle className="text-lg sm:text-xl text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">{service.title}</CardTitle>
-                    <CardDescription className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">
+                    <CardDescription className="text-gray-600 dark:text-gray-400 text-sm sm:text-base mb-4">
                       {service.description}
                     </CardDescription>
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <Button asChild size="sm" className="bg-blue-600 hover:bg-blue-700 text-white flex-1">
+                        <Link to="/services">More Info</Link>
+                      </Button>
+                      <Button asChild size="sm" variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 flex-1">
+                        <Link to="/contact">Book Consultation</Link>
+                      </Button>
+                    </div>
                   </CardHeader>
                 </Card>
               </motion.div>
@@ -254,7 +310,7 @@ const Index = () => {
       </section>
 
       {/* Awards and Recognition Section */}
-      <section className="py-12 sm:py-16 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm relative z-10">
+      <section className="py-12 sm:py-16 bg-white/90 dark:bg-gray-800/90">
         <div className="container mx-auto px-4">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 dark:text-white">Awards & Recognition</h2>
@@ -272,7 +328,7 @@ const Index = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Card className="text-center hover:shadow-lg transition-all duration-300 bg-white/90 dark:bg-gray-700/90 backdrop-blur-sm">
+                <Card className="text-center hover:shadow-lg transition-all duration-300 bg-white/95 dark:bg-gray-700/95">
                   <CardHeader className="pb-4">
                     <award.icon className="w-12 h-12 text-yellow-600 dark:text-yellow-400 mx-auto mb-4" />
                     <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">{award.year}</div>
@@ -289,45 +345,13 @@ const Index = () => {
       </section>
 
       {/* Partners Section */}
-      <div className="relative z-10">
-        <PartnersSection />
-      </div>
+      <PartnersSection />
 
       {/* Downloads Section */}
-      <div className="relative z-10">
-        <DownloadsSection />
-      </div>
-
-      {/* Enhanced Why Choose Us Section */}
-      <section className="py-12 sm:py-16 bg-gray-100/80 dark:bg-muted/20 backdrop-blur-sm relative z-10">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 dark:text-white">Why Choose Our Legal Services</h2>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-            {coreValues.map((item, index) => (
-              <motion.div
-                key={index}
-                className="text-center"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true }}
-              >
-                <item.icon className={`w-12 h-12 sm:w-16 sm:h-16 ${item.color} mx-auto mb-4 transition-transform duration-300 hover:scale-110`} />
-                <h3 className="text-xl sm:text-2xl font-semibold mb-3 text-gray-900 dark:text-white">{item.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
-                  {item.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <DownloadsSection />
 
       {/* Enhanced Contact CTA Section */}
-      <section className="py-12 sm:py-16 bg-blue-900/90 dark:bg-blue-950/90 backdrop-blur-sm text-white relative z-10">
+      <section className="py-12 sm:py-16 bg-blue-900/95 dark:bg-blue-950/95 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">Ready to Get Legal Help?</h2>
           <p className="text-lg sm:text-xl mb-6 sm:mb-8 max-w-2xl mx-auto">
@@ -340,14 +364,14 @@ const Index = () => {
             </Button>
             
             <div className="flex flex-col sm:flex-row items-center gap-4">
-              <Button asChild size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-blue-900 bg-white/10 backdrop-blur-sm font-bold shadow-lg">
+              <Button asChild size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-blue-900 bg-white/10 font-bold shadow-lg">
                 <a href="tel:0796985336" className="flex items-center gap-2">
                   <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
                   Call Now
                 </a>
               </Button>
               
-              <Button asChild size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-blue-900 bg-white/10 backdrop-blur-sm font-bold shadow-lg">
+              <Button asChild size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-blue-900 bg-white/10 font-bold shadow-lg">
                 <Link to="/contact" className="flex items-center gap-2">
                   <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
                   Send Message
@@ -359,9 +383,7 @@ const Index = () => {
       </section>
 
       {/* Enhanced AI Chatbot Assistant */}
-      <div className="relative z-20">
-        <AIChatbot />
-      </div>
+      <AIChatbot />
     </div>
   );
 };

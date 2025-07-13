@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { Scale, Phone, Mail, MapPin, MessageCircle } from "lucide-react";
+import { Scale, Phone, Mail, MapPin, MessageCircle, Youtube } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -11,10 +11,10 @@ const Footer = () => {
           <div className="col-span-1">
             <div className="flex items-center space-x-2 mb-4">
               <Scale className="w-8 h-8 text-yellow-400" />
-              <span className="font-bold text-xl">Legal Counsel</span>
+              <span className="font-bold text-xl">Mwaura Muroki Associates & Advocates</span>
             </div>
             <p className="text-blue-100 mb-4">
-              Professional legal services in Kenya with integrity, expertise, and dedication to justice.
+              "To provide Timely and Affordable Legal Services" - Professional legal services in Thika, Kenya with integrity, expertise, and dedication to justice.
             </p>
           </div>
 
@@ -49,16 +49,17 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold text-lg mb-4">Legal Services</h3>
             <ul className="space-y-2 text-blue-100">
-              <li>Family Law</li>
-              <li>Criminal Law</li>
-              <li>Property & Conveyancing</li>
-              <li>Employment Law</li>
-              <li>Business Law</li>
-              <li>Estate Planning</li>
+              <li>Commercial Litigation</li>
+              <li>Contract Drafting & Negotiation</li>
+              <li>Dispute Resolution</li>
+              <li>Family Law (Custody, Maintenance, Adoption)</li>
+              <li>Sports Law</li>
+              <li>Legal Research</li>
+              <li>Mental Health Law</li>
             </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* Contact Info & Social Media */}
           <div>
             <h3 className="font-semibold text-lg mb-4">Contact Info</h3>
             <div className="space-y-3">
@@ -90,7 +91,36 @@ const Footer = () => {
               
               <div className="flex items-center space-x-2">
                 <MapPin className="w-4 h-4 text-yellow-400" />
-                <span className="text-blue-100">Nairobi, Kenya</span>
+                <span className="text-blue-100">Thika, Kenya</span>
+              </div>
+
+              {/* YouTube Links */}
+              <div className="mt-4">
+                <h4 className="font-semibold text-sm mb-2 text-yellow-400">Watch Our Videos</h4>
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2">
+                    <Youtube className="w-4 h-4 text-red-500" />
+                    <a 
+                      href="https://youtu.be/NafQG2JUlhQ?si=fs97AKYtJOesBzhU" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-blue-100 hover:text-white transition-colors text-sm"
+                    >
+                      Legal Insights Video 1
+                    </a>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Youtube className="w-4 h-4 text-red-500" />
+                    <a 
+                      href="https://youtu.be/S8aDORAlyr4?si=j0lekfW_rSGkjfU6" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-blue-100 hover:text-white transition-colors text-sm"
+                    >
+                      Legal Insights Video 2
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -98,7 +128,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-blue-800 mt-8 pt-8 text-center text-blue-100">
-          <p>&copy; {new Date().getFullYear()} Legal Counsel Kenya. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Mwaura Muroki Associates & Advocates. All rights reserved.</p>
           <p className="mt-2 text-sm">
             Licensed Advocate of the High Court of Kenya | Member of Law Society of Kenya (LSK)
           </p>
