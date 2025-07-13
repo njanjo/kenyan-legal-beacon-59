@@ -181,9 +181,24 @@ const Footer = () => {
             Licensed Advocate of the High Court of Kenya | Member of Law Society of Kenya (LSK)
           </p>
           <div className="mt-4 flex flex-wrap justify-center gap-4 text-sm">
-            <a href="/privacy-policy" className="text-blue-100 hover:text-white transition-colors">Privacy Policy</a>
-            <a href="/terms-conditions" className="text-blue-100 hover:text-white transition-colors">Terms & Conditions</a>
-            <a href="/legal-disclaimer" className="text-blue-100 hover:text-white transition-colors">Legal Disclaimer</a>
+            <Link to="/privacy-policy" className="text-blue-100 hover:text-white transition-colors">
+              Privacy Policy
+            </Link>
+            <Link to="/terms-conditions" className="text-blue-100 hover:text-white transition-colors">
+              Terms & Conditions
+            </Link>
+            <Link to="/legal-disclaimer" className="text-blue-100 hover:text-white transition-colors">
+              Legal Disclaimer
+            </Link>
+            <Link to="/cookie-policy" className="text-blue-100 hover:text-white transition-colors">
+              Cookie Policy
+            </Link>
+          </div>
+          <div className="mt-4 text-xs text-blue-200">
+            <p className="italic">
+              "The information on this website is for informational purposes only and should not be relied upon as legal advice. 
+              We are not liable for any harm or injury resulting from reliance on the information herein."
+            </p>
           </div>
         </div>
       </div>
