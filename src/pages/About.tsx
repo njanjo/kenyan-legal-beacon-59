@@ -92,7 +92,7 @@ const About = () => {
               <div className="relative">
                 <div className="w-80 h-80 rounded-full overflow-hidden border-4 border-white/30 shadow-2xl">
                   <img
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                    src="/lovable-uploads/00794513-1237-4309-b855-598e2c8c5109.png"
                     alt="Francis Mwaura Muroki - Principal Advocate"
                     className="w-full h-full object-cover"
                   />
@@ -219,7 +219,10 @@ const About = () => {
                   </div>
                   <div className="flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-gray-500" />
-                    <span>Thika, Kenya</span>
+                    <div className="flex flex-col">
+                      <span className="font-medium">Equity Plaza Commercial Street</span>
+                      <span className="text-sm">4th Floor Wing B Rm 420, Thika</span>
+                    </div>
                   </div>
                 </CardContent>
               </Card>

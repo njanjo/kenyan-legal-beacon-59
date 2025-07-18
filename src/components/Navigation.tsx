@@ -30,7 +30,11 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <Scale className="w-8 h-8 text-blue-600" />
+            <img 
+              src="/lovable-uploads/7ac751ff-dfac-4f6b-9e97-e9e8eb7fe3b8.png" 
+              alt="Mwaura Muroki Associates Logo" 
+              className="w-8 h-8"
+            />
             <div className="flex flex-col">
               <span className="font-bold text-lg leading-tight">Mwaura Muroki</span>
               <span className="text-xs text-muted-foreground leading-tight">Associates & Advocates</span>
@@ -67,7 +71,7 @@ const Navigation = () => {
               )}
             </Button>
             <Button asChild>
-              <a href="tel:0796985336">Call Now</a>
+              <a href="tel:+254704780934">Call Now</a>
             </Button>
           </div>
 
@@ -108,7 +112,7 @@ const Navigation = () => {
                   ))}
                   <div className="pt-4 border-t">
                     <Button asChild className="w-full">
-                      <a href="tel:0796985336">Call Now: 0796985336</a>
+                      <a href="tel:+254704780934">Call Now: +254 704 780 934</a>
                     </Button>
                   </div>
                 </div>

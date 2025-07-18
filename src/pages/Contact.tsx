@@ -267,13 +267,40 @@ const Contact = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="mb-4">
-                    Thika, Kenya
-                  </p>
-                  <div className="bg-muted rounded-lg p-4">
-                    <p className="text-sm text-muted-foreground">
-                      Exact office location provided upon appointment booking
-                    </p>
+                  <div className="space-y-4">
+                    <div>
+                      <p className="font-semibold">Mwaura Muroki Associates Advocates</p>
+                      <p>Equity Plaza Commercial Street</p>
+                      <p>4th Floor Wing B Room 420</p>
+                      <p>Thika, Kenya</p>
+                    </div>
+                    
+                    <div className="bg-muted rounded-lg p-4">
+                      <p className="text-sm font-medium mb-2">Get Directions</p>
+                      <a 
+                        href="https://maps.google.com/maps?q=Equity+Plaza+Commercial+Street+Thika+Kenya" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
+                      >
+                        <MapPin className="w-4 h-4" />
+                        Open in Google Maps
+                      </a>
+                    </div>
+                    
+                    {/* Embedded Map */}
+                    <div className="rounded-lg overflow-hidden border">
+                      <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.7963040502453!2d37.073462!3d-1.033333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f4f7a6b7a7b7b%3A0x7b7b7b7b7b7b7b7b!2sEquity+Plaza%2C+Thika!5e0!3m2!1sen!2ske!4v1642675894567!5m2!1sen!2ske"
+                        width="100%"
+                        height="200"
+                        style={{ border: 0 }}
+                        allowFullScreen
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        title="Mwaura Muroki Associates Office Location"
+                      ></iframe>
+                    </div>
                   </div>
                 </CardContent>
               </Card>

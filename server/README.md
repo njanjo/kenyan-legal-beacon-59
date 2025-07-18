@@ -1,7 +1,7 @@
 
-# Law Advocate Website Backend
+# Mwaura Muroki Associates & Advocates - Backend API
 
-A Node.js/Express backend API for handling contact form submissions and sending emails via Nodemailer.
+A Node.js/Express backend API for handling contact form submissions and sending professional email notifications via Nodemailer.
 
 ## Features
 
@@ -25,9 +25,9 @@ npm install
 2. Update the following variables in `.env`:
 
 ```env
-EMAIL_USER=drfatush005@gmail.com
+EMAIL_USER=mwauramurokiadvocates@gmail.com
 EMAIL_PASS=your-gmail-app-password
-TO_EMAIL=drfatush005@gmail.com
+TO_EMAIL=mwauramurokiadvocates@gmail.com
 ```
 
 ### 3. Gmail App Password Setup
