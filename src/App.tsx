@@ -17,6 +17,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import LegalDisclaimer from "./pages/LegalDisclaimer";
 import TermsConditions from "./pages/TermsConditions";
 import CookiePolicy from "./pages/CookiePolicy";
+import MediaDashboard from "./components/MediaDashboard";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const App = () => (
                 <Route path="/about" element={<About />} />
                 <Route path="/services" element={<Services />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/media" element={<MediaDashboard />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/legal-disclaimer" element={<LegalDisclaimer />} />
                 <Route path="/terms-conditions" element={<TermsConditions />} />
