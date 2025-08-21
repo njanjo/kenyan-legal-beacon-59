@@ -1,38 +1,44 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import kenyaJudiciaryLogo from "@/assets/kenya-judiciary-logo.png";
+import ibaLogo from "@/assets/iba-logo.png";
+import lawSocietyKenyaLogo from "@/assets/law-society-kenya-logo.png";
+import eastAfricaLawSocietyLogo from "@/assets/east-africa-law-society-logo.png";
+import attorneyOffice1 from "/lovable-uploads/00794513-1237-4309-b855-598e2c8c5109.png";
+import attorneyOffice2 from "/lovable-uploads/7ac751ff-dfac-4f6b-9e97-e9e8eb7fe3b8.png";
 
 const PartnersSection = () => {
   const partners = [
     {
       name: "Kenya Law Society",
       description: "Professional legal association",
-      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: lawSocietyKenyaLogo
     },
     {
-      name: "East Africa Law Society",
+      name: "East Africa Law Society", 
       description: "Regional legal network",
-      image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: eastAfricaLawSocietyLogo
     },
     {
       name: "International Bar Association",
-      description: "Global legal community",
-      image: "https://images.unsplash.com/photo-1466442929976-97f336a657be?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      description: "Global legal community", 
+      image: ibaLogo
     },
     {
       name: "Kenya Judiciary",
       description: "Court system partnership",
-      image: "https://images.unsplash.com/photo-1551038247-3d9af20df552?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: kenyaJudiciaryLogo
     },
     {
-      name: "Law Society of Kenya",
-      description: "Legal practitioners body",
-      image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      name: "Mwaura Muroki Associates",
+      description: "Our law firm offices",
+      image: attorneyOffice1
     },
     {
-      name: "Africa Legal Network",
-      description: "Continental legal alliance",
-      image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      name: "Legal Excellence Center",
+      description: "Professional legal services",
+      image: attorneyOffice2
     }
   ];
 

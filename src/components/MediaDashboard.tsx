@@ -27,7 +27,8 @@ const mediaItems: MediaItem[] = [
     category: 'Legal Documentation',
     description: 'Human rights violation case documentation',
     source: 'YouTube',
-    date: '2024'
+    date: '2024',
+    thumbnail: '/lovable-uploads/00794513-1237-4309-b855-598e2c8c5109.png'
   },
   {
     id: '2',
@@ -87,7 +88,8 @@ const mediaItems: MediaItem[] = [
     category: 'Social Media',
     description: 'Professional updates and legal insights',
     source: 'Twitter/X',
-    date: '2024'
+    date: '2024',
+    thumbnail: '/lovable-uploads/7ac751ff-dfac-4f6b-9e97-e9e8eb7fe3b8.png'
   }
 ];
 
@@ -189,6 +191,18 @@ const MediaDashboard: React.FC = () => {
               }}
             >
               <CardContent className="p-6">
+                {item.thumbnail && (
+                  <div className="relative overflow-hidden rounded-lg mb-4">
+                    <img 
+                      src={item.thumbnail} 
+                      alt={item.title}
+                      className="w-full h-32 object-cover transition-transform duration-300 group-hover:scale-110"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                  </div>
+                )}
+                
                 <div className="flex items-start justify-between mb-4">
                   <Badge className={cn("rounded-full border", getTypeColor(item.type))}>
                     {getTypeIcon(item.type)}
