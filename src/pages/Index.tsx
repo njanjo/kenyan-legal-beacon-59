@@ -5,7 +5,6 @@ import { Scale, FileText, Shield, Users, Building, Heart, Phone, MessageCircle, 
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import DownloadsSection from "@/components/DownloadsSection";
-import AIChatbot from "@/components/AIChatbot";
 import PartnersSection from "@/components/PartnersSection";
 
 const Index = () => {
@@ -392,8 +391,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Enhanced AI Chatbot Assistant */}
-      <AIChatbot />
     </div>
   );
 };
