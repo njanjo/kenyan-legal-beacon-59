@@ -1,19 +1,23 @@
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { FileText, Download, Edit3, Send, Loader2, Sparkles, MessageCircle } from "lucide-react";
+import { Download, FileText, Edit3, Send, MessageCircle, Loader2, CheckCircle, AlertCircle, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
+import { PDFDocument, rgb } from "pdf-lib";
+import { saveAs } from "file-saver";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useState } from "react";
-import { PDFDocument, rgb } from "pdf-lib";
-import { toast } from "sonner";
 
 // Form schemas for different document types
 const consultationFormSchema = z.object({
@@ -583,9 +587,11 @@ const DownloadsSection = () => {
           <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
             Our legal experts are available to assist you with filling out any forms or answering questions about legal documentation.
           </p>
-          <Button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold px-8 py-3 rounded-full">
-            <MessageCircle className="w-5 h-5 mr-2" />
-            Contact Legal Expert
+          <Button asChild className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold px-8 py-3 rounded-full">
+            <Link to="/contact">
+              <MessageCircle className="w-5 h-5 mr-2" />
+              Contact Legal Expert
+            </Link>
           </Button>
         </motion.div>
       </div>

@@ -134,7 +134,7 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/85 to-blue-700/85 dark:from-blue-950/90 dark:to-blue-800/90" />
         
         <div className="relative container mx-auto px-4 z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <div className="flex justify-center items-center">
             {/* Left Column - Main Content */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -199,36 +199,6 @@ const Index = () => {
               </div>
             </motion.div>
             
-            {/* Right Column - Lawyer Image */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="relative flex justify-center lg:justify-end"
-            >
-              <div className="relative">
-                {/* Glowing background effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/30 to-blue-400/30 rounded-full blur-2xl animate-pulse"></div>
-                
-                {/* Main image container */}
-                <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-white/30 shadow-2xl backdrop-blur-sm bg-white/10">
-                  <img
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                    alt="Francis Mwaura Muroki - Principal Advocate"
-                    className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                  
-                  {/* Overlay gradient for better integration */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 via-transparent to-transparent"></div>
-                </div>
-                
-                {/* Floating elements around the image */}
-                <div className="absolute -top-4 -right-4 w-8 h-8 bg-yellow-400 rounded-full animate-bounce opacity-80"></div>
-                <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-blue-400 rounded-full animate-pulse opacity-60"></div>
-                <div className="absolute top-1/2 -left-8 w-4 h-4 bg-white rounded-full animate-pulse opacity-50"></div>
-              </div>
-            </motion.div>
           </div>
         </div>
       </section>
