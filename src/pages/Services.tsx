@@ -158,9 +158,9 @@ const Services = () => {
             </Button>
             
             <Button asChild size="lg" variant="outline">
-              <a href="tel:0796985336" className="flex items-center gap-2">
+              <a href="tel:0704780934" className="flex items-center gap-2">
                 <Phone className="w-5 h-5" />
-                Call: 0796985336
+                Call: 0704780934
               </a>
             </Button>
           </div>

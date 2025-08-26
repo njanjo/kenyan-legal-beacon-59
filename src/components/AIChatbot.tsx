@@ -36,7 +36,7 @@ const legalKnowledgeBase = {
     responses: [
       "If you're facing criminal charges, it's crucial to have experienced legal representation. We provide robust criminal defense services including bail applications and court representation.",
       "Your rights are protected under Kenyan law. We can help with police interrogations, court appearances, and building a strong defense strategy for your case.",
-      "Bail applications require urgent attention. Contact us immediately at 0796985336 for emergency legal assistance in criminal matters."
+      "Bail applications require urgent attention. Contact us immediately at 0704780934 for emergency legal assistance in criminal matters."
     ]
   },
   propertyLaw: {
@@ -68,7 +68,7 @@ const legalKnowledgeBase = {
     responses: [
       "I'm here to provide initial legal guidance. For detailed advice on your specific situation, I recommend scheduling a consultation with our experienced legal team.",
       "Legal matters vary greatly in complexity. Our team offers personalized consultations to understand your unique situation and provide tailored legal solutions.",
-      "Every legal case is unique. Contact us at 0796985336 or visit our office for a comprehensive consultation where we can discuss your specific needs and legal options."
+      "Every legal case is unique. Contact us at 0704780934 or visit our office for a comprehensive consultation where we can discuss your specific needs and legal options."
     ]
   }
 };
@@ -125,11 +125,11 @@ const AIChatbot = () => {
     
     // Contact information responses
     if (message.includes('contact') || message.includes('phone') || message.includes('call')) {
-      return "You can reach us at 0796985336 for immediate assistance, WhatsApp us, or email drfatush005@gmail.com. Our office is open Monday to Friday, 8 AM to 6 PM.";
+      return "You can reach us at 0704780934 for immediate assistance, WhatsApp us, or email drfatush005@gmail.com. Our office is open Monday to Friday, 8 AM to 6 PM.";
     }
     
     if (message.includes('location') || message.includes('office') || message.includes('address')) {
-      return "Our law office is conveniently located in Kenya. Please call 0796985336 to schedule a consultation or get specific directions to our office.";
+      return "Our law office is conveniently located in Kenya. Please call 0704780934 to schedule a consultation or get specific directions to our office.";
     }
     
     if (message.includes('cost') || message.includes('fee') || message.includes('price')) {
@@ -137,7 +137,7 @@ const AIChatbot = () => {
     }
     
     if (message.includes('urgent') || message.includes('emergency')) {
-      return "For urgent legal matters, please call us immediately at 0796985336. We understand that legal emergencies require prompt attention and we're here to help.";
+      return "For urgent legal matters, please call us immediately at 0704780934. We understand that legal emergencies require prompt attention and we're here to help.";
     }
     
     // Default helpful response
@@ -206,7 +206,7 @@ const AIChatbot = () => {
         messages: [...prev.messages, {
           id: (Date.now() + 1).toString(),
           type: 'bot',
-          content: 'I apologize, but I\'m having trouble processing your request. Please call us at 0796985336 for immediate assistance.',
+          content: 'I apologize, but I\'m having trouble processing your request. Please call us at 0704780934 for immediate assistance.',
           timestamp: new Date()
         }],
         isTyping: false

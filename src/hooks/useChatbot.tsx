@@ -90,7 +90,7 @@ export const useChatbot = (config: ChatbotConfig = { welcomeMessage: 'Hello! How
     const legalResponses = [
       `Thank you for your question about "${userMessage.toLowerCase()}". I'd be happy to provide some initial guidance. For detailed legal advice, I recommend scheduling a consultation with our team.`,
       "That's an important legal matter. Our experienced attorneys can help you navigate this situation. Would you like me to connect you with the right specialist?",
-      "I understand your concern. Legal matters can be complex, and it's important to get proper guidance. You can reach us at 0796985336 for a consultation.",
+      "I understand your concern. Legal matters can be complex, and it's important to get proper guidance. You can reach us at 0704780934 for a consultation.",
       "Based on your inquiry, this falls under one of our areas of expertise. Our legal team has extensive experience with similar cases. Let me help you get started.",
       "Thank you for contacting us. This type of legal issue requires careful consideration. I recommend speaking directly with one of our attorneys who can provide personalized advice."
     ];
@@ -98,9 +98,9 @@ export const useChatbot = (config: ChatbotConfig = { welcomeMessage: 'Hello! How
     // Simple keyword-based response selection (can be enhanced with actual AI)
     const keywords = userMessage.toLowerCase();
     if (keywords.includes('family') || keywords.includes('divorce') || keywords.includes('custody')) {
-      return "Family law matters require sensitive handling. Our family law specialists can help with divorce proceedings, child custody, and related issues. Call 0796985336 to schedule a consultation.";
+      return "Family law matters require sensitive handling. Our family law specialists can help with divorce proceedings, child custody, and related issues. Call 0704780934 to schedule a consultation.";
     } else if (keywords.includes('criminal') || keywords.includes('bail') || keywords.includes('arrest')) {
-      return "Criminal law cases are time-sensitive. Our criminal defense team is available to help with bail applications, defense strategies, and court representation. Contact us immediately at 0796985336.";
+      return "Criminal law cases are time-sensitive. Our criminal defense team is available to help with bail applications, defense strategies, and court representation. Contact us immediately at 0704780934.";
     } else if (keywords.includes('property') || keywords.includes('land') || keywords.includes('real estate')) {
       return "Property and conveyancing matters are our specialty. We handle property transfers, land disputes, and real estate transactions. Let's discuss your specific situation.";
     }
@@ -143,7 +143,7 @@ export const useChatbot = (config: ChatbotConfig = { welcomeMessage: 'Hello! How
       const errorMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         type: 'bot',
-        content: "I apologize, but I'm having trouble responding right now. Please call us directly at 0796985336 for immediate assistance.",
+        content: "I apologize, but I'm having trouble responding right now. Please call us directly at 0704780934 for immediate assistance.",
         timestamp: new Date()
       };
       
