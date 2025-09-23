@@ -8,6 +8,8 @@ import { ThemeProvider } from "next-themes";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import CookieConsent from "./components/CookieConsent";
+import WhatsAppButton from "./components/WhatsAppButton";
+import AIChatbot from "./components/AIChatbot";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Services from "./pages/Services";
@@ -46,6 +48,8 @@ const App = () => (
             </main>
             <Footer />
             <CookieConsent />
+            <AIChatbot />
+            <WhatsAppButton />
           </div>
         </BrowserRouter>
       </TooltipProvider>

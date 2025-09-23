@@ -126,34 +126,53 @@ const DownloadsSection = () => {
       const titleFontSize = 16;
       const headerFontSize = 14;
       
-      // Company letterhead
+      // Professional letterhead with enhanced design
+      // Main company name with larger font
       page.drawText('MWAURA MUROKI ASSOCIATES & ADVOCATES', {
         x: 50,
         y: height - 30,
-        size: headerFontSize,
-        color: rgb(0.1, 0.2, 0.6),
+        size: 18,
+        color: rgb(0.05, 0.15, 0.5),
       });
       
-      page.drawText('P.O. Box 12345-00100, Nairobi, Kenya', {
+      // Subtitle
+      page.drawText('Advocates & Commissioners for Oaths', {
         x: 50,
         y: height - 50,
-        size: 10,
-        color: rgb(0.4, 0.4, 0.4),
+        size: 12,
+        color: rgb(0.2, 0.3, 0.7),
       });
       
-      page.drawText('Tel: 0704780934 | Email: info@mwauralaw.com', {
+      // Contact information with better formatting
+      page.drawText('Office: Equity Plaza Commercial Street, 4th Floor Wing B Room 420, Thika', {
         x: 50,
-        y: height - 65,
-        size: 10,
+        y: height - 70,
+        size: 9,
         color: rgb(0.4, 0.4, 0.4),
       });
       
-      // Draw a line separator
-      page.drawLine({
-        start: { x: 50, y: height - 80 },
-        end: { x: width - 50, y: height - 80 },
-        thickness: 1,
-        color: rgb(0.7, 0.7, 0.7),
+      page.drawText('Tel: +254 704 780 934 | Email: mwauramurokiadvocates@gmail.com', {
+        x: 50,
+        y: height - 85,
+        size: 9,
+        color: rgb(0.4, 0.4, 0.4),
+      });
+      
+      // Professional border design
+      page.drawRectangle({
+        x: 40,
+        y: height - 100,
+        width: width - 80,
+        height: 3,
+        color: rgb(0.05, 0.15, 0.5),
+      });
+      
+      // Watermark effect (simplified to avoid TypeScript issues)
+      page.drawText('CONFIDENTIAL LEGAL DOCUMENT', {
+        x: width / 2 - 120,
+        y: height / 2,
+        size: 35,
+        color: rgb(0.92, 0.92, 0.92),
       });
       
       // Add title
@@ -268,24 +287,62 @@ const DownloadsSection = () => {
         color: rgb(0, 0, 0),
       });
       
-      // Add footer
+      // Professional footer with enhanced design
+      page.drawLine({
+        start: { x: 50, y: 100 },
+        end: { x: width - 50, y: 100 },
+        thickness: 1,
+        color: rgb(0.7, 0.7, 0.7),
+      });
+      
+      page.drawText('IMPORTANT LEGAL NOTICE', {
+        x: 50,
+        y: 85,
+        size: 10,
+        color: rgb(0.7, 0.2, 0.2),
+      });
+      
       page.drawText('This document was generated electronically and requires proper signatures to be legally binding.', {
         x: 50,
-        y: 80,
-        size: 9,
+        y: 70,
+        size: 8,
         color: rgb(0.5, 0.5, 0.5),
       });
       
-      page.drawText('For legal advice and consultation, please contact our office.', {
+      page.drawText('For legal advice and consultation, please contact our office immediately.', {
         x: 50,
-        y: 65,
-        size: 9,
+        y: 55,
+        size: 8,
         color: rgb(0.5, 0.5, 0.5),
       });
       
-      page.drawText('© 2024 Mwaura Muroki Associates & Advocates', {
+      page.drawText('© 2024 Mwaura Muroki Associates & Advocates - All Rights Reserved', {
         x: 50,
         y: 30,
+        size: 8,
+        color: rgb(0.6, 0.6, 0.6),
+      });
+      
+      // Professional stamp placeholder
+      page.drawRectangle({
+        x: width - 150,
+        y: 120,
+        width: 100,
+        height: 60,
+        borderColor: rgb(0.7, 0.7, 0.7),
+        borderWidth: 1,
+      });
+      
+      page.drawText('OFFICIAL SEAL', {
+        x: width - 135,
+        y: 155,
+        size: 8,
+        color: rgb(0.6, 0.6, 0.6),
+      });
+      
+      page.drawText('& SIGNATURE', {
+        x: width - 135,
+        y: 145,
         size: 8,
         color: rgb(0.6, 0.6, 0.6),
       });
