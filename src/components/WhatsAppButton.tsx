@@ -1,10 +1,19 @@
 import { MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import { useToast } from "@/hooks/use-toast";
 
 const WhatsAppButton = () => {
   const phoneNumber = "254704780934";
   const message = "Hello! I would like to inquire about your legal services.";
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+  const { toast } = useToast();
+
+  const handleClick = () => {
+    toast({
+      title: "Opening WhatsApp...",
+      description: "You will be redirected to WhatsApp chat.",
+    });
+  };
 
   return (
     <motion.div
@@ -24,16 +33,17 @@ const WhatsAppButton = () => {
         rel="noopener noreferrer"
         className="flex items-center justify-center w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
         animate={{
-          y: [0, -8, 0],
+          y: [0, -20, 0],
         }}
         transition={{
-          duration: 2,
+          duration: 0.7,
           repeat: Infinity,
           repeatType: "reverse",
           ease: "easeInOut"
         }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
+        onClick={handleClick}
       >
         <MessageCircle className="w-7 h-7" />
         
