@@ -17,54 +17,72 @@ const WhatsAppButton = () => {
 
   return (
     <motion.div
-      className="fixed bottom-6 right-6 z-50"
+      className="fixed bottom-6 right-6 z-50 sm:bottom-8 sm:right-8"
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       transition={{ 
         type: "spring",
         stiffness: 260,
         damping: 20,
-        delay: 1
+        delay: 0.5
       }}
     >
       <motion.a
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center justify-center w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
+        className="flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
         animate={{
-          y: [0, -20, 0],
+          y: [0, -15, 0],
         }}
         transition={{
-          duration: 0.7,
+          duration: 2,
           repeat: Infinity,
           repeatType: "reverse",
           ease: "easeInOut"
         }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{ scale: 1.15, rotate: 5 }}
+        whileTap={{ scale: 0.9 }}
         onClick={handleClick}
       >
-        <MessageCircle className="w-7 h-7" />
+        <MessageCircle className="w-7 h-7 sm:w-8 sm:h-8" />
         
-        {/* WhatsApp tooltip */}
-        <div className="absolute right-16 top-1/2 -translate-y-1/2 bg-gray-800 text-white px-3 py-2 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-          Chat on WhatsApp
-          <div className="absolute top-1/2 -translate-y-1/2 -right-1 w-2 h-2 bg-gray-800 rotate-45"></div>
+        {/* Enhanced WhatsApp tooltip with responsive positioning */}
+        <div className="absolute right-16 top-1/2 -translate-y-1/2 sm:right-20 bg-gray-900 text-white px-3 py-2 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-lg border border-gray-700">
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <span>Chat on WhatsApp</span>
+          </div>
+          <div className="absolute top-1/2 -translate-y-1/2 -right-1 w-2 h-2 bg-gray-900 rotate-45 border-r border-b border-gray-700"></div>
         </div>
       </motion.a>
       
-      {/* Pulse ring animation */}
+      {/* Enhanced pulse ring animation */}
       <motion.div
         className="absolute inset-0 rounded-full bg-green-500 opacity-20"
         animate={{
-          scale: [1, 1.8, 1],
+          scale: [1, 2.2, 1],
+          opacity: [0.3, 0, 0.3],
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      
+      {/* Secondary pulse ring */}
+      <motion.div
+        className="absolute inset-0 rounded-full bg-green-400 opacity-10"
+        animate={{
+          scale: [1, 1.5, 1],
           opacity: [0.2, 0, 0.2],
         }}
         transition={{
           duration: 2,
           repeat: Infinity,
-          ease: "easeInOut"
+          ease: "easeInOut",
+          delay: 0.5
         }}
       />
     </motion.div>
