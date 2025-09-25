@@ -21,51 +21,51 @@ interface ChatbotState {
   isTyping: boolean;
 }
 
-// Enhanced legal knowledge base with comprehensive legal information
+// Enhanced legal knowledge base with comprehensive Kenyan legal information
 const legalKnowledgeBase = {
   familyLaw: {
-    keywords: ['divorce', 'custody', 'child', 'marriage', 'separation', 'alimony', 'matrimonial', 'spouse', 'wedding', 'prenup'],
+    keywords: ['divorce', 'custody', 'child', 'marriage', 'separation', 'alimony', 'matrimonial', 'spouse', 'wedding', 'prenup', 'maintenance'],
     responses: [
-      "Family law matters require sensitive handling. Our team specializes in divorce proceedings, child custody arrangements, and matrimonial disputes. We ensure your family's interests are protected while seeking amicable solutions. Contact us at 0704780934 for a confidential consultation.",
-      "Child custody cases need careful attention to the child's best interests. We can help you navigate custody arrangements, visitation rights, and support obligations under Kenyan law. Our success rate in custody cases is 95%.",
-      "Divorce proceedings can be complex involving property division, spousal support, and custody arrangements. We handle both contested and uncontested divorces with complete discretion. Our average case resolution time is 3-6 months.",
-      "Prenuptial agreements protect both parties' interests. We draft comprehensive prenups that cover property rights, financial obligations, and future contingencies under Kenyan matrimonial law."
+      "Under the Marriage Act 2014 (Kenya), marriage dissolution requires court proceedings. Grounds include cruelty, desertion, adultery, and irretrievable breakdown. Children's interests are paramount per Children Act 2022. Source: kenyalaw.org. This is general legal information, not legal advice.",
+      "Child custody in Kenya follows the 'best interests of the child' principle (Children Act 2022, Section 4). Courts consider child's welfare, parental capability, and wishes of mature children. Both parents have equal rights initially. This is general legal information, not legal advice.",
+      "The Matrimonial Property Act 2013 governs property division in divorce. Contributions (financial and non-financial) determine shares. Matrimonial home has special protection. Courts have discretion in distribution. This is general legal information, not legal advice.",
+      "Maintenance obligations are governed by the Children Act 2022 and Marriage Act 2014. Both parents must support children regardless of custody. Spousal maintenance may be ordered based on need and ability to pay. This is general legal information, not legal advice."
     ]
   },
   criminalLaw: {
-    keywords: ['criminal', 'arrest', 'bail', 'court', 'charges', 'defense', 'police', 'theft', 'assault', 'fraud', 'dui', 'traffic'],
+    keywords: ['criminal', 'arrest', 'bail', 'court', 'charges', 'defense', 'police', 'theft', 'assault', 'fraud', 'dui', 'traffic', 'penal code'],
     responses: [
-      "If you're facing criminal charges, immediate legal representation is crucial. We provide 24/7 criminal defense services including bail applications, court representation, and case strategy. Our criminal defense team has a 90% success rate.",
-      "Your constitutional rights are protected under Articles 49-50 of the Kenyan Constitution. We can help with police interrogations, court appearances, and building a strong defense strategy. Don't speak to police without a lawyer present.",
-      "Bail applications require urgent attention and proper documentation. Contact us immediately at 0704780934 for emergency legal assistance. We handle bail applications within 24 hours of arrest.",
-      "Traffic offenses and DUI charges can result in license suspension and jail time. Our traffic law specialists help minimize penalties and protect your driving privileges. We've successfully defended over 1000 traffic cases."
+      "Criminal rights in Kenya are protected by Constitution Articles 49-50: presumption of innocence, right to counsel, fair trial within reasonable time. Criminal Procedure Code (Cap 75) governs proceedings. Source: kenyalaw.org. This is general legal information, not legal advice.",
+      "Bail is a constitutional right (Article 49(1)(h)) except for specific offenses. Factors: offense severity, flight risk, public safety. Bail & Bond Policy Guidelines 2015 provide framework. Apply promptly after arrest. This is general legal information, not legal advice.",
+      "The Penal Code (Cap 63) defines criminal offenses in Kenya. Traffic offenses under Traffic Act (Cap 403) include licensing, speed limits, DUI. Penalties range from fines to imprisonment. Recent amendments strengthen enforcement. This is general legal information, not legal advice.",
+      "Police powers are limited by Constitution Article 244. Arrest requires reasonable suspicion. Detention maximum 24 hours without charge, 14 days with court order. Right to remain silent, legal representation. This is general legal information, not legal advice."
     ]
   },
   propertyLaw: {
-    keywords: ['property', 'land', 'conveyancing', 'title', 'deed', 'real estate', 'transfer', 'lease', 'rent', 'mortgage', 'boundary'],
+    keywords: ['property', 'land', 'conveyancing', 'title', 'deed', 'real estate', 'transfer', 'lease', 'rent', 'mortgage', 'boundary', 'succession'],
     responses: [
-      "Property transactions require meticulous legal documentation. We handle conveyancing, title searches, stamp duty calculations, and registration. Our conveyancing service ensures 100% legal compliance and protects your investment.",
-      "Land disputes involving boundaries, inheritance, or illegal occupation require expert handling. Our property law team has resolved over 500 land disputes with an 85% success rate through negotiation and litigation.",
-      "Whether buying, selling, or leasing property, proper legal procedures protect your interests. We conduct comprehensive title searches, draft contracts, and handle all registration requirements. Average transaction completion: 30 days.",
-      "Mortgage and loan security documentation must comply with banking regulations. We prepare charges, guarantees, and security documents that protect both lenders and borrowers under the Land Registration Act 2012."
+      "Land registration in Kenya follows Land Registration Act 2012. Three systems: registration of titles, deeds, and special registration. Indefeasibility of title protects registered owners. Search at Ardhi House or online. This is general legal information, not legal advice.",
+      "Land succession follows Law of Succession Act (Cap 160). Intestate succession distributes property to spouse and children. Widows/widowers get life interest in matrimonial home. Succession certificate required for transfers. This is general legal information, not legal advice.",
+      "The Land Act 2012 governs land tenure: freehold, leasehold, customary. Community land under Community Land Act 2016. Land Control Act regulates agricultural land transactions in specified areas. This is general legal information, not legal advice.",
+      "Stamp duty on property transfers: KSh 20 per KSh 1,000 (2%) for property in municipalities, KSh 10 per KSh 1,000 (1%) elsewhere. Registration fees additional. Stamp Duty Act (Cap 480). This is general legal information, not legal advice."
     ]
   },
   employmentLaw: {
-    keywords: ['employment', 'job', 'work', 'labor', 'wrongful termination', 'workplace', 'contract', 'salary', 'harassment', 'discrimination'],
+    keywords: ['employment', 'job', 'work', 'labor', 'wrongful termination', 'workplace', 'contract', 'salary', 'harassment', 'discrimination', 'NSSF', 'NHIF'],
     responses: [
-      "Employment disputes can devastate your career and finances. We handle wrongful termination, unfair dismissal, salary disputes, and workplace harassment cases. Our employment lawyers have recovered over KES 50M in employee compensation.",
-      "Workplace harassment and discrimination violate your fundamental rights. We provide confidential legal advice and aggressive representation for sexual harassment, age discrimination, and hostile work environment cases.",
-      "Employment contracts should protect both parties. We draft, review, and negotiate employment agreements, non-compete clauses, severance packages, and executive compensation packages that comply with the Employment Act 2007.",
-      "Labor disputes require skilled mediation and sometimes litigation. Our team handles collective bargaining, union disputes, industrial court cases, and workplace safety violations with expertise in Kenyan labor law."
+      "Employment Act 2007 governs work relationships in Kenya. Covers contracts, termination, working hours, leave entitlements. Industrial Court handles disputes. Minimum wage set by government annually. This is general legal information, not legal advice.",
+      "Termination requires just cause and proper procedure (Employment Act Section 41-47). Notice periods: 1 month for monthly-paid staff. Unfair dismissal entitles compensation. Redundancy requires consultation and compensation. This is general legal information, not legal advice.",
+      "Workplace discrimination violates Constitution Article 27. Equal opportunities regardless of race, gender, religion, disability. Employment Act prohibits unfair treatment. Sexual harassment addressed under Employment Act Section 6. This is general legal information, not legal advice.",
+      "Statutory deductions include PAYE (Pay As You Earn), NSSF (National Social Security Fund), NHIF (National Hospital Insurance Fund), Housing Levy (1.5%). Employers must register and remit monthly. This is general legal information, not legal advice."
     ]
   },
   businessLaw: {
-    keywords: ['business', 'company', 'commercial', 'contract', 'startup', 'incorporation', 'compliance', 'partnership', 'tax', 'licensing'],
+    keywords: ['business', 'company', 'commercial', 'contract', 'startup', 'incorporation', 'compliance', 'partnership', 'tax', 'licensing', 'KRA', 'VAT'],
     responses: [
-      "Starting a business requires proper legal foundation and regulatory compliance. We handle company formation, business licensing, tax registration, and corporate structuring. We've incorporated over 1000 companies with 100% success rate.",
-      "Commercial contracts are the backbone of business success. We draft and negotiate supplier agreements, distribution contracts, joint ventures, and partnership agreements that protect your interests and maximize profits.",
-      "Business disputes can halt operations and drain resources. Our commercial litigation team handles contract breaches, partnership disputes, debt recovery, and intellectual property violations with aggressive but cost-effective strategies.",
-      "Regulatory compliance prevents costly penalties and business closure. We ensure your business meets all KRA, county government, and sector-specific requirements. Our compliance audit service identifies and fixes violations before they become problems."
+      "Company registration in Kenya follows Companies Act 2015. Types: private limited, public, LLP. Register at Registrar of Companies with Memorandum and Articles. Minimum 1 director, 1 shareholder. Online registration available. This is general legal information, not legal advice.",
+      "Tax obligations include Corporate Income Tax (30%), VAT (16% standard rate), Withholding Tax, PAYE for employees. Register with KRA, file monthly/annual returns. Digital Service Tax (1.5%) applies to digital marketplace. This is general legal information, not legal advice.",
+      "Business licensing varies by activity and location. Single Business Permit from county government covers most businesses. Professional services may need additional licensing. Environment Impact Assessment for specified activities. This is general legal information, not legal advice.",
+      "Commercial contracts follow Contract Law principles and Sale of Goods Act (Cap 31). Essential terms: parties, consideration, performance, termination. Consumer Protection Act 2012 governs consumer transactions. This is general legal information, not legal advice."
     ]
   },
   general: {
@@ -85,10 +85,18 @@ const legalKnowledgeBase = {
     ]
   },
   research: {
-    keywords: ['statute', 'act', 'case law', 'judgment', 'ruling', 'precedent', 'citation', 'kenyalaw', 'court'],
+    keywords: ['statute', 'act', 'case law', 'judgment', 'ruling', 'precedent', 'citation', 'kenyalaw', 'court', 'high court', 'appeal', 'supreme'],
     responses: [
-      "Kenya Law Reports (kenyalaw.org) contains all current statutes, Acts of Parliament, and case law. I can help locate specific provisions and summarize legal principles. Always verify with the most recent version. This is general legal information, not legal advice.",
-      "For case law research, I search Kenya Law Reports by case name, citation, or legal principle. I provide summaries with proper citations and note if cases have been overruled. This is general legal information, not legal advice."
+      "Kenya's court structure: Magistrates Courts, High Court, Court of Appeal, Supreme Court. High Court has unlimited jurisdiction. Appeal lies to Court of Appeal, then Supreme Court (constitutional matters). Source: kenyalaw.org. This is general legal information, not legal advice.",
+      "Kenya Law Reports (kenyalaw.org) contains all current statutes, Acts of Parliament, subsidiary legislation, and case law. Search by citation, parties, or subject matter. Always verify amendments and current status. This is general legal information, not legal advice.",
+      "Legal research requires checking multiple sources: primary legislation (Acts), subsidiary legislation (regulations), case law (precedents), and international law where applicable. Cross-reference for consistency and updates. This is general legal information, not legal advice."
+    ]
+  },
+  international: {
+    keywords: ['international', 'treaty', 'UN', 'human rights', 'convention', 'protocol', 'ratification'],
+    responses: [
+      "Kenya has ratified major UN treaties: ICCPR, ICESCR, CEDAW, CRC, CERD. These are domesticated through various Acts. UN Treaty Collection (treaties.un.org) provides full texts and status. This is general legal information, not legal advice.",
+      "International human rights law supplements domestic protections. African Charter on Human and Peoples' Rights applies. Regional courts: African Court on Human and Peoples' Rights. This is general legal information, not legal advice."
     ]
   }
 };
@@ -145,11 +153,11 @@ const AIChatbot = () => {
     
     // Contact information responses
     if (message.includes('contact') || message.includes('phone') || message.includes('call')) {
-      return "You can reach us at 0704780934 for immediate assistance, WhatsApp us, or email drfatush005@gmail.com. Our office is open Monday to Friday, 8 AM to 6 PM.";
+      return "For legal consultations, please use the contact form on this website or call the provided contact number. Office hours are typically Monday to Friday, 8 AM to 6 PM. This is general legal information, not legal advice.";
     }
     
     if (message.includes('location') || message.includes('office') || message.includes('address')) {
-      return "Our law office is conveniently located in Kenya. Please call 0704780934 to schedule a consultation or get specific directions to our office.";
+      return "Office location details are available through the contact form on this website. Please reach out to schedule a consultation or get specific directions. This is general legal information, not legal advice.";
     }
     
     if (message.includes('cost') || message.includes('fee') || message.includes('price')) {
