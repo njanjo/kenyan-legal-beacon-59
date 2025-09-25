@@ -69,19 +69,26 @@ const legalKnowledgeBase = {
     ]
   },
   general: {
-    keywords: ['help', 'legal', 'lawyer', 'advice', 'consultation', 'cost', 'fee', 'attorney', 'law', 'services'],
+    keywords: ['help', 'legal', 'lawyer', 'advice', 'consultation', 'research', 'statute', 'case', 'law', 'information'],
     responses: [
-      "I'm your AI legal assistant with access to comprehensive Kenyan law knowledge. For personalized legal advice on your specific situation, schedule a consultation with our experienced legal team. First consultation is FREE for new clients.",
-      "Our law firm offers full-service legal representation across all practice areas. With 15+ years of experience and over 2000 successful cases, we provide expert legal solutions tailored to your unique situation and budget.",
-      "Legal expertise shouldn't be expensive. We offer competitive rates, flexible payment plans, and transparent pricing. Contact us at 0704780934 for a FREE case evaluation and cost estimate based on your specific legal needs.",
-      "Available 24/7 for legal emergencies. Our multilingual team serves clients in English, Swahili, and local languages. Office hours: Monday-Friday 8AM-6PM, Emergency hotline: 0704780934. Email: drfatush005@gmail.com"
+      "I'm a Legal Research Assistant providing general legal information from authoritative sources. I prioritize Kenya Law Reports (kenyalaw.org), UN treaties, and public-domain legal materials. This is general legal information, not legal advice.",
+      "I can help research Kenyan statutes, Acts of Parliament, constitutional materials, case law, and UN treaties. I always provide the most recent versions and cite my sources. This is general legal information, not legal advice.",
+      "For legal research, I search Kenya Law Reports, UN Treaty Collection, and government publications. I summarize findings in plain language with proper citations. This is general legal information, not legal advice.",
+      "I provide factual, neutral legal information from public sources. If laws are amended or cases overruled, I note that clearly. For personalized advice, consult a qualified attorney. This is general legal information, not legal advice."
     ]
   },
   constitution: {
-    keywords: ['constitution', 'rights', 'bill of rights', 'constitutional', 'article', 'chapter'],
+    keywords: ['constitution', 'rights', 'bill of rights', 'constitutional', 'article', 'chapter', 'fundamental', 'devolution'],
     responses: [
-      "The Kenyan Constitution 2010 guarantees fundamental rights and freedoms. We can help you understand your constitutional rights and take legal action when they're violated. Download our free copy of the Constitution from our website.",
-      "Constitutional law cases require specialized expertise. Our team has successfully handled numerous constitutional petitions and judicial review cases in the High Court and Court of Appeal."
+      "The Constitution of Kenya 2010 is available at kenyalaw.org. Key chapters include: Bill of Rights (Chapter 4), Devolution (Chapter 11), and Judiciary (Chapter 10). Each article addresses specific rights and government structures. This is general legal information, not legal advice.",
+      "Constitutional rights in Kenya include fundamental freedoms (Articles 19-51), economic and social rights, and environmental rights. The Supreme Court is the final authority on constitutional interpretation. This is general legal information, not legal advice."
+    ]
+  },
+  research: {
+    keywords: ['statute', 'act', 'case law', 'judgment', 'ruling', 'precedent', 'citation', 'kenyalaw', 'court'],
+    responses: [
+      "Kenya Law Reports (kenyalaw.org) contains all current statutes, Acts of Parliament, and case law. I can help locate specific provisions and summarize legal principles. Always verify with the most recent version. This is general legal information, not legal advice.",
+      "For case law research, I search Kenya Law Reports by case name, citation, or legal principle. I provide summaries with proper citations and note if cases have been overruled. This is general legal information, not legal advice."
     ]
   }
 };
@@ -95,7 +102,7 @@ const AIChatbot = () => {
       {
         id: '1',
         type: 'bot',
-        content: 'Hello! I\'m your legal assistant. I can help you with questions about family law, criminal law, property law, employment law, and business law. How can I assist you today?',
+        content: 'Hello! I\'m your Legal Research Assistant. I provide general legal information from authoritative sources like Kenya Law Reports and UN treaties. I can help research statutes, case law, and legal procedures. This is general legal information, not legal advice. How can I assist you today?',
         timestamp: new Date()
       }
     ],
@@ -153,8 +160,12 @@ const AIChatbot = () => {
       return "For urgent legal matters, please call us immediately at 0704780934. We understand that legal emergencies require prompt attention and we're here to help.";
     }
     
-    // Default helpful response
-    return legalKnowledgeBase.general.responses[Math.floor(Math.random() * legalKnowledgeBase.general.responses.length)];
+    // Default research-focused response
+    const defaultResponses = [
+      "I can help research Kenyan law from authoritative sources like Kenya Law Reports and UN treaties. Please specify what legal topic, statute, or case you'd like information about. This is general legal information, not legal advice.",
+      "As a Legal Research Assistant, I provide information from public-domain legal sources. What specific area of Kenyan law would you like me to research? This is general legal information, not legal advice."
+    ];
+    return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
   }, []);
 
   const toggleChatbot = useCallback(() => {
@@ -243,9 +254,9 @@ const AIChatbot = () => {
 
   return (
     <>
-      {/* Floating Action Button - Positioned to avoid WhatsApp button conflict */}
+      {/* Legal Research Assistant Button */}
       <motion.div
-        className="fixed bottom-6 left-6 z-50"
+        className="fixed bottom-6 right-6 z-50"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 1.2, type: "spring", stiffness: 260, damping: 20 }}
@@ -263,7 +274,7 @@ const AIChatbot = () => {
       <AnimatePresence>
         {chatState.isOpen && (
           <motion.div
-            className="fixed bottom-24 left-6 z-50"
+            className="fixed bottom-24 right-6 z-50"
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -274,7 +285,7 @@ const AIChatbot = () => {
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-blue-600 text-white rounded-t-lg">
                 <div className="flex items-center space-x-2">
                   <Bot className="w-5 h-5" />
-                  <CardTitle className="text-sm font-medium">Legal Assistant</CardTitle>
+                  <CardTitle className="text-sm font-medium">Legal Research Assistant</CardTitle>
                 </div>
                 <div className="flex items-center space-x-1">
                   <Button
@@ -361,7 +372,7 @@ const AIChatbot = () => {
                         value={chatState.inputValue}
                         onChange={handleInputChange}
                         onKeyPress={handleKeyPress}
-                        placeholder="Ask about legal services..."
+                        placeholder="Ask about Kenyan law, statutes, or cases..."
                         className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                         disabled={chatState.isTyping}
                       />
