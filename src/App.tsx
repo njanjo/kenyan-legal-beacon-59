@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import Navigation from "./components/Navigation";
-import Footer from "./components/Footer";
+
 import CookieConsent from "./components/CookieConsent";
 import AIChatbot from "./components/AIChatbot";
 import Index from "./pages/Index";
@@ -45,7 +45,7 @@ const App = () => (
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
-            <Footer />
+            
             <CookieConsent />
             <AIChatbot />
           </div>
