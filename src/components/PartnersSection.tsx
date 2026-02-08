@@ -1,6 +1,6 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import { Scale, Globe, Landmark, BookOpen, Building2, Handshake } from "lucide-react";
 import kenyaJudiciaryLogo from "@/assets/kenya-judiciary-logo.png";
 import ibaLogo from "@/assets/iba-logo.png";
 import lawSocietyKenyaLogo from "@/assets/law-society-kenya-logo.png";
@@ -13,36 +13,47 @@ const PartnersSection = () => {
     {
       name: "Kenya Law Society",
       description: "Professional legal association",
-      image: lawSocietyKenyaLogo
+      image: lawSocietyKenyaLogo,
+      icon: Scale,
+      iconColor: "text-blue-600 dark:text-blue-400"
     },
     {
-      name: "East Africa Law Society", 
+      name: "East Africa Law Society",
       description: "Regional legal network",
-      image: eastAfricaLawSocietyLogo
+      image: eastAfricaLawSocietyLogo,
+      icon: Globe,
+      iconColor: "text-green-600 dark:text-green-400"
     },
     {
       name: "International Bar Association",
-      description: "Global legal community", 
-      image: ibaLogo
+      description: "Global legal community",
+      image: ibaLogo,
+      icon: BookOpen,
+      iconColor: "text-purple-600 dark:text-purple-400"
     },
     {
       name: "Kenya Judiciary",
       description: "Court system partnership",
-      image: kenyaJudiciaryLogo
+      image: kenyaJudiciaryLogo,
+      icon: Landmark,
+      iconColor: "text-red-600 dark:text-red-400"
     },
     {
       name: "Mwaura Muroki Associates",
       description: "Our law firm offices",
-      image: attorneyOffice1
+      image: attorneyOffice1,
+      icon: Building2,
+      iconColor: "text-yellow-600 dark:text-yellow-400"
     },
     {
       name: "Legal Excellence Center",
       description: "Professional legal services",
-      image: attorneyOffice2
+      image: attorneyOffice2,
+      icon: Handshake,
+      iconColor: "text-indigo-600 dark:text-indigo-400"
     }
   ];
 
-  // Duplicate partners for seamless scrolling
   const scrollingPartners = [...partners, ...partners];
 
   return (
@@ -54,8 +65,7 @@ const PartnersSection = () => {
             Collaborating with leading legal institutions to provide comprehensive legal services
           </p>
         </div>
-        
-        {/* Scrolling Partners Container */}
+
         <div className="relative">
           <div className="flex space-x-6 animate-scroll-right">
             {scrollingPartners.map((partner, index) => (
@@ -70,17 +80,20 @@ const PartnersSection = () => {
                 <Card className="hover:shadow-lg transition-all duration-300 hover:scale-105 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 group">
                   <CardContent className="p-4 text-center">
                     <div className="relative overflow-hidden rounded-lg mb-4">
-                      <img 
-                        src={partner.image} 
+                      <img
+                        src={partner.image}
                         alt={partner.name}
                         className="w-full h-32 object-cover transition-transform duration-300 group-hover:scale-110"
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
-                    <h4 className="font-semibold mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
-                      {partner.name}
-                    </h4>
+                    <div className="flex items-center justify-center gap-2 mb-2">
+                      <partner.icon className={`w-5 h-5 ${partner.iconColor} transition-transform duration-300 group-hover:scale-125`} />
+                      <h4 className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                        {partner.name}
+                      </h4>
+                    </div>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
                       {partner.description}
                     </p>
@@ -89,8 +102,7 @@ const PartnersSection = () => {
               </motion.div>
             ))}
           </div>
-          
-          {/* Gradient Overlays for Seamless Effect */}
+
           <div className="absolute top-0 left-0 w-20 h-full bg-gradient-to-r from-white dark:from-gray-900 to-transparent z-10 pointer-events-none"></div>
           <div className="absolute top-0 right-0 w-20 h-full bg-gradient-to-l from-white dark:from-gray-900 to-transparent z-10 pointer-events-none"></div>
         </div>
