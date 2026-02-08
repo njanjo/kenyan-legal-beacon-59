@@ -349,7 +349,7 @@ const DownloadsSection = () => {
       
       // Generate PDF
       const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const blob = new Blob([pdfBytes as unknown as BlobPart], { type: 'application/pdf' });
       
       // Download PDF with timestamp
       const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
