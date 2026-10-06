@@ -11,7 +11,7 @@ const Footer = () => {
           <div className="col-span-1 lg:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
               <img
-                src="/lovable-uploads/7ac751ff-dfac-4f6b-9e97-e9e8eb7fe3b8.png"
+                src="/uploads/7ac751ff-dfac-4f6b-9e97-e9e8eb7fe3b8.png"
                 alt="Mwaura Muroki Associates Logo"
                 className="w-10 h-10 object-contain"
               />

@@ -28,7 +28,7 @@ const mediaItems: MediaItem[] = [
     description: 'Human rights violation case documentation',
     source: 'YouTube',
     date: '2024',
-    thumbnail: '/lovable-uploads/00794513-1237-4309-b855-598e2c8c5109.png'
+    thumbnail: '/uploads/00794513-1237-4309-b855-598e2c8c5109.png'
   },
   {
     id: '2',
@@ -89,7 +89,7 @@ const mediaItems: MediaItem[] = [
     description: 'Professional updates and legal insights',
     source: 'Twitter/X',
     date: '2024',
-    thumbnail: '/lovable-uploads/7ac751ff-dfac-4f6b-9e97-e9e8eb7fe3b8.png'
+    thumbnail: '/uploads/7ac751ff-dfac-4f6b-9e97-e9e8eb7fe3b8.png'
   }
 ];
 

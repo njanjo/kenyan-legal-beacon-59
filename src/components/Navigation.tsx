@@ -31,7 +31,7 @@ const Navigation = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <img
-              src="/lovable-uploads/7ac751ff-dfac-4f6b-9e97-e9e8eb7fe3b8.png"
+              src="/uploads/7ac751ff-dfac-4f6b-9e97-e9e8eb7fe3b8.png"
               alt="Mwaura Muroki Associates Logo"
               className="w-9 h-9 object-contain"
             />
