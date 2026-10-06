@@ -1,10 +1,26 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Scale, FileText, Shield, Users, Building, Heart, Phone, MessageCircle, Award, Gavel, Briefcase } from "lucide-react";
+import { Scale, FileText, Shield, Users, Building, Heart, Phone, MessageCircle, Award, Gavel, Briefcase, Landmark } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import DownloadsSection from "@/components/DownloadsSection";
 import PartnersSection from "@/components/PartnersSection";
+
+/** Decorative fluted columns motif (courthouse portico) — watermarked, legal-themed. */
+const ColumnsMotif = ({ className = "" }: { className?: string }) => (
+  <svg viewBox="0 0 320 400" fill="none" aria-hidden="true" className={className}>
+    {[40, 120, 200].map((x) => (
+      <g key={x} stroke="currentColor" strokeWidth="1.2">
+        <rect x={x - 5} y={24} width="34" height="12" rx="3" />
+        <rect x={x} y={40} width="24" height="340" rx="3" />
+        <line x1={x + 6} y1={40} x2={x + 6} y2={380} />
+        <line x1={x + 12} y1={40} x2={x + 12} y2={380} />
+        <line x1={x + 18} y1={40} x2={x + 18} y2={380} />
+        <rect x={x - 5} y={384} width="34" height="12" rx="3" />
+      </g>
+    ))}
+  </svg>
+);
 
 const Index = () => {
   // Legal services data with improved structure
@@ -105,46 +121,102 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section — two-column editorial layout with arch-framed attorney portrait */}
-      <section className="relative isolate overflow-hidden bg-gradient-to-br from-navy-950 via-navy-900 to-navy-950 dark:from-navy-950 dark:via-navy-950 dark:to-navy-900 text-white">
-        {/* Decorative glows + fine grid texture */}
-        <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_12%,rgba(245,158,11,0.12),transparent_42%),radial-gradient(circle_at_8%_88%,rgba(37,71,184,0.35),transparent_50%)]" />
+      {/* Hero Section — full-bleed navy canvas, portrait blended left, legal motif backdrop */}
+      <section className="relative isolate min-h-[94vh] overflow-hidden bg-gradient-to-br from-navy-950 via-navy-900 to-navy-950 dark:from-navy-950 dark:via-navy-950 dark:to-navy-900 text-white">
+        {/* Atmosphere: soft gold + court-blue glows */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)",
-            backgroundSize: "56px 56px",
-            maskImage: "radial-gradient(ellipse 80% 60% at 50% 40%, black, transparent)",
-            WebkitMaskImage: "radial-gradient(ellipse 80% 60% at 50% 40%, black, transparent)",
-          }}
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_10%,rgba(245,158,11,0.12),transparent_42%),radial-gradient(circle_at_45%_108%,rgba(37,71,184,0.38),transparent_55%)]"
         />
 
-        <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 px-6 py-16 sm:py-20 lg:grid-cols-[1.12fr_1fr] lg:gap-8 lg:py-24">
-          {/* Left: message */}
+        {/* Legal motif watermarks (no gridlines) */}
+        <Scale
+          aria-hidden
+          strokeWidth={0.8}
+          size={620}
+          className="pointer-events-none absolute -right-40 top-1/2 -translate-y-1/2 rotate-12 text-gold-300 opacity-[0.05]"
+        />
+        <Gavel
+          aria-hidden
+          strokeWidth={0.9}
+          size={300}
+          className="pointer-events-none absolute -bottom-16 right-24 text-gold-300 opacity-[0.05]"
+        />
+        <ColumnsMotif className="pointer-events-none absolute -right-2 top-1/2 h-[86vh] w-auto -translate-y-1/2 text-blue-200 opacity-[0.06]" />
+        <Landmark
+          aria-hidden
+          strokeWidth={1}
+          size={360}
+          className="pointer-events-none absolute -left-40 top-16 text-blue-200 opacity-[0.05]"
+        />
+
+        {/* Edge vignette so the photograph melts into the scene */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(4,9,26,0.55)_100%)]"
+        />
+
+        <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 px-6 py-16 sm:py-20 lg:grid-cols-[1fr_1.05fr] lg:gap-16 lg:py-28">
+          {/* Left: the portrait — frameless, blending into the canvas */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.1 }}
+            className="relative order-2 justify-self-center lg:order-1 lg:justify-self-end lg:-mr-8"
+          >
+            {/* pooled light behind the subject */}
+            <div
+              aria-hidden
+              className="absolute left-1/2 top-1/3 h-[115%] w-[115%] -translate-x-1/2 rounded-full bg-gold-400/10 blur-3xl"
+            />
+            <div
+              aria-hidden
+              className="absolute left-1/2 top-1/2 h-[95%] w-[95%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/15 blur-3xl"
+            />
+
+            <img
+              src="/uploads/attorney-cutout.png"
+              alt="Francis Mwaura Muroki, Principal Advocate"
+              width={900}
+              height={1357}
+              loading="lazy"
+              decoding="async"
+              className="relative mx-auto block aspect-[900/1357] w-full max-w-[26rem] object-cover object-top saturate-[0.9] brightness-[0.97] contrast-[0.97]"
+            />
+            {/* tone-matching wash so his palette sits inside the navy scene */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 mix-blend-soft-light bg-gradient-to-t from-navy-900/50 via-transparent to-navy-950/40"
+            />
+          </motion.div>
+
+          {/* Right: message */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="flex flex-col items-start text-left"
+            className="order-1 flex flex-col items-start text-left lg:order-2 lg:max-w-xl"
           >
             <span className="inline-flex items-center gap-2 rounded-full border border-gold-400/40 bg-gold-400/10 px-4 py-1.5 text-xs sm:text-sm font-semibold uppercase tracking-wider text-gold-300">
               <Scale className="h-4 w-4" />
               Licensed Advocates · Thika, Kenya · Est. 2022
             </span>
 
-            <h1 className="mt-6 font-display text-4xl leading-tight tracking-tight text-balance sm:text-5xl lg:text-6xl">
+            <h1 className="mt-7 font-display text-4xl leading-tight tracking-tight text-balance sm:text-5xl lg:mt-8 lg:text-6xl">
               Mwaura Muroki{" "}
               <span className="text-gold-400 italic">Associates &amp; Advocates</span>
             </h1>
 
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-blue-100 sm:text-xl">
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-blue-100 sm:text-xl">
               "To provide Timely and Affordable Legal Services" — professional legal
               representation with integrity, expertise, and dedication to justice.
             </p>
 
-            <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:items-center">
+            <p className="mt-7 font-display text-lg text-blue-100">
+              Francis Mwaura Muroki <span className="text-gold-300">· Principal Advocate</span>
+            </p>
+
+            <div className="mt-10 flex flex-col flex-wrap items-center gap-4 sm:flex-row sm:items-center sm:gap-3">
               <Button
                 asChild
                 size="lg"
@@ -166,7 +238,7 @@ const Index = () => {
             </div>
 
             {/* Trust indicator strip */}
-            <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 text-sm text-blue-100">
+            <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 text-sm text-blue-100">
               <div className="flex items-center gap-2.5">
                 <Briefcase className="h-5 w-5 text-gold-400" />
                 <span>
@@ -190,71 +262,14 @@ const Index = () => {
               </div>
             </div>
           </motion.div>
-
-          {/* Right: arch-framed attorney portrait with transparent background */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.15 }}
-            className="relative mx-auto w-full max-w-[26rem]"
-          >
-            {/* soft glow behind shoulders */}
-            <div
-              aria-hidden
-              className="absolute left-1/2 top-1/3 h-3/4 w-full -translate-x-1/2 rounded-full bg-gold-400/10 blur-3xl"
-            />
-            {/* decorative gold arc behind the arch */}
-            <div
-              aria-hidden
-              className="absolute -inset-3 rounded-t-full border border-gold-400/30"
-            />
-            {/* floor shadow under the portrait */}
-            <div
-              aria-hidden
-              className="absolute -bottom-8 left-1/2 h-10 w-3/4 -translate-x-1/2 rounded-[100%] bg-black/50 blur-2xl"
-            />
-
-            <div className="relative overflow-hidden rounded-t-full border-2 border-gold-400/50 bg-navy-900 shadow-[0_25px_80px_-20px_rgba(0,0,0,0.7)]">
-              <img
-                src="/uploads/attorney-cutout.png"
-                alt="Francis Mwaura Muroki, Principal Advocate"
-                width={900}
-                height={1357}
-                loading="lazy"
-                decoding="async"
-                className="aspect-[900/1357] w-full object-cover object-top"
-              />
-              {/* faint gold sheen on the arch face */}
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-gold-400/15 to-transparent"
-              />
-            </div>
-
-            {/* floating trust badges */}
-            <div className="absolute -left-3 top-[22%] flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold backdrop-blur-sm sm:-left-6 sm:px-4 sm:text-sm">
-              <Award className="h-4 w-4 text-gold-400" />
-              Member, Law Society of Kenya
-            </div>
-            <div className="absolute -right-3 top-[42%] flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold backdrop-blur-sm sm:-right-6 sm:px-4 sm:text-sm">
-              <Gavel className="h-4 w-4 text-gold-400" />
-              Advocate of the High Court
-            </div>
-
-            {/* name plaque */}
-            <div className="mt-4 text-center">
-              <p className="font-display text-xl font-semibold tracking-wide">
-                Francis Mwaura Muroki
-              </p>
-              <p className="text-sm uppercase tracking-widest text-gold-300">
-                Principal Advocate
-              </p>
-            </div>
-          </motion.div>
         </div>
 
-        {/* hairline divider into the next section */}
-        <div aria-hidden className="relative z-10 mx-auto h-px max-w-6xl bg-gradient-to-r from-transparent via-gold-400/40 to-transparent" />
+        {/* ornamental hairline divider into the next section */}
+        <div aria-hidden className="relative z-10 mx-auto flex max-w-6xl items-center gap-3 px-6">
+          <span className="h-px flex-1 bg-gradient-to-r from-transparent via-gold-400/50 to-gold-400/50" />
+          <span className="h-1.5 w-1.5 rotate-45 bg-gold-400/80" />
+          <span className="h-px flex-1 bg-gradient-to-l from-transparent via-gold-400/50 to-gold-400/50" />
+        </div>
       </section>
 
       {/* Brand Values Featured Quote Section */}

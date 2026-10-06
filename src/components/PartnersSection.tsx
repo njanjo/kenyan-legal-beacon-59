@@ -1,10 +1,12 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { Scale, Globe, BookOpen, Landmark, Users, Award, type LucideIcon } from "lucide-react";
+import { Scale, Globe, Gavel, Landmark, Users, HeartHandshake, type LucideIcon } from "lucide-react";
 import kenyaJudiciaryLogo from "@/assets/kenya-judiciary-logo.png";
 import ibaLogo from "@/assets/iba-logo.png";
 import lawSocietyKenyaLogo from "@/assets/law-society-kenya-logo.png";
 import eastAfricaLawSocietyLogo from "@/assets/east-africa-law-society-logo.png";
+import paralegalSocietyKenyaLogo from "@/assets/paralegal-society-kenya-logo.png";
+import kituoChaSheriaLogo from "@/assets/kituo-cha-sheria-logo.png";
 
 interface Partner {
   name: string;
@@ -31,7 +33,7 @@ const PartnersSection = () => {
       name: "International Bar Association",
       description: "Global legal community",
       image: ibaLogo,
-      icon: BookOpen
+      icon: Gavel
     },
     {
       name: "Kenya Judiciary",
@@ -42,12 +44,14 @@ const PartnersSection = () => {
     {
       name: "Paralegal Society of Kenya",
       description: "Young Male Lawyer of the Year 2024",
+      image: paralegalSocietyKenyaLogo,
       icon: Users
     },
     {
       name: "Kituo Cha Sheria",
       description: "Legal aid and advocacy partner",
-      icon: Award
+      image: kituoChaSheriaLogo,
+      icon: HeartHandshake
     }
   ];
 
