@@ -1,105 +1,81 @@
+# kenyan-legal-beacon-api
 
-# Mwaura Muroki Associates & Advocates - Backend API
+Standalone contact-form API with file uploads for the Kenyan legal website.
 
-A Node.js/Express backend API for handling contact form submissions and sending professional email notifications via Nodemailer.
+- **Runtime:** Node.js ≥ 18 (ESM, TypeScript)
+- **Bind:** `127.0.0.1:4000` only — reachable exclusively through nginx, never exposed publicly
+- **Uploads:** memory storage only (nothing is written to disk)
 
-## Features
+## Endpoints
 
-- ✅ Contact form API endpoint (`POST /api/contact`)
-- ✅ Email notifications to advocate
-- ✅ Confirmation emails to clients
-- ✅ Input validation and error handling
-- ✅ CORS support for frontend integration
-- ✅ Environment variable management
-
-## Setup Instructions
-
-### 1. Install Dependencies
-```bash
-cd server
-npm install
-```
-
-### 2. Configure Environment Variables
-1. Copy `.env.example` to `.env`
-2. Update the following variables in `.env`:
-
-```env
-EMAIL_USER=mwauramurokiadvocates@gmail.com
-EMAIL_PASS=your-gmail-app-password
-TO_EMAIL=mwauramurokiadvocates@gmail.com
-```
-
-### 3. Gmail App Password Setup
-To use Gmail SMTP, you need to generate an App Password:
-
-1. Enable 2-Factor Authentication on your Gmail account
-2. Go to [Google Account Settings](https://myaccount.google.com/)
-3. Navigate to Security > 2-Step Verification
-4. Scroll down and click "App passwords"
-5. Generate a new app password for "Mail"
-6. Use the 16-character password in your `.env` file
-
-### 4. Run the Server
-
-**Development:**
-```bash
-npm run dev
-```
-
-**Production:**
-```bash
-npm start
-```
-
-The server will run on `http://localhost:5000`
-
-## API Endpoints
+| Method | Path            | Purpose                                  |
+| ------ | --------------- | ---------------------------------------- |
+| GET    | `/api/health`   | Liveness check (no rate limit)           |
+| POST   | `/api/contact`  | Submit a contact form (+ attachments)    |
 
 ### POST /api/contact
-Handles contact form submissions.
 
-**Request Body:**
-```json
-{
-  "name": "John Doe",
-  "email": "john@example.com",
-  "phone": "0123456789",
-  "message": "I need legal consultation."
-}
+`multipart/form-data` fields:
+
+| Field           | Required | Notes                                        |
+| --------------- | -------- | -------------------------------------------- |
+| `name`          | yes      | 2–120 chars                                  |
+| `email`         | yes      | valid email, ≤ 254 chars                     |
+| `phone`         | no       |                                                |
+| `subject`       | no       | ≤ 200 chars                                  |
+| `message`       | yes      | ≤ 8000 chars                                 |
+| `honeypot`      | no       | anti-spam trap — must stay empty             |
+| `turnstileToken`| no       | Cloudflare Turnstile token                   |
+| `files`         | no       | ≤ 5 files; PDF, DOC, DOCX, JPG, PNG; 10 MB total |
+
+**Files are validated three ways:** extension, declared MIME (advisory), and magic bytes (`%PDF`, OLE2, ZIP, JPEG, PNG headers). Content that does not match its extension is rejected.
+
+**Responses**
+
+- `200 { success: true }` — email queued/sent, **or** fake success for bots (honeypot tripped or Turnstile failed)
+- `400 { error }` — validation failed (fields or files)
+- `413 { error }` — upload exceeds the 10 MB total cap
+- `429 { error }` — rate limited (5 submissions per IP per 15 minutes)
+- `500 { error }` — SMTP failure or unexpected error
+
+**Security defaults**
+
+- `helmet` headers, `x-powered-by` disabled
+- `app.set('trust proxy', 1)` so rate limiting sees the real client IP behind nginx
+- All user input HTML-escaped in emails; control characters stripped
+- Message text and file names/contents are never logged
+- Turnstile secret and tokens are never logged
+
+## Environment variables
+
+Copy `.env.example` to `.env` and fill in:
+
+| Variable                | Default | Notes                                          |
+| ----------------------- | ------- | ---------------------------------------------- |
+| `PORT`                  | `4000`  | Bound to 127.0.0.1                             |
+| `SMTP_HOST`             | —       | SMTP server                                     |
+| `SMTP_PORT`             | `587`   | `465` enables implicit TLS                      |
+| `SMTP_USER`             | —       | SMTP username                                   |
+| `SMTP_PASS`             | —       | SMTP password / app token                       |
+| `CONTACT_TO_EMAIL`      | —       | Inbox receiving form notifications              |
+| `CONTACT_FROM_EMAIL`    | —       | From-address for notifications and auto-replies |
+| `TURNSTILE_SECRET_KEY`  | —       | Cloudflare Turnstile secret (empty = off, dev)  |
+| `MAX_TOTAL_UPLOAD_MB`   | `10`    | Combined upload cap                             |
+
+> SMTP is validated lazily: the API boots without it and only fails when a send is attempted.
+
+## Development
+
+```sh
+npm install
+npm run dev        # tsx watch src/index.ts — reloads on save
 ```
 
-**Success Response (200):**
-```json
-{
-  "success": true,
-  "message": "Email sent successfully!"
-}
+## Production
+
+```sh
+npm run build      # tsc → dist/
+npm start          # node dist/index.js
 ```
 
-**Error Responses:**
-- `400`: Missing required fields
-- `500`: Server/email sending error
-
-### GET /health
-Health check endpoint to verify server status.
-
-## Email Templates
-
-The backend sends two emails:
-1. **To Advocate**: Contains client details and message
-2. **To Client**: Confirmation email with next steps
-
-## Production Deployment
-
-1. Update `FRONTEND_URL` in `.env` to your production domain
-2. Ensure all environment variables are set on your hosting platform
-3. Update CORS origins if needed
-4. Deploy to your preferred hosting service (Heroku, DigitalOcean, etc.)
-
-## Security Notes
-
-- Never commit `.env` files to version control
-- Use strong app passwords for email authentication
-- Configure CORS properly for production
-- Consider rate limiting for the contact endpoint in production
+The root `deploy/deploy.sh` script (see the repo README) builds and restarts the API via PM2.

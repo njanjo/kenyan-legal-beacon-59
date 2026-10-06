@@ -1,23 +1,91 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Phone, Mail, MapPin, Clock, MessageCircle, CheckCircle, AlertCircle, Facebook, Instagram, Linkedin, Twitter, Navigation } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, MessageCircle, CheckCircle, AlertCircle, Facebook, Instagram, Linkedin, Twitter, Navigation, Paperclip, FileText, X, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (
+        el: HTMLElement,
+        options: {
+          sitekey: string;
+          callback: (token: string) => void;
+          "expired-callback"?: () => void;
+          "error-callback"?: () => void;
+          theme?: string;
+        }
+      ) => string;
+      reset: (id: string) => void;
+      remove: (id: string) => void;
+    };
+  }
+}
+
+const CONTACT_API_ENDPOINT = "/api/contact";
+const MAX_FILE_COUNT = 5;
+const MAX_TOTAL_FILE_BYTES = 10 * 1024 * 1024;
+const ALLOWED_FILE_EXTENSIONS = new Set(["pdf", "doc", "docx", "jpg", "jpeg", "png"]);
+const TURNSTILE_SCRIPT_ID = "cf-turnstile-script";
+const TURNSTILE_SCRIPT_URL = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+const TURNSTILE_SITE_KEY: string | undefined = import.meta.env
+  .VITE_TURNSTILE_SITE_KEY as string | undefined;
+
+const emptyFormData = {
+  name: "",
+  email: "",
+  phone: "",
+  subject: "",
+  message: "",
+};
+
+interface AttachedFile {
+  id: string;
+  name: string;
+  size: number;
+  type: string;
+  file: File;
+}
+
+const createFileId = (): string =>
+  typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
+    ? crypto.randomUUID()
+    : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+const formatFileSize = (bytes: number): string => {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+};
+
+const getFileExtension = (name: string): string => {
+  const index = name.lastIndexOf(".");
+  return index === -1 ? "" : name.slice(index + 1).toLowerCase();
+};
+
+const extractApiErrorMessage = (data: unknown): string | null => {
+  if (typeof data !== "object" || data === null) return null;
+  const error = (data as { error?: unknown }).error;
+  return typeof error === "string" && error.length > 0 ? error : null;
+};
+
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: ""
-  });
+  const [formData, setFormData] = useState(emptyFormData);
+  const [honeypot, setHoneypot] = useState("");
+  const [files, setFiles] = useState<AttachedFile[]>([]);
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success'>('idle');
   const { toast } = useToast();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const turnstileContainerRef = useRef<HTMLDivElement>(null);
+  const turnstileWidgetIdRef = useRef<string | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -30,23 +98,183 @@ const Contact = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (!TURNSTILE_SITE_KEY || !turnstileContainerRef.current) return;
+
+    const renderWidget = () => {
+      if (
+        turnstileWidgetIdRef.current !== null ||
+        !window.turnstile ||
+        !turnstileContainerRef.current
+      ) {
+        return;
+      }
+      turnstileWidgetIdRef.current = window.turnstile.render(turnstileContainerRef.current, {
+        sitekey: TURNSTILE_SITE_KEY,
+        callback: (token) => setTurnstileToken(token),
+        "expired-callback": () => setTurnstileToken(""),
+        theme: "auto",
+      });
+    };
+
+    const existingScript = document.getElementById(TURNSTILE_SCRIPT_ID);
+    if (existingScript) {
+      if (window.turnstile) {
+        renderWidget();
+      } else {
+        existingScript.addEventListener("load", renderWidget);
+      }
+    } else {
+      const script = document.createElement("script");
+      script.id = TURNSTILE_SCRIPT_ID;
+      script.src = TURNSTILE_SCRIPT_URL;
+      script.async = true;
+      script.onload = renderWidget;
+      document.head.appendChild(script);
+    }
+
+    return () => {
+      const widgetId = turnstileWidgetIdRef.current;
+      if (widgetId !== null) {
+        window.turnstile?.remove(widgetId);
+        turnstileWidgetIdRef.current = null;
+      }
+    };
+  }, []);
+
+  const handleFilesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selected = Array.from(e.target.files ?? []);
+    e.target.value = "";
+    if (selected.length === 0) return;
+
+    const knownNames = new Set(files.map((f) => f.name));
+    const additions: AttachedFile[] = [];
+    let totalCount = files.length;
+    let totalBytes = files.reduce((sum, f) => sum + f.size, 0);
+
+    for (const file of selected) {
+      const extension = getFileExtension(file.name);
+
+      if (!ALLOWED_FILE_EXTENSIONS.has(extension)) {
+        toast({
+          title: "Unsupported file type",
+          description: `"${file.name}" is not allowed. Accepted formats: PDF, DOC, DOCX, JPG, PNG.`,
+          variant: "destructive",
+        });
+        continue;
+      }
+
+      if (knownNames.has(file.name)) {
+        toast({
+          title: "Duplicate file",
+          description: `"${file.name}" is already attached.`,
+          variant: "destructive",
+        });
+        continue;
+      }
+
+      if (totalCount >= MAX_FILE_COUNT) {
+        toast({
+          title: "File limit reached",
+          description: `You can attach up to ${MAX_FILE_COUNT} files.`,
+          variant: "destructive",
+        });
+        break;
+      }
+
+      if (totalBytes + file.size > MAX_TOTAL_FILE_BYTES) {
+        toast({
+          title: "Attachments too large",
+          description: `"${file.name}" would exceed the ${formatFileSize(MAX_TOTAL_FILE_BYTES)} total limit.`,
+          variant: "destructive",
+        });
+        continue;
+      }
+
+      knownNames.add(file.name);
+      totalCount += 1;
+      totalBytes += file.size;
+      additions.push({
+        id: createFileId(),
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        file,
+      });
+    }
+
+    if (additions.length > 0) {
+      setFiles((prev) => [...prev, ...additions]);
+    }
+  };
+
+  const removeFile = (id: string) => {
+    setFiles((prev) => prev.filter((f) => f.id !== id));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitting(true);
 
-    const subject = encodeURIComponent(`Consultation request from ${formData.name}`);
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone || "Not provided"}\n\nMessage:\n${formData.message}`
-    );
-    const mailtoUrl = `mailto:mwauramurokiadvocates@gmail.com?subject=${subject}&body=${body}`;
-
-    window.location.href = mailtoUrl;
-
-    setSubmitStatus('success');
-    setFormData({ name: "", email: "", phone: "", message: "" });
-    toast({
-      title: "Opening your email client…",
-      description: "Your message has been prepared. We'll respond within 24 hours.",
+    const body = new FormData();
+    body.append("name", formData.name.trim());
+    body.append("email", formData.email.trim());
+    body.append("phone", formData.phone.trim());
+    body.append("subject", formData.subject.trim());
+    body.append("message", formData.message.trim());
+    body.append("honeypot", honeypot);
+    if (turnstileToken) {
+      body.append("turnstileToken", turnstileToken);
+    }
+    files.forEach(({ file }) => {
+      body.append("files", file, file.name);
     });
+
+    try {
+      const response = await fetch(CONTACT_API_ENDPOINT, { method: "POST", body });
+      const data: unknown = await response.json().catch(() => null);
+
+      if (response.ok) {
+        toast({
+          title: "Message sent successfully!",
+          description: "We'll respond within 24 hours.",
+        });
+        setFormData(emptyFormData);
+        setHoneypot("");
+        setFiles([]);
+        setTurnstileToken("");
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
+        if (turnstileWidgetIdRef.current !== null) {
+          window.turnstile?.reset(turnstileWidgetIdRef.current);
+        }
+        setSubmitStatus("success");
+        return;
+      }
+
+      const serverMessage = extractApiErrorMessage(data);
+      const fallbackMessage =
+        response.status === 429
+          ? "Too many submissions. Please try again later."
+          : response.status === 413
+            ? "Files are too large. Keep attachments under 10 MB."
+            : "Failed to send your message. Please try again.";
+
+      toast({
+        title: "Failed to send message",
+        description: serverMessage ?? fallbackMessage,
+        variant: "destructive",
+      });
+    } catch {
+      toast({
+        title: "Failed to send message",
+        description: "We couldn't reach the server. Please check your connection and try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -89,7 +317,7 @@ const Contact = () => {
                     <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg flex items-start gap-3">
                       <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0" aria-hidden />
                       <p className="text-green-800 dark:text-green-200 font-medium">
-                        Your email client should now open with your message ready to send. We'll respond within 24 hours.
+                        Your message has been sent successfully. We'll respond within 24 hours.
                       </p>
                     </div>
                   )}
@@ -135,6 +363,18 @@ const Contact = () => {
                   </div>
 
                   <div>
+                    <Label htmlFor="subject">Subject</Label>
+                    <Input
+                      id="subject"
+                      name="subject"
+                      type="text"
+                      value={formData.subject}
+                      onChange={handleInputChange}
+                      placeholder="What is this regarding? (optional)"
+                    />
+                  </div>
+
+                  <div>
                     <Label htmlFor="message">Message *</Label>
                     <Textarea
                       id="message"
@@ -147,8 +387,87 @@ const Contact = () => {
                     />
                   </div>
 
-                  <Button type="submit" size="lg" className="w-full btn-glow">
-                    Send Message
+                  <Input
+                    name="honeypot"
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                    className="sr-only"
+                  />
+
+                  <div>
+                    <Label htmlFor="contact-files">Attachments</Label>
+                    <input
+                      id="contact-files"
+                      ref={fileInputRef}
+                      type="file"
+                      multiple
+                      accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                      className="sr-only"
+                      onChange={handleFilesChange}
+                      disabled={submitting}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={submitting}
+                    >
+                      <Paperclip className="w-4 h-4" />
+                      Attach documents (optional)
+                    </Button>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      Up to {MAX_FILE_COUNT} files, {formatFileSize(MAX_TOTAL_FILE_BYTES)} total — PDF, DOC, DOCX, JPG, PNG
+                    </p>
+                    <div aria-live="polite" className="mt-3">
+                      {files.length > 0 && (
+                        <ul className="space-y-2">
+                          {files.map((attached) => (
+                            <li
+                              key={attached.id}
+                              className="flex items-center gap-2 rounded-md border border-input bg-background px-3 py-2 text-sm"
+                            >
+                              <FileText className="w-4 h-4 text-muted-foreground flex-shrink-0" aria-hidden />
+                              <span className="flex-1 truncate text-muted-foreground">{attached.name}</span>
+                              <span className="text-xs text-muted-foreground flex-shrink-0">
+                                {formatFileSize(attached.size)}
+                              </span>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon"
+                                aria-label="Remove file"
+                                disabled={submitting}
+                                onClick={() => removeFile(attached.id)}
+                              >
+                                <X className="w-4 h-4" />
+                              </Button>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </div>
+
+                  {TURNSTILE_SITE_KEY && (
+                    <div>
+                      <Label className="text-sm text-muted-foreground">Security check</Label>
+                      <div ref={turnstileContainerRef} className="mt-2" />
+                    </div>
+                  )}
+
+                  <Button type="submit" size="lg" className="w-full btn-glow" disabled={submitting}>
+                    {submitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      "Send Message"
+                    )}
                   </Button>
 
                   <p className="text-center text-sm text-muted-foreground">
