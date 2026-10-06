@@ -4,21 +4,21 @@ import { Link } from "react-router-dom";
 
 const CookiePolicy = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-blue-950 dark:to-indigo-950">
+    <div className="min-h-screen bg-gradient-to-br from-navy-50 to-navy-100 dark:from-navy-950 dark:to-navy-950">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6 mb-6">
+          <div className="bg-white dark:bg-navy-900 rounded-lg shadow-lg p-6 mb-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-3">
-                <Cookie className="w-8 h-8 text-orange-600" />
+                <Cookie className="w-8 h-8 text-navy-700" />
                 <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
                   Cookie Policy
                 </h1>
               </div>
               <Link 
                 to="/" 
-                className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 transition-colors"
+                className="flex items-center space-x-2 text-navy-700 hover:text-navy-900 dark:text-gold-400 dark:hover:text-gold-300 transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Back to Home</span>
@@ -30,7 +30,7 @@ const CookiePolicy = () => {
           </div>
 
           {/* Content */}
-          <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-8 space-y-8">
+          <div className="bg-white dark:bg-navy-900 rounded-lg shadow-lg p-8 space-y-8">
             <section>
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
                 1. What Are Cookies?
@@ -45,7 +45,7 @@ const CookiePolicy = () => {
                 2. Types of Cookies We Use
               </h2>
               <div className="space-y-6">
-                <div className="border-l-4 border-green-500 pl-6">
+                <div className="border-l-4 border-gold-500 pl-6">
                   <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
                     Necessary Cookies
                   </h3>
@@ -59,7 +59,7 @@ const CookiePolicy = () => {
                   </ul>
                 </div>
 
-                <div className="border-l-4 border-blue-500 pl-6">
+                <div className="border-l-4 border-gold-500 pl-6">
                   <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
                     Functional Cookies
                   </h3>
@@ -74,7 +74,7 @@ const CookiePolicy = () => {
                   </ul>
                 </div>
 
-                <div className="border-l-4 border-purple-500 pl-6">
+                <div className="border-l-4 border-gold-500 pl-6">
                   <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
                     Analytics Cookies
                   </h3>
@@ -96,7 +96,7 @@ const CookiePolicy = () => {
               </h2>
               <div className="overflow-x-auto">
                 <table className="w-full border-collapse border border-gray-300 dark:border-gray-600">
-                  <thead className="bg-gray-50 dark:bg-gray-800">
+                  <thead className="bg-navy-50 dark:bg-navy-800">
                     <tr>
                       <th className="border border-gray-300 dark:border-gray-600 p-3 text-left text-gray-900 dark:text-white">Cookie Type</th>
                       <th className="border border-gray-300 dark:border-gray-600 p-3 text-left text-gray-900 dark:text-white">Duration</th>
@@ -133,21 +133,21 @@ const CookiePolicy = () => {
                   You have several options for managing cookies:
                 </p>
                 
-                <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg">
-                  <h3 className="text-lg font-medium text-blue-800 dark:text-blue-200 mb-3">
+                <div className="bg-navy-50 dark:bg-navy-800/40 p-6 rounded-lg">
+                  <h3 className="text-lg font-medium text-navy-700 dark:text-gold-300 mb-3">
                     Website Cookie Settings
                   </h3>
-                  <p className="text-blue-700 dark:text-blue-300 mb-3">
+                  <p className="text-slate-700 dark:text-slate-300 mb-3">
                     Use our cookie consent banner to manage your preferences:
                   </p>
-                  <div className="space-y-2 text-blue-600 dark:text-blue-400 text-sm">
+                  <div className="space-y-2 text-slate-600 dark:text-slate-400 text-sm">
                     <p>• <strong>Accept All:</strong> Allow all cookies</p>
                     <p>• <strong>Reject Non-Essential:</strong> Only necessary cookies</p>
                     <p>• <strong>Customize:</strong> Choose specific cookie types</p>
                   </div>
                 </div>
 
-                <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg">
+                <div className="bg-navy-50 dark:bg-navy-800/40 p-6 rounded-lg">
                   <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
                     Browser Settings
                   </h3>
@@ -177,9 +177,14 @@ const CookiePolicy = () => {
                   <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
                     Helps us understand website usage and improve user experience.
                   </p>
-                  <Link to="#" className="text-blue-600 hover:text-blue-800 text-sm">
+                  <a
+                    href="https://policies.google.com/privacy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-navy-700 hover:text-navy-900 dark:text-gold-400 dark:hover:text-gold-300 text-sm"
+                  >
                     Google Privacy Policy →
-                  </Link>
+                  </a>
                 </div>
                 
                 <div className="border border-gray-200 dark:border-gray-700 p-4 rounded-lg">
@@ -195,11 +200,11 @@ const CookiePolicy = () => {
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
                 6. Your Rights and Choices
               </h2>
-              <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-lg">
-                <p className="text-green-800 dark:text-green-200 leading-relaxed mb-4">
+              <div className="bg-navy-50 dark:bg-navy-800/40 p-6 rounded-lg">
+                <p className="text-navy-700 dark:text-gold-300 leading-relaxed mb-4">
                   Under Kenyan data protection laws, you have the right to:
                 </p>
-                <ul className="list-disc list-inside text-green-700 dark:text-green-300 space-y-2">
+                <ul className="list-disc list-inside text-slate-700 dark:text-slate-300 space-y-2">
                   <li>Know what cookies are being used</li>
                   <li>Withdraw consent at any time</li>
                   <li>Access information about cookie usage</li>
@@ -221,11 +226,11 @@ const CookiePolicy = () => {
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
                 8. Contact Us
               </h2>
-              <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg">
-                <p className="text-blue-800 dark:text-blue-200 mb-4">
+              <div className="bg-navy-50 dark:bg-navy-800/40 p-6 rounded-lg">
+                <p className="text-navy-700 dark:text-gold-300 mb-4">
                   For questions about our use of cookies:
                 </p>
-                <div className="space-y-2 text-blue-700 dark:text-blue-300">
+                <div className="space-y-2 text-slate-700 dark:text-slate-300">
                   <p><strong>Email:</strong> mwauramurokiadvocates@gmail.com</p>
                   <p><strong>Phone:</strong> +254 704 780 934</p>
                   <p><strong>Address:</strong> Thika, Kenya</p>
@@ -235,7 +240,7 @@ const CookiePolicy = () => {
 
             <div className="border-t pt-6 mt-8">
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                Last updated: {new Date().toLocaleDateString()} | This policy explains our use of cookies and similar technologies.
+                Last updated: October 2026 | This policy explains our use of cookies and similar technologies.
               </p>
             </div>
           </div>

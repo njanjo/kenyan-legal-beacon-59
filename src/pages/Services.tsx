@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Gavel, FileText, Shield, Heart, Users, Brain, Briefcase, Phone } from "lucide-react";
@@ -72,7 +71,7 @@ const Services = () => {
       ]
     },
     {
-      icon: FileText,
+      icon: Briefcase,
       title: "Legal Research",
       description: "Comprehensive legal research and case preparation services",
       details: [
@@ -102,11 +101,11 @@ const Services = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-900 to-blue-700 dark:from-blue-950 dark:to-blue-800 text-white py-16">
+      <section className="bg-gradient-to-r from-navy-900 to-navy-700 dark:from-navy-950 dark:to-navy-700 text-white py-16">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold mb-4">Our Legal Services</h1>
-          <p className="text-xl max-w-2xl mx-auto">
-            Comprehensive legal solutions from Mwaura Muroki Associates & Advocates, 
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">Our Legal Services</h1>
+          <p className="text-lg sm:text-xl max-w-2xl mx-auto text-blue-100">
+            Comprehensive legal solutions from Mwaura Muroki Associates &amp; Advocates, 
             tailored to meet your specific needs with professional excellence
           </p>
         </div>
@@ -116,51 +115,61 @@ const Services = () => {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-8">
-            {services.map((service, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="flex items-center gap-4 mb-4">
-                    <service.icon className="w-12 h-12 text-blue-600" />
-                    <div>
-                      <CardTitle className="text-2xl">{service.title}</CardTitle>
-                      <CardDescription className="text-lg">{service.description}</CardDescription>
+            {services.map((service, index) => {
+              const isLast = index === services.length - 1;
+              return (
+                <Card
+                  key={index}
+                  className={`transition-all duration-300 hover:border-blue-700/40 hover:shadow-xl hover:shadow-blue-700/10 dark:hover:border-gold-400/40 ${
+                    isLast ? "lg:col-span-2" : ""
+                  }`}
+                >
+                  <CardHeader>
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-lg bg-blue-700/10 dark:bg-gold-400/10">
+                        <service.icon className="w-7 h-7 text-blue-700 dark:text-gold-400" />
+                      </div>
+                      <div>
+                        <CardTitle className="text-2xl">{service.title}</CardTitle>
+                        <CardDescription className="text-lg">{service.description}</CardDescription>
+                      </div>
                     </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {service.details.map((detail, detailIndex) => (
-                      <li key={detailIndex} className="flex items-start gap-2 text-muted-foreground">
-                        <span className="text-blue-600 mt-1">•</span>
-                        {detail}
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardHeader>
+                  <CardContent>
+                    <ul className={`gap-2 ${isLast ? "grid sm:grid-cols-3" : "space-y-2"}`}>
+                      {service.details.map((detail, detailIndex) => (
+                        <li key={detailIndex} className="flex items-start gap-2 text-muted-foreground">
+                          <span className="text-gold-500 mt-1">•</span>
+                          {detail}
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-muted/50">
+      <section className="py-16 bg-muted/40">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-6">Need Legal Assistance?</h2>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Don't navigate your legal challenges alone. Contact Mwaura Muroki Associates & Advocates 
+          <h2 className="text-3xl sm:text-4xl font-bold mb-6">Need Legal Assistance?</h2>
+          <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Don't navigate your legal challenges alone. Contact Mwaura Muroki Associates &amp; Advocates 
             today for expert legal guidance and professional representation.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700">
+            <Button asChild size="lg">
               <Link to="/contact">Book Consultation</Link>
             </Button>
             
             <Button asChild size="lg" variant="outline">
-              <a href="tel:0704780934" className="flex items-center gap-2">
+              <a href="tel:+254704780934" className="flex items-center gap-2">
                 <Phone className="w-5 h-5" />
-                Call: 0704780934
+                Call: +254 704 780 934
               </a>
             </Button>
           </div>

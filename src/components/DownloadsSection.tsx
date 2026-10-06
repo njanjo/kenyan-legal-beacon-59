@@ -60,11 +60,24 @@ type ConsultationFormData = z.infer<typeof consultationFormSchema>;
 type ClientInfoFormData = z.infer<typeof clientInfoSchema>;
 type PowerOfAttorneyFormData = z.infer<typeof powerOfAttorneySchema>;
 
+type DocumentItem = {
+  id: string;
+  title: string;
+  description: string;
+  size: string;
+  type: string;
+  category: string;
+  downloadOnly?: boolean;
+  filename: string;
+  gradient: string;
+  schema?: z.ZodType;
+};
+
 const DownloadsSection = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [activeForm, setActiveForm] = useState<string | null>(null);
 
-  const documents = [
+  const documents: DocumentItem[] = [
     {
       id: "constitution",
       title: "Constitution of Kenya 2010",
@@ -74,8 +87,7 @@ const DownloadsSection = () => {
       category: "constitutional",
       downloadOnly: true,
       filename: "Kenya-Constitution-2010",
-      gradient: "from-blue-500/20 to-cyan-500/20",
-      glowColor: "shadow-blue-500/20"
+      gradient: "from-navy-700/40 to-navy-800/40"
     },
     {
       id: "consultation",
@@ -86,8 +98,7 @@ const DownloadsSection = () => {
       category: "consultation",
       schema: consultationFormSchema,
       filename: "legal-consultation-form-template",
-      gradient: "from-green-500/20 to-emerald-500/20",
-      glowColor: "shadow-green-500/20"
+      gradient: "from-gold-500/20 to-gold-600/10"
     },
     {
       id: "clientinfo",
@@ -98,8 +109,7 @@ const DownloadsSection = () => {
       category: "client",
       schema: clientInfoSchema,
       filename: "client-information-sheet-template",
-      gradient: "from-purple-500/20 to-pink-500/20",
-      glowColor: "shadow-purple-500/20"
+      gradient: "from-navy-800/40 to-navy-700/40"
     },
     {
       id: "powerattorney",
@@ -110,12 +120,11 @@ const DownloadsSection = () => {
       category: "legal",
       schema: powerOfAttorneySchema,
       filename: "power-of-attorney-template",
-      gradient: "from-orange-500/20 to-red-500/20",
-      glowColor: "shadow-orange-500/20"
+      gradient: "from-gold-600/20 to-gold-500/10"
     }
   ];
 
-  const generatePDF = async (formData: any, documentType: string) => {
+  const generatePDF = async (formData: Record<string, unknown>, documentType: string) => {
     setIsGenerating(true);
     try {
       // Create a new PDF document
@@ -263,8 +272,24 @@ const DownloadsSection = () => {
       });
       
       // Add signature section
+      // Guard against overflow: if content reaches the footer area, continue
+      // signatures and the stamp on a new page instead of overlapping.
+      const footerBoundary = 150;
+      let contentPage = page;
+      if (yPosition < footerBoundary + 130) {
+        contentPage = pdfDoc.addPage([612, 792]);
+        const { height: newHeight } = contentPage.getSize();
+        contentPage.drawText(`${documentType.toUpperCase()} - Signatures`, {
+          x: 50,
+          y: newHeight - 60,
+          size: headerFontSize,
+          color: rgb(0.05, 0.15, 0.5),
+        });
+        yPosition = newHeight - 100;
+      }
+
       yPosition -= 30;
-      page.drawText('SIGNATURES:', {
+      contentPage.drawText('SIGNATURES:', {
         x: 50,
         y: yPosition,
         size: headerFontSize,
@@ -272,7 +297,7 @@ const DownloadsSection = () => {
       });
       
       yPosition -= 40;
-      page.drawText('Client Signature: ________________________    Date: ______________', {
+      contentPage.drawText('Client Signature: ________________________    Date: ______________', {
         x: 50,
         y: yPosition,
         size: fontSize,
@@ -280,7 +305,7 @@ const DownloadsSection = () => {
       });
       
       yPosition -= 30;
-      page.drawText('Witness Signature: _______________________    Date: ______________', {
+      contentPage.drawText('Witness Signature: _______________________    Date: ______________', {
         x: 50,
         y: yPosition,
         size: fontSize,
@@ -288,35 +313,35 @@ const DownloadsSection = () => {
       });
       
       // Professional footer with enhanced design
-      page.drawLine({
+      contentPage.drawLine({
         start: { x: 50, y: 100 },
         end: { x: width - 50, y: 100 },
         thickness: 1,
         color: rgb(0.7, 0.7, 0.7),
       });
       
-      page.drawText('IMPORTANT LEGAL NOTICE', {
+      contentPage.drawText('IMPORTANT LEGAL NOTICE', {
         x: 50,
         y: 85,
         size: 10,
         color: rgb(0.7, 0.2, 0.2),
       });
       
-      page.drawText('This document was generated electronically and requires proper signatures to be legally binding.', {
+      contentPage.drawText('This document was generated electronically and requires proper signatures to be legally binding.', {
         x: 50,
         y: 70,
         size: 8,
         color: rgb(0.5, 0.5, 0.5),
       });
       
-      page.drawText('For legal advice and consultation, please contact our office immediately.', {
+      contentPage.drawText('For legal advice and consultation, please contact our office immediately.', {
         x: 50,
         y: 55,
         size: 8,
         color: rgb(0.5, 0.5, 0.5),
       });
       
-      page.drawText('© 2024 Mwaura Muroki Associates & Advocates - All Rights Reserved', {
+      contentPage.drawText(`© ${new Date().getFullYear()} Mwaura Muroki Associates & Advocates - All Rights Reserved`, {
         x: 50,
         y: 30,
         size: 8,
@@ -324,7 +349,7 @@ const DownloadsSection = () => {
       });
       
       // Professional stamp placeholder
-      page.drawRectangle({
+      contentPage.drawRectangle({
         x: width - 150,
         y: 120,
         width: 100,
@@ -333,14 +358,14 @@ const DownloadsSection = () => {
         borderWidth: 1,
       });
       
-      page.drawText('OFFICIAL SEAL', {
+      contentPage.drawText('OFFICIAL SEAL', {
         x: width - 135,
         y: 155,
         size: 8,
         color: rgb(0.6, 0.6, 0.6),
       });
       
-      page.drawText('& SIGNATURE', {
+      contentPage.drawText('& SIGNATURE', {
         x: width - 135,
         y: 145,
         size: 8,
@@ -364,23 +389,28 @@ const DownloadsSection = () => {
     }
   };
 
-  const handleStaticDownload = (doc: any) => {
-    // For static documents like Constitution and templates
-    const link = document.createElement('a');
-    link.href = `/documents/${doc.filename}.pdf`;
-    link.download = `${doc.filename}.pdf`;
-    link.target = '_blank';
-    link.click();
-    toast.success("Document downloaded successfully!");
+  const handleStaticDownload = async (doc: DocumentItem) => {
+    try {
+      const response = await fetch(`/documents/${doc.filename}.pdf`);
+      if (!response.ok) {
+        throw new Error(`Download failed (${response.status})`);
+      }
+      const blob = await response.blob();
+      saveAs(blob, `${doc.filename}.pdf`);
+      toast.success("Document downloaded successfully!");
+    } catch (error) {
+      console.error('Error downloading document:', error);
+      toast.error("Download failed. Please try again later or request the document from our office.");
+    }
   };
 
-  const FormComponent = ({ document, onSubmit }: { document: any, onSubmit: (data: any) => void }) => {
-    const form = useForm<any>({
+  const FormComponent = ({ document, onSubmit }: { document: DocumentItem, onSubmit: (data: Record<string, unknown>) => void }) => {
+    const form = useForm<Record<string, unknown>>({
       resolver: zodResolver(document.schema),
       defaultValues: {},
     });
 
-    const handleSubmit = (data: any) => {
+    const handleSubmit = (data: Record<string, unknown>) => {
       onSubmit(data);
       form.reset();
       setActiveForm(null);
@@ -396,9 +426,9 @@ const DownloadsSection = () => {
                 name="fullName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Full Name</FormLabel>
+                    <FormLabel className="text-gold-300">Full Name</FormLabel>
                     <FormControl>
-                      <Input {...field} className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Input {...field} className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -409,9 +439,9 @@ const DownloadsSection = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Email</FormLabel>
+                    <FormLabel className="text-gold-300">Email</FormLabel>
                     <FormControl>
-                      <Input {...field} type="email" className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Input {...field} type="email" className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -422,9 +452,9 @@ const DownloadsSection = () => {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Phone Number</FormLabel>
+                    <FormLabel className="text-gold-300">Phone Number</FormLabel>
                     <FormControl>
-                      <Input {...field} className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Input {...field} className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -435,9 +465,9 @@ const DownloadsSection = () => {
                 name="legalMatter"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Legal Matter Description</FormLabel>
+                    <FormLabel className="text-gold-300">Legal Matter Description</FormLabel>
                     <FormControl>
-                      <Textarea {...field} className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Textarea {...field} className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -448,9 +478,9 @@ const DownloadsSection = () => {
                 name="preferredDate"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Preferred Consultation Date</FormLabel>
+                    <FormLabel className="text-gold-300">Preferred Consultation Date</FormLabel>
                     <FormControl>
-                      <Input {...field} type="date" className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Input {...field} type="date" className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -466,9 +496,9 @@ const DownloadsSection = () => {
                 name="fullName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Full Name</FormLabel>
+                    <FormLabel className="text-gold-300">Full Name</FormLabel>
                     <FormControl>
-                      <Input {...field} className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Input {...field} className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -479,9 +509,9 @@ const DownloadsSection = () => {
                 name="idNumber"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">ID Number</FormLabel>
+                    <FormLabel className="text-gold-300">ID Number</FormLabel>
                     <FormControl>
-                      <Input {...field} className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Input {...field} className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -492,9 +522,9 @@ const DownloadsSection = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Email</FormLabel>
+                    <FormLabel className="text-gold-300">Email</FormLabel>
                     <FormControl>
-                      <Input {...field} type="email" className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Input {...field} type="email" className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -505,9 +535,9 @@ const DownloadsSection = () => {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Phone Number</FormLabel>
+                    <FormLabel className="text-gold-300">Phone Number</FormLabel>
                     <FormControl>
-                      <Input {...field} className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Input {...field} className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -518,9 +548,9 @@ const DownloadsSection = () => {
                 name="address"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Address</FormLabel>
+                    <FormLabel className="text-gold-300">Address</FormLabel>
                     <FormControl>
-                      <Textarea {...field} className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Textarea {...field} className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -531,9 +561,9 @@ const DownloadsSection = () => {
                 name="occupation"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Occupation</FormLabel>
+                    <FormLabel className="text-gold-300">Occupation</FormLabel>
                     <FormControl>
-                      <Input {...field} className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Input {...field} className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -544,9 +574,9 @@ const DownloadsSection = () => {
                 name="employer"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Employer</FormLabel>
+                    <FormLabel className="text-gold-300">Employer</FormLabel>
                     <FormControl>
-                      <Input {...field} className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Input {...field} className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -557,9 +587,9 @@ const DownloadsSection = () => {
                 name="emergencyContactName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Emergency Contact Name</FormLabel>
+                    <FormLabel className="text-gold-300">Emergency Contact Name</FormLabel>
                     <FormControl>
-                      <Input {...field} className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Input {...field} className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -570,9 +600,9 @@ const DownloadsSection = () => {
                 name="emergencyContactPhone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Emergency Contact Phone</FormLabel>
+                    <FormLabel className="text-gold-300">Emergency Contact Phone</FormLabel>
                     <FormControl>
-                      <Input {...field} className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Input {...field} className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -583,9 +613,9 @@ const DownloadsSection = () => {
                 name="emergencyContactRelationship"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Relationship</FormLabel>
+                    <FormLabel className="text-gold-300">Relationship</FormLabel>
                     <FormControl>
-                      <Input {...field} className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Input {...field} className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -601,9 +631,9 @@ const DownloadsSection = () => {
                 name="principalName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Principal Name</FormLabel>
+                    <FormLabel className="text-gold-300">Principal Name</FormLabel>
                     <FormControl>
-                      <Input {...field} className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Input {...field} className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -614,9 +644,9 @@ const DownloadsSection = () => {
                 name="principalId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Principal ID Number</FormLabel>
+                    <FormLabel className="text-gold-300">Principal ID Number</FormLabel>
                     <FormControl>
-                      <Input {...field} className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Input {...field} className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -627,9 +657,9 @@ const DownloadsSection = () => {
                 name="principalAddress"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Principal Address</FormLabel>
+                    <FormLabel className="text-gold-300">Principal Address</FormLabel>
                     <FormControl>
-                      <Textarea {...field} className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Textarea {...field} className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -640,9 +670,9 @@ const DownloadsSection = () => {
                 name="agentName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Agent Name</FormLabel>
+                    <FormLabel className="text-gold-300">Agent Name</FormLabel>
                     <FormControl>
-                      <Input {...field} className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Input {...field} className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />  
                   </FormItem>
@@ -653,9 +683,9 @@ const DownloadsSection = () => {
                 name="agentId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Agent ID Number</FormLabel>
+                    <FormLabel className="text-gold-300">Agent ID Number</FormLabel>
                     <FormControl>
-                      <Input {...field} className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Input {...field} className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -666,9 +696,9 @@ const DownloadsSection = () => {
                 name="agentAddress"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Agent Address</FormLabel>
+                    <FormLabel className="text-gold-300">Agent Address</FormLabel>
                     <FormControl>
-                      <Textarea {...field} className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Textarea {...field} className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -679,9 +709,9 @@ const DownloadsSection = () => {
                 name="powers"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Powers Granted</FormLabel>
+                    <FormLabel className="text-gold-300">Powers Granted</FormLabel>
                     <FormControl>
-                      <Textarea {...field} className="bg-gray-800/50 border-cyan-500/30 text-white" placeholder="Describe the specific powers being granted to the agent..." />
+                      <Textarea {...field} className="bg-white/5 border-gold-500/30 text-white" placeholder="Describe the specific powers being granted to the agent..." />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -692,9 +722,9 @@ const DownloadsSection = () => {
                 name="startDate"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Start Date</FormLabel>
+                    <FormLabel className="text-gold-300">Start Date</FormLabel>
                     <FormControl>
-                      <Input {...field} type="date" className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Input {...field} type="date" className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -705,9 +735,9 @@ const DownloadsSection = () => {
                 name="endDate"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">End Date (Optional)</FormLabel>
+                    <FormLabel className="text-gold-300">End Date (Optional)</FormLabel>
                     <FormControl>
-                      <Input {...field} type="date" className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Input {...field} type="date" className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -718,9 +748,9 @@ const DownloadsSection = () => {
                 name="witnessName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Witness Name</FormLabel>
+                    <FormLabel className="text-gold-300">Witness Name</FormLabel>
                     <FormControl>
-                      <Input {...field} className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Input {...field} className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -731,9 +761,9 @@ const DownloadsSection = () => {
                 name="witnessId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-cyan-300">Witness ID Number</FormLabel>
+                    <FormLabel className="text-gold-300">Witness ID Number</FormLabel>
                     <FormControl>
-                      <Input {...field} className="bg-gray-800/50 border-cyan-500/30 text-white" />
+                      <Input {...field} className="bg-white/5 border-gold-500/30 text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -764,7 +794,7 @@ const DownloadsSection = () => {
             <Button
               type="submit"
               disabled={isGenerating}
-              className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white"
+              className="bg-gradient-to-r from-gold-500 to-blue-500 hover:from-gold-600 hover:to-blue-600 text-white"
             >
               {isGenerating ? (
                 <>
@@ -785,16 +815,16 @@ const DownloadsSection = () => {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-br from-gray-900 via-gray-900 to-black min-h-screen relative overflow-hidden">
-      {/* Futuristic background effects */}
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDAsIDI1NSwgMjU1LCAwLjEpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30"></div>
+    <section className="py-16 bg-gradient-to-br from-navy-950 via-navy-900 to-navy-950 min-h-screen relative overflow-hidden">
+      {/* Subtle grid background */}
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDI1NSwgMTkxLCAzNiwgMC4wOCkiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-30"></div>
       
       {/* Animated particles */}
       <div className="absolute inset-0">
         {[...Array(20)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-cyan-400 rounded-full animate-pulse"
+            className="absolute w-1 h-1 bg-gold-400 rounded-full animate-pulse"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -812,17 +842,17 @@ const DownloadsSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
+            <h2 className="text-4xl sm:text-5xl font-bold mb-6 bg-gradient-to-r from-gold-300 via-gold-400 to-gold-300 bg-clip-text text-transparent">
               Interactive Legal Forms
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              Experience the future of legal documentation with our AI-powered interactive forms. 
-              Fill, generate, and download professional PDFs instantly.
+            <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+              Access essential legal document templates and fillable forms. 
+              Complete them online and generate professional PDFs instantly.
             </p>
             <div className="flex items-center justify-center mt-4 gap-2">
-              <Sparkles className="w-5 h-5 text-cyan-400 animate-pulse" />
-              <span className="text-cyan-400 font-medium">Powered by Advanced PDF Technology</span>
-              <Sparkles className="w-5 h-5 text-cyan-400 animate-pulse" />
+              <Sparkles className="w-5 h-5 text-gold-400" />
+              <span className="text-gold-400 font-medium">Professional Document Technology</span>
+              <Sparkles className="w-5 h-5 text-gold-400" />
             </div>
           </motion.div>
         </div>
@@ -835,20 +865,20 @@ const DownloadsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="group"
+              className="group h-full"
             >
-              <Card className={`relative overflow-hidden transition-all duration-500 hover:scale-105 bg-gradient-to-br ${doc.gradient} backdrop-blur-sm border-gray-700/50 hover:border-cyan-500/50 hover:${doc.glowColor} group-hover:shadow-2xl`}>
+              <Card className={`relative h-full overflow-hidden transition-all duration-500 bg-gradient-to-br ${doc.gradient} backdrop-blur-sm border-gray-700/50 hover:border-gold-500/50 group-hover:shadow-2xl`}>
                 {/* Glow effect on hover */}
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-gold-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 
                 <CardHeader className="relative z-10">
                   <div className="flex items-center justify-between mb-4">
-                    <FileText className="w-12 h-12 text-cyan-400 group-hover:text-cyan-300 transition-colors duration-300 group-hover:scale-110 transform" />
-                    <div className={`px-2 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${doc.gradient} border border-cyan-500/30`}>
+                    <FileText className="w-12 h-12 text-gold-400 group-hover:text-gold-300 transition-colors duration-300" />
+                    <div className={`px-2 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${doc.gradient} border border-gold-500/30`}>
                       {doc.type}
                     </div>
                   </div>
-                  <CardTitle className="text-xl text-white group-hover:text-cyan-300 transition-colors duration-300">
+                  <CardTitle className="text-xl text-white group-hover:text-gold-300 transition-colors duration-300">
                     {doc.title}
                   </CardTitle>
                   <CardDescription className="text-gray-300 group-hover:text-gray-200 transition-colors duration-300">
@@ -861,7 +891,7 @@ const DownloadsSection = () => {
                     <span className="text-sm text-gray-400 uppercase font-medium tracking-wide">
                       {doc.category}
                     </span>
-                    <span className="text-sm text-cyan-400 font-medium">
+                    <span className="text-sm text-gold-400 font-medium">
                       {doc.size}
                     </span>
                   </div>
@@ -870,7 +900,7 @@ const DownloadsSection = () => {
                     {doc.downloadOnly ? (
                       <Button 
                         onClick={() => handleStaticDownload(doc)}
-                        className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white border-none shadow-lg hover:shadow-blue-500/25 transition-all duration-300"
+                        className="w-full bg-gold-500 hover:bg-gold-400 text-navy-950 font-semibold border-none shadow-lg hover:shadow-gold-500/25 transition-all duration-300"
                       >
                         <Download className="w-4 h-4 mr-2" />
                         Download PDF
@@ -881,15 +911,15 @@ const DownloadsSection = () => {
                           <DialogTrigger asChild>
                             <Button 
                               onClick={() => setActiveForm(doc.id)}
-                              className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white border-none shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 group-hover:scale-105"
+                              className="w-full bg-gold-500 hover:bg-gold-400 text-navy-950 font-semibold border-none shadow-lg hover:shadow-gold-500/25 transition-all duration-300"
                             >
                               <Edit3 className="w-4 h-4 mr-2" />
                               Fill Online
                             </Button>
                           </DialogTrigger>
-                          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-gray-900/95 backdrop-blur-lg border-gray-700/50">
+                          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-navy-950/95 backdrop-blur-lg border-gray-700/50">
                             <DialogHeader>
-                              <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                              <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-gold-400 to-gold-500 bg-clip-text text-transparent">
                                 {doc.title}
                               </DialogTitle>
                             </DialogHeader>
@@ -903,7 +933,7 @@ const DownloadsSection = () => {
                         <Button 
                           onClick={() => handleStaticDownload(doc)}
                           variant="outline"
-                          className="w-full border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:border-cyan-500/50 hover:text-cyan-300 transition-all duration-300"
+                          className="w-full border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:border-gold-500/50 hover:text-gold-300 transition-all duration-300"
                         >
                           <Download className="w-4 h-4 mr-2" />
                           Download Template
@@ -923,7 +953,7 @@ const DownloadsSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
           viewport={{ once: true }}
-          className="text-center mt-16 p-8 bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-sm rounded-2xl border border-gray-700/50"
+          className="text-center mt-16 p-8 bg-gradient-to-r from-navy-800/50 to-navy-900/50 backdrop-blur-sm rounded-2xl border border-gray-700/50"
         >
           <h3 className="text-2xl font-bold text-white mb-4">
             Need Help with Your Forms?
@@ -931,7 +961,7 @@ const DownloadsSection = () => {
           <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
             Our legal experts are available to assist you with filling out any forms or answering questions about legal documentation.
           </p>
-          <Button asChild className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold px-8 py-3 rounded-full">
+          <Button asChild className="bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold px-8 py-3 rounded-full">
             <Link to="/contact">
               <MessageCircle className="w-5 h-5 mr-2" />
               Contact Legal Expert

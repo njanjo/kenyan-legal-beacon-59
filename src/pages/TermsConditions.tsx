@@ -4,21 +4,21 @@ import { Link } from "react-router-dom";
 
 const TermsConditions = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-blue-950 dark:to-indigo-950">
+    <div className="min-h-screen bg-gradient-to-br from-navy-50 to-navy-100 dark:from-navy-950 dark:to-navy-950">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6 mb-6">
+          <div className="bg-white dark:bg-navy-900 rounded-lg shadow-lg p-6 mb-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-3">
-                <Scale className="w-8 h-8 text-green-600" />
+                <Scale className="w-8 h-8 text-navy-700" />
                 <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
                   Terms & Conditions
                 </h1>
               </div>
               <Link 
                 to="/" 
-                className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 transition-colors"
+                className="flex items-center space-x-2 text-navy-700 hover:text-navy-900 dark:text-gold-400 dark:hover:text-gold-300 transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Back to Home</span>
@@ -30,7 +30,7 @@ const TermsConditions = () => {
           </div>
 
           {/* Content */}
-          <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-8 space-y-8">
+          <div className="bg-white dark:bg-navy-900 rounded-lg shadow-lg p-8 space-y-8">
             <section>
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
                 1. Acceptance of Terms
@@ -48,11 +48,11 @@ const TermsConditions = () => {
                 <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
                   All content on this website, including but not limited to text, graphics, logos, images, audio clips, digital downloads, data compilations, and software, is the property of Mwaura Muroki Associates & Advocates and is protected by Kenyan and international copyright laws.
                 </p>
-                <div className="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-lg border-l-4 border-amber-500">
-                  <h3 className="text-lg font-medium text-amber-800 dark:text-amber-200 mb-2">
+                <div className="bg-slate-50 dark:bg-navy-800/40 p-6 rounded-lg border-l-4 border-gold-500">
+                  <h3 className="text-lg font-medium text-gold-700 dark:text-gold-400 mb-2">
                     Prohibited Activities:
                   </h3>
-                  <ul className="list-disc list-inside text-amber-700 dark:text-amber-300 space-y-1">
+                  <ul className="list-disc list-inside text-slate-700 dark:text-slate-300 space-y-1">
                     <li>Copying, reproducing, or distributing website content without permission</li>
                     <li>Using content for commercial purposes without authorization</li>
                     <li>Modifying or creating derivative works from our materials</li>
@@ -97,8 +97,8 @@ const TermsConditions = () => {
                   <li>We are not responsible for the outcome of using downloaded materials</li>
                   <li>Materials are provided "as is" without warranty of any kind</li>
                 </ul>
-                <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-                  <p className="text-blue-800 dark:text-blue-200 text-sm">
+                <div className="bg-navy-50 dark:bg-navy-800/40 p-4 rounded-lg">
+                  <p className="text-navy-700 dark:text-gold-300 text-sm">
                     <FileText className="w-4 h-4 inline mr-2" />
                     <strong>Important:</strong> Legal forms and templates should be reviewed by qualified legal counsel before use. Generic forms may not be suitable for all situations.
                   </p>
@@ -154,8 +154,8 @@ const TermsConditions = () => {
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
                 8. Governing Law and Jurisdiction
               </h2>
-              <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-lg">
-                <p className="text-green-800 dark:text-green-200 leading-relaxed">
+              <div className="bg-navy-50 dark:bg-navy-800/40 p-6 rounded-lg">
+                <p className="text-navy-700 dark:text-gold-300 leading-relaxed">
                   These Terms and Conditions are governed by and construed in accordance with the laws of Kenya. Any disputes arising under these terms shall be subject to the exclusive jurisdiction of the Kenyan courts. Mwaura Muroki Associates & Advocates operates under the regulations and ethical guidelines of the Law Society of Kenya (LSK).
                 </p>
               </div>
@@ -174,11 +174,11 @@ const TermsConditions = () => {
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
                 10. Contact Information
               </h2>
-              <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg">
-                <p className="text-blue-800 dark:text-blue-200 mb-4">
+              <div className="bg-navy-50 dark:bg-navy-800/40 p-6 rounded-lg">
+                <p className="text-navy-700 dark:text-gold-300 mb-4">
                   For questions about these Terms and Conditions, please contact:
                 </p>
-                <div className="space-y-2 text-blue-700 dark:text-blue-300">
+                <div className="space-y-2 text-slate-700 dark:text-slate-300">
                   <p><strong>Mwaura Muroki Associates & Advocates</strong></p>
                   <p><strong>Email:</strong> mwauramurokiadvocates@gmail.com</p>
                   <p><strong>Phone:</strong> +254 704 780 934</p>
@@ -189,7 +189,7 @@ const TermsConditions = () => {
 
             <div className="border-t pt-6 mt-8">
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                Last updated: {new Date().toLocaleDateString()} | These terms are effective immediately and govern your use of this website.
+                Last updated: October 2026 | These terms are effective immediately and govern your use of this website.
               </p>
             </div>
           </div>

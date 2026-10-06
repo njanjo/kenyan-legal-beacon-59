@@ -8,14 +8,22 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Logo & Description */}
-          <div className="col-span-1">
+          <div className="col-span-1 lg:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
-              <Scale className="w-8 h-8 text-yellow-400" />
-              <span className="font-bold text-xl">Mwaura Muroki Associates & Advocates</span>
+              <img
+                src="/lovable-uploads/7ac751ff-dfac-4f6b-9e97-e9e8eb7fe3b8.png"
+                alt="Mwaura Muroki Associates Logo"
+                className="w-10 h-10 object-contain"
+              />
+              <span className="font-bold text-xl leading-tight">Mwaura Muroki</span>
             </div>
-            <p className="text-blue-100 mb-4">
-              "To provide Timely and Affordable Legal Services" - Professional legal services in Thika, Kenya with integrity, expertise, and dedication to justice.
+            <p className="text-blue-100 mb-3">
+              Associates & Advocates. "To provide Timely and Affordable Legal Services" - Professional legal services in Thika, Kenya with integrity, expertise, and dedication to justice.
             </p>
+            <div className="inline-flex items-center gap-2 text-xs text-blue-200">
+              <Scale className="w-4 h-4 text-gold-400" />
+              Licensed Advocate · High Court of Kenya
+            </div>
           </div>
 
           {/* Quick Links */}

@@ -1,100 +1,98 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { Scale, Globe, Landmark, BookOpen, Building2, Handshake } from "lucide-react";
+import { Scale, Globe, BookOpen, Landmark, Users, Award, type LucideIcon } from "lucide-react";
 import kenyaJudiciaryLogo from "@/assets/kenya-judiciary-logo.png";
 import ibaLogo from "@/assets/iba-logo.png";
 import lawSocietyKenyaLogo from "@/assets/law-society-kenya-logo.png";
 import eastAfricaLawSocietyLogo from "@/assets/east-africa-law-society-logo.png";
-import attorneyOffice1 from "/lovable-uploads/00794513-1237-4309-b855-598e2c8c5109.png";
-import attorneyOffice2 from "/lovable-uploads/7ac751ff-dfac-4f6b-9e97-e9e8eb7fe3b8.png";
+
+interface Partner {
+  name: string;
+  description: string;
+  image?: string;
+  icon: LucideIcon;
+}
 
 const PartnersSection = () => {
-  const partners = [
+  const partners: Partner[] = [
     {
-      name: "Kenya Law Society",
+      name: "Law Society of Kenya",
       description: "Professional legal association",
       image: lawSocietyKenyaLogo,
-      icon: Scale,
-      iconColor: "text-blue-600 dark:text-blue-400"
+      icon: Scale
     },
     {
       name: "East Africa Law Society",
       description: "Regional legal network",
       image: eastAfricaLawSocietyLogo,
-      icon: Globe,
-      iconColor: "text-green-600 dark:text-green-400"
+      icon: Globe
     },
     {
       name: "International Bar Association",
       description: "Global legal community",
       image: ibaLogo,
-      icon: BookOpen,
-      iconColor: "text-purple-600 dark:text-purple-400"
+      icon: BookOpen
     },
     {
       name: "Kenya Judiciary",
       description: "Court system partnership",
       image: kenyaJudiciaryLogo,
-      icon: Landmark,
-      iconColor: "text-red-600 dark:text-red-400"
+      icon: Landmark
     },
     {
-      name: "Mwaura Muroki Associates",
-      description: "Our law firm offices",
-      image: attorneyOffice1,
-      icon: Building2,
-      iconColor: "text-yellow-600 dark:text-yellow-400"
+      name: "Paralegal Society of Kenya",
+      description: "Young Male Lawyer of the Year 2024",
+      icon: Users
     },
     {
-      name: "Legal Excellence Center",
-      description: "Professional legal services",
-      image: attorneyOffice2,
-      icon: Handshake,
-      iconColor: "text-indigo-600 dark:text-indigo-400"
+      name: "Kituo Cha Sheria",
+      description: "Legal aid and advocacy partner",
+      icon: Award
     }
   ];
 
   const scrollingPartners = [...partners, ...partners];
 
   return (
-    <section className="py-16 bg-white dark:bg-gray-900 overflow-hidden">
+    <section className="py-16 bg-card overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h3 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">Our Professional Partners</h3>
-          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          <h3 className="text-3xl sm:text-4xl font-bold mb-4">Our Professional Partners</h3>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
             Collaborating with leading legal institutions to provide comprehensive legal services
           </p>
         </div>
 
         <div className="relative">
-          <div className="flex space-x-6 animate-scroll-right">
+          <div className="flex space-x-6 animate-scroll-right motion-reduce:animate-none hover:[animation-play-state:paused]">
             {scrollingPartners.map((partner, index) => (
               <motion.div
                 key={`${partner.name}-${index}`}
                 className="flex-shrink-0 w-64"
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: (index % partners.length) * 0.1 }}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: (index % partners.length) * 0.05 }}
                 viewport={{ once: true }}
               >
-                <Card className="hover:shadow-lg transition-all duration-300 hover:scale-105 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 group">
+                <Card className="h-full transition-all duration-300 hover:border-gold-500/40 hover:shadow-lg hover:shadow-gold-500/10 bg-card border-border">
                   <CardContent className="p-4 text-center">
-                    <div className="relative overflow-hidden rounded-lg mb-4">
-                      <img
-                        src={partner.image}
-                        alt={partner.name}
-                        className="w-full h-32 object-cover transition-transform duration-300 group-hover:scale-110"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="mb-4 flex h-28 items-center justify-center rounded-lg bg-muted/50 p-3">
+                      {partner.image ? (
+                        <img
+                          src={partner.image}
+                          alt={`${partner.name} logo`}
+                          className="max-h-full max-w-full object-contain"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <partner.icon className="h-12 w-12 text-blue-700 dark:text-gold-400" />
+                      )}
                     </div>
                     <div className="flex items-center justify-center gap-2 mb-2">
-                      <partner.icon className={`w-5 h-5 ${partner.iconColor} transition-transform duration-300 group-hover:scale-125`} />
-                      <h4 className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
-                        {partner.name}
-                      </h4>
+                      <partner.icon className="w-5 h-5 text-blue-700 dark:text-gold-400" />
+                      <h4 className="font-semibold">{partner.name}</h4>
                     </div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-muted-foreground">
                       {partner.description}
                     </p>
                   </CardContent>
@@ -103,8 +101,8 @@ const PartnersSection = () => {
             ))}
           </div>
 
-          <div className="absolute top-0 left-0 w-20 h-full bg-gradient-to-r from-white dark:from-gray-900 to-transparent z-10 pointer-events-none"></div>
-          <div className="absolute top-0 right-0 w-20 h-full bg-gradient-to-l from-white dark:from-gray-900 to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute top-0 left-0 w-16 sm:w-24 h-full bg-gradient-to-r from-card to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-16 sm:w-24 h-full bg-gradient-to-l from-card to-transparent z-10 pointer-events-none"></div>
         </div>
       </div>
     </section>

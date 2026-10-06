@@ -1,19 +1,15 @@
 
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
 	darkMode: ["class"],
-	content: [
-		"./pages/**/*.{ts,tsx}",
-		"./components/**/*.{ts,tsx}",
-		"./app/**/*.{ts,tsx}",
-		"./src/**/*.{ts,tsx}",
-	],
+	content: ["./src/**/*.{ts,tsx}"],
 	prefix: "",
 	theme: {
 		container: {
 			center: true,
-			padding: '2rem',
+			padding: '1rem',
 			screens: {
 				'2xl': '1400px'
 			}
@@ -53,6 +49,23 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				navy: {
+					50: '#f2f6ff',
+					100: '#e3eaff',
+					200: '#c7d5f7',
+					950: '#0a1633',
+					900: '#1e3a8a',
+					800: '#1e40af',
+					700: '#2547b8',
+					600: '#2f5bd0'
+				},
+				gold: {
+					300: '#fcd34d',
+					400: '#fbbf24',
+					500: '#f59e0b',
+					600: '#d97706',
+					700: '#b45309'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -63,6 +76,10 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				}
+			},
+			fontFamily: {
+				display: ['"EB Garamond"', 'Georgia', 'serif'],
+				sans: ['Lato', 'system-ui', 'sans-serif']
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -86,38 +103,6 @@ export default {
 						height: '0'
 					}
 				},
-				'glow': {
-					'0%, 100%': {
-						boxShadow: '0 0 20px rgba(59, 130, 246, 0.5)'
-					},
-					'50%': {
-						boxShadow: '0 0 40px rgba(59, 130, 246, 0.8)'
-					}
-				},
-				'float': {
-					'0%, 100%': {
-						transform: 'translateY(0px)'
-					},
-					'50%': {
-						transform: 'translateY(-10px)'
-					}
-				},
-				'pulse-glow': {
-					'0%, 100%': {
-						boxShadow: '0 0 20px rgba(59, 130, 246, 0.3)'
-					},
-					'50%': {
-						boxShadow: '0 0 30px rgba(59, 130, 246, 0.6)'
-					}
-				},
-				'bounce-subtle': {
-					'0%, 100%': {
-						transform: 'translateY(0)'
-					},
-					'50%': {
-						transform: 'translateY(-5px)'
-					}
-				},
 				'scroll-right': {
 					'0%': {
 						transform: 'translateX(0)'
@@ -125,61 +110,14 @@ export default {
 					'100%': {
 						transform: 'translateX(-50%)'
 					}
-				},
-				'fade-in-up': {
-					'0%': {
-						opacity: '0',
-						transform: 'translateY(20px)'
-					},
-					'100%': {
-						opacity: '1',
-						transform: 'translateY(0)'
-					}
-				},
-				'slide-in-left': {
-					'0%': {
-						opacity: '0',
-						transform: 'translateX(-20px)'
-					},
-					'100%': {
-						opacity: '1',
-						transform: 'translateX(0)'
-					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'glow': 'glow 2s ease-in-out infinite',
-				'float': 'float 3s ease-in-out infinite',
-				'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
-				'bounce-subtle': 'bounce-subtle 2s ease-in-out infinite',
-				'scroll-right': 'scroll-right 20s linear infinite',
-				'fade-in-up': 'fade-in-up 0.6s ease-out',
-				'slide-in-left': 'slide-in-left 0.5s ease-out'
-			},
-			boxShadow: {
-				'glow': '0 0 20px rgba(59, 130, 246, 0.5)',
-				'glow-lg': '0 0 40px rgba(59, 130, 246, 0.6)',
-				'dark-glow': '0 0 20px rgba(96, 165, 250, 0.4)',
-				'dark-glow-lg': '0 0 40px rgba(96, 165, 250, 0.5)',
-				'soft': '0 2px 15px rgba(0, 0, 0, 0.1)',
-				'soft-lg': '0 10px 40px rgba(0, 0, 0, 0.15)',
-				'light-border': '0 0 0 1px rgba(0, 0, 0, 0.1)',
-				'light-hover': '0 4px 20px rgba(0, 0, 0, 0.1)'
-			},
-			screens: {
-				'xs': '475px',
-				'3xl': '1600px'
-			},
-			spacing: {
-				'18': '4.5rem',
-				'88': '22rem',
-				'100': '25rem',
-				'112': '28rem',
-				'128': '32rem'
+				'scroll-right': 'scroll-right 40s linear infinite'
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [tailwindcssAnimate],
 } satisfies Config;

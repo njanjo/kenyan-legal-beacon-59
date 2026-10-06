@@ -153,7 +153,7 @@ const AIChatbot = () => {
     
     // Contact information responses
     if (message.includes('contact') || message.includes('phone') || message.includes('call')) {
-      return "For legal consultations, please use the contact form on this website or call the provided contact number. Office hours are typically Monday to Friday, 8 AM to 6 PM. This is general legal information, not legal advice.";
+      return "For legal consultations, please use the contact form on this website or call the provided contact number. Office hours are typically Monday to Friday, 8:00 AM to 5:00 PM. This is general legal information, not legal advice.";
     }
     
     if (message.includes('location') || message.includes('office') || message.includes('address')) {
@@ -165,7 +165,7 @@ const AIChatbot = () => {
     }
     
     if (message.includes('urgent') || message.includes('emergency')) {
-      return "For urgent legal matters, please call us immediately at 0704780934. We understand that legal emergencies require prompt attention and we're here to help.";
+      return "For urgent legal matters, please call us immediately at +254 704 780 934. We understand that legal emergencies require prompt attention and we're here to help.";
     }
     
     // Default research-focused response
@@ -238,7 +238,7 @@ const AIChatbot = () => {
         messages: [...prev.messages, {
           id: (Date.now() + 1).toString(),
           type: 'bot',
-          content: 'I apologize, but I\'m having trouble processing your request. Please call us at 0704780934 for immediate assistance.',
+          content: 'I apologize, but I\'m having trouble processing your request. Please call us at +254 704 780 934 for immediate assistance.',
           timestamp: new Date()
         }],
         isTyping: false
@@ -264,17 +264,18 @@ const AIChatbot = () => {
     <>
       {/* Legal Research Assistant Button */}
       <motion.div
-        className="fixed bottom-6 right-6 z-50"
+        className="fixed bottom-6 right-4 sm:right-6 z-30"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 1.2, type: "spring", stiffness: 260, damping: 20 }}
       >
         <Button
           onClick={toggleChatbot}
-          className="w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 border-2 border-blue-500"
+          aria-label={chatState.isOpen ? "Close legal assistant" : "Open legal assistant"}
+          className="w-14 h-14 rounded-full bg-navy-700 hover:bg-navy-800 dark:bg-gold-500 dark:hover:bg-gold-400 text-white dark:text-navy-950 shadow-lg border-2 border-gold-400/40 transition-all duration-300"
           size="icon"
         >
-          <MessageCircle className="w-6 h-6 text-white" />
+          {chatState.isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
         </Button>
       </motion.div>
 
@@ -282,17 +283,17 @@ const AIChatbot = () => {
       <AnimatePresence>
         {chatState.isOpen && (
           <motion.div
-            className="fixed bottom-24 right-6 z-50"
+            className="fixed bottom-24 right-4 sm:right-6 z-30"
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           >
-            <Card className="w-80 sm:w-96 h-96 shadow-2xl border-0 bg-white/98 backdrop-blur-sm dark:bg-gray-900/98 border border-gray-200 dark:border-gray-700">
+            <Card className="w-[calc(100vw-2rem)] max-w-96 h-[28rem] shadow-2xl border bg-white/95 backdrop-blur-sm dark:bg-gray-900/95 border-gray-200 dark:border-gray-700">
               {/* Chat Header */}
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-blue-600 text-white rounded-t-lg">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-navy-800 dark:bg-navy-900 text-white rounded-t-lg">
                 <div className="flex items-center space-x-2">
-                  <Bot className="w-5 h-5" />
+                  <Bot className="w-5 h-5 text-gold-400" />
                   <CardTitle className="text-sm font-medium">Legal Research Assistant</CardTitle>
                 </div>
                 <div className="flex items-center space-x-1">
@@ -300,6 +301,7 @@ const AIChatbot = () => {
                     variant="ghost"
                     size="icon"
                     onClick={toggleMinimize}
+                    aria-label={chatState.isMinimized ? "Maximize chat window" : "Minimize chat window"}
                     className="w-6 h-6 text-white hover:bg-white/20"
                   >
                     {chatState.isMinimized ? <Maximize2 className="w-3 h-3" /> : <Minimize2 className="w-3 h-3" />}
@@ -308,6 +310,7 @@ const AIChatbot = () => {
                     variant="ghost"
                     size="icon"
                     onClick={closeChatbot}
+                    aria-label="Close chat window"
                     className="w-6 h-6 text-white hover:bg-white/20"
                   >
                     <X className="w-3 h-3" />
@@ -330,7 +333,7 @@ const AIChatbot = () => {
                         <div
                           className={`max-w-[80%] p-3 rounded-lg ${
                             message.type === 'user'
-                              ? 'bg-blue-600 text-white rounded-br-sm'
+                              ? 'bg-navy-700 dark:bg-gold-500 dark:text-navy-950 text-white rounded-br-sm'
                               : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-bl-sm border border-gray-200 dark:border-gray-700'
                           }`}
                         >
@@ -360,9 +363,9 @@ const AIChatbot = () => {
                           <div className="flex items-center space-x-2">
                             <Bot className="w-3 h-3" />
                             <div className="flex space-x-1">
-                              <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
-                              <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                              <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                              <div className="w-2 h-2 bg-gold-400 rounded-full animate-bounce"></div>
+                              <div className="w-2 h-2 bg-gold-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                              <div className="w-2 h-2 bg-gold-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                             </div>
                           </div>
                         </div>
@@ -381,14 +384,16 @@ const AIChatbot = () => {
                         onChange={handleInputChange}
                         onKeyPress={handleKeyPress}
                         placeholder="Ask about Kenyan law, statutes, or cases..."
-                        className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                        aria-label="Ask a legal question"
+                        className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                         disabled={chatState.isTyping}
                       />
                       <Button
                         onClick={handleSendMessage}
                         disabled={!chatState.inputValue.trim() || chatState.isTyping}
+                        aria-label="Send message"
                         size="icon"
-                        className="bg-blue-600 hover:bg-blue-700 border border-blue-500"
+                        className="bg-navy-700 hover:bg-navy-800 dark:bg-gold-500 dark:hover:bg-gold-400 dark:text-navy-950"
                       >
                         <Send className="w-4 h-4" />
                       </Button>

@@ -4,33 +4,33 @@ import { Link } from "react-router-dom";
 
 const PrivacyPolicy = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-blue-950 dark:to-indigo-950">
+    <div className="min-h-screen bg-gradient-to-br from-navy-50 to-navy-100 dark:from-navy-950 dark:to-navy-950">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6 mb-6">
+          <div className="bg-white dark:bg-navy-900 rounded-lg shadow-lg p-6 mb-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-3">
-                <Scale className="w-8 h-8 text-blue-600" />
+                <Scale className="w-8 h-8 text-navy-700" />
                 <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
                   Privacy Policy
                 </h1>
               </div>
               <Link 
                 to="/" 
-                className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 transition-colors"
+                className="flex items-center space-x-2 text-navy-700 hover:text-navy-900 dark:text-gold-400 dark:hover:text-gold-300 transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Back to Home</span>
               </Link>
             </div>
             <p className="text-gray-600 dark:text-gray-300">
-              Mwaura Muroki Associates & Advocates - Effective Date: {new Date().toLocaleDateString()}
+              Mwaura Muroki Associates & Advocates - Effective Date: 1 October 2026
             </p>
           </div>
 
           {/* Content */}
-          <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-8 space-y-8">
+          <div className="bg-white dark:bg-navy-900 rounded-lg shadow-lg p-8 space-y-8">
             <section>
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
                 1. Compliance with Kenyan Law
@@ -137,7 +137,7 @@ const PrivacyPolicy = () => {
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
                 7. Contact Information for Privacy Inquiries
               </h2>
-              <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg">
+              <div className="bg-navy-50 dark:bg-navy-800/40 p-6 rounded-lg">
                 <p className="text-gray-700 dark:text-gray-300 mb-4">
                   For any privacy-related inquiries or to exercise your rights:
                 </p>
@@ -161,7 +161,7 @@ const PrivacyPolicy = () => {
 
             <div className="border-t pt-6 mt-8">
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                Last updated: {new Date().toLocaleDateString()} | Mwaura Muroki Associates & Advocates | Licensed Advocate of the High Court of Kenya
+                Last updated: October 2026 | Mwaura Muroki Associates & Advocates | Licensed Advocate of the High Court of Kenya
               </p>
             </div>
           </div>

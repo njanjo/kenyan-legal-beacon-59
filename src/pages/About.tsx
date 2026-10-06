@@ -8,12 +8,12 @@ import { Link } from "react-router-dom";
 
 const About = () => {
   const specializations = [
-    { icon: Gavel, name: "Commercial Litigation", color: "bg-blue-100 text-blue-800" },
-    { icon: FileText, name: "Contract Law", color: "bg-green-100 text-green-800" },
-    { icon: Shield, name: "Dispute Resolution", color: "bg-purple-100 text-purple-800" },
-    { icon: Heart, name: "Family Law", color: "bg-red-100 text-red-800" },
-    { icon: Users, name: "Sports Law", color: "bg-orange-100 text-orange-800" },
-    { icon: Brain, name: "Mental Health Law", color: "bg-pink-100 text-pink-800" }
+    { icon: Gavel, name: "Commercial Litigation" },
+    { icon: FileText, name: "Contract Law" },
+    { icon: Shield, name: "Dispute Resolution" },
+    { icon: Heart, name: "Family Law" },
+    { icon: Users, name: "Sports Law" },
+    { icon: Brain, name: "Mental Health Law" }
   ];
 
   const timeline = [
@@ -64,7 +64,7 @@ const About = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-900 to-blue-700 dark:from-blue-950 dark:to-blue-800 text-white py-16">
+      <section className="bg-gradient-to-r from-navy-900 to-navy-700 dark:from-navy-950 dark:to-navy-700 text-white py-16">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -72,10 +72,10 @@ const About = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h1 className="text-5xl font-bold mb-6">Attorney Profile</h1>
-              <h2 className="text-3xl font-semibold mb-4 text-yellow-300">Francis Mwaura Muroki</h2>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">Attorney Profile</h1>
+              <h2 className="text-2xl sm:text-3xl font-semibold mb-4 text-gold-400">Francis Mwaura Muroki</h2>
               <p className="text-xl mb-6">
-                Principal Advocate & Founder
+                Principal Advocate &amp; Founder
               </p>
               <p className="text-lg text-blue-100 leading-relaxed">
                 "To provide Timely and Affordable Legal Services" - Dedicated to delivering professional legal representation 
@@ -90,14 +90,14 @@ const About = () => {
               className="flex justify-center"
             >
               <div className="relative">
-                <div className="w-80 h-80 rounded-full overflow-hidden border-4 border-white/30 shadow-2xl">
+                <div className="w-72 h-72 sm:w-80 sm:h-80 overflow-hidden border-4 border-white/30 shadow-2xl">
                   <img
                     src="/lovable-uploads/00794513-1237-4309-b855-598e2c8c5109.png"
                     alt="Francis Mwaura Muroki - Principal Advocate"
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="absolute -bottom-4 -right-4 bg-yellow-400 text-black p-3 rounded-full">
+                <div className="absolute -bottom-4 -right-4 bg-gold-400 text-navy-950 p-3 rounded-full shadow-lg">
                   <Scale className="w-8 h-8" />
                 </div>
               </div>
@@ -115,7 +115,7 @@ const About = () => {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-2xl">
-                    <BookOpen className="w-6 h-6 text-blue-600" />
+                    <BookOpen className="w-6 h-6 text-blue-700 dark:text-gold-400" />
                     Professional Biography
                   </CardTitle>
                 </CardHeader>
@@ -154,7 +154,7 @@ const About = () => {
               <Card className="mt-8">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-2xl">
-                    <Briefcase className="w-6 h-6 text-blue-600" />
+                    <Briefcase className="w-6 h-6 text-blue-700 dark:text-gold-400" />
                     Areas of Expertise
                   </CardTitle>
                   <CardDescription>
@@ -170,12 +170,10 @@ const About = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: index * 0.1 }}
                         viewport={{ once: true }}
-                        className="flex items-center gap-3"
+                        className="flex items-center gap-3 rounded-lg border border-border bg-muted/50 px-3 py-2"
                       >
-                        <spec.icon className="w-5 h-5 text-blue-600" />
-                        <Badge variant="secondary" className={spec.color}>
-                          {spec.name}
-                        </Badge>
+                        <spec.icon className="w-5 h-5 text-blue-700 dark:text-gold-400" />
+                        <span className="text-sm font-medium">{spec.name}</span>
                       </motion.div>
                     ))}
                   </div>
@@ -189,30 +187,30 @@ const About = () => {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <Phone className="w-5 h-5 text-blue-600" />
+                    <Phone className="w-5 h-5 text-blue-700 dark:text-gold-400" />
                     Contact Information
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center gap-2">
                     <Phone className="w-4 h-4 text-gray-500" />
-                    <a href="tel:+254704780934" className="text-blue-600 hover:underline">
+                    <a href="tel:+254704780934" className="text-blue-700 dark:text-gold-400 hover:underline">
                       +254 704 780 934
                     </a>
                   </div>
                   <div className="flex items-center gap-2">
                     <MessageCircle className="w-4 h-4 text-gray-500" />
-                    <a href="https://wa.me/254704780934" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                    <a href="https://wa.me/254704780934" target="_blank" rel="noopener noreferrer" className="text-blue-700 dark:text-gold-400 hover:underline">
                       WhatsApp
                     </a>
                   </div>
                   <div className="flex items-center gap-2">
                     <Mail className="w-4 h-4 text-gray-500" />
                     <div className="flex flex-col">
-                      <a href="mailto:mwauramurokiadvocates@gmail.com" className="text-blue-600 hover:underline text-sm">
+                      <a href="mailto:mwauramurokiadvocates@gmail.com" className="text-blue-700 dark:text-gold-400 hover:underline text-sm">
                         mwauramurokiadvocates@gmail.com
                       </a>
-                      <a href="mailto:mwaurafmuroki@yahoo.com" className="text-blue-600 hover:underline text-sm">
+                      <a href="mailto:mwaurafmuroki@yahoo.com" className="text-blue-700 dark:text-gold-400 hover:underline text-sm">
                         mwaurafmuroki@yahoo.com
                       </a>
                     </div>
@@ -275,11 +273,11 @@ const About = () => {
       </section>
 
       {/* Professional Timeline */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-900">
+      <section className="py-16 bg-muted/40">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Professional Timeline</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Key milestones and achievements in Francis Mwaura Muroki's legal career
             </p>
           </div>
@@ -287,7 +285,7 @@ const About = () => {
           <div className="max-w-4xl mx-auto">
             <div className="relative">
               {/* Timeline line */}
-              <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-blue-200 dark:bg-blue-800"></div>
+              <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-blue-200 dark:bg-blue-800/60"></div>
               
               <div className="space-y-8">
                 {timeline.map((item, index) => (
@@ -300,7 +298,7 @@ const About = () => {
                     className="relative flex items-start gap-6"
                   >
                     {/* Timeline dot */}
-                    <div className="flex-shrink-0 w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm z-10">
+                    <div className="flex-shrink-0 w-16 h-16 bg-navy-700 dark:bg-gold-500 dark:text-navy-950 text-white rounded-full flex items-center justify-center font-bold text-sm z-10">
                       {item.year}
                     </div>
                     
@@ -329,8 +327,8 @@ const About = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">About Our Firm</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Mwaura Muroki Associates & Advocates - Excellence in Legal Practice
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Mwaura Muroki Associates &amp; Advocates - Excellence in Legal Practice
             </p>
           </div>
           
@@ -338,7 +336,7 @@ const About = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Scale className="w-6 h-6 text-blue-600" />
+                  <Scale className="w-6 h-6 text-blue-700 dark:text-gold-400" />
                   Our Mission
                 </CardTitle>
               </CardHeader>
@@ -354,30 +352,30 @@ const About = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Award className="w-6 h-6 text-blue-600" />
+                  <Award className="w-6 h-6 text-blue-700 dark:text-gold-400" />
                   Our Values
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                    <div className="w-2 h-2 bg-gold-500 rounded-full"></div>
                     <span>Integrity in all our dealings</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                    <div className="w-2 h-2 bg-gold-500 rounded-full"></div>
                     <span>Timely service delivery</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                    <div className="w-2 h-2 bg-gold-500 rounded-full"></div>
                     <span>Cost-friendly legal solutions</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                    <div className="w-2 h-2 bg-gold-500 rounded-full"></div>
                     <span>Accessible legal services</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                    <div className="w-2 h-2 bg-gold-500 rounded-full"></div>
                     <span>Commitment to justice</span>
                   </li>
                 </ul>
