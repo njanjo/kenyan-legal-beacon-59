@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import PartnersSection from "@/components/PartnersSection";
 import SEO, { SITE_URL, attorneySchema } from "@/components/SEO";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 // pdf-lib is ~500 KB — load the downloads section on demand so the
 // homepage first paint doesn't pay for PDF generation capability.
@@ -200,7 +201,6 @@ const Index = () => {
               width={768}
               height={1158}
               loading="eager"
-              fetchPriority="high"
               decoding="async"
               className="relative mx-auto block aspect-[900/1357] w-full max-w-[26rem] object-cover object-top saturate-[0.9] brightness-[0.97] contrast-[0.97]"
             />
@@ -423,9 +423,11 @@ const Index = () => {
       <PartnersSection />
 
       {/* Downloads Section */}
-      <Suspense fallback={null}>
-        <DownloadsSection />
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={null}>
+          <DownloadsSection />
+        </Suspense>
+      </ErrorBoundary>
 
       {/* Enhanced Contact CTA Section */}
       <section className="py-12 sm:py-16 bg-navy-900 dark:bg-navy-950 text-white">

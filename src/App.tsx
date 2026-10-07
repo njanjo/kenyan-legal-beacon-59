@@ -9,6 +9,7 @@ import { ThemeProvider } from "next-themes";
 import { MotionConfig } from "framer-motion";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 import CookieConsent from "./components/CookieConsent";
 import Index from "./pages/Index";
@@ -39,27 +40,31 @@ const App = () => (
             <div className="min-h-screen flex flex-col">
               <Navigation />
               <main className="flex-1">
-                <Suspense fallback={null}>
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/services" element={<Services />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/media" element={<MediaDashboard />} />
-                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                    <Route path="/legal-disclaimer" element={<LegalDisclaimer />} />
-                    <Route path="/terms-conditions" element={<TermsConditions />} />
-                    <Route path="/cookie-policy" element={<CookiePolicy />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </Suspense>
+                <ErrorBoundary>
+                  <Suspense fallback={null}>
+                    <Routes>
+                      <Route path="/" element={<Index />} />
+                      <Route path="/about" element={<About />} />
+                      <Route path="/services" element={<Services />} />
+                      <Route path="/contact" element={<Contact />} />
+                      <Route path="/media" element={<MediaDashboard />} />
+                      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                      <Route path="/legal-disclaimer" element={<LegalDisclaimer />} />
+                      <Route path="/terms-conditions" element={<TermsConditions />} />
+                      <Route path="/cookie-policy" element={<CookiePolicy />} />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </Suspense>
+                </ErrorBoundary>
               </main>
               <Footer />
 
               <CookieConsent />
-              <Suspense fallback={null}>
-                <AIChatbot />
-              </Suspense>
+              <ErrorBoundary>
+                <Suspense fallback={null}>
+                  <AIChatbot />
+                </Suspense>
+              </ErrorBoundary>
             </div>
           </BrowserRouter>
         </MotionConfig>
