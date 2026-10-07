@@ -108,8 +108,12 @@ const About = () => {
               <div className="relative">
                 <div className="w-72 h-72 sm:w-80 sm:h-80 overflow-hidden border-4 border-white/30 shadow-2xl">
                   <img
-                    src="/uploads/00794513-1237-4309-b855-598e2c8c5109.png"
+                    src="/uploads/00794513-1237-4309-b855-598e2c8c5109.webp"
                     alt="Francis Mwaura Muroki - Principal Advocate"
+                    width={480}
+                    height={720}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover"
                   />
                 </div>

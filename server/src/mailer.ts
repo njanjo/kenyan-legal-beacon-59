@@ -52,9 +52,10 @@ function row(label: string, value: string): string {
 }
 
 /** Build the notification email HTML. Every user value passes through esc(). */
-function buildContactHtml(fields: ContactFields): string {
+function buildContactHtml(fields: ContactFields, reference?: string): string {
   const subjectLine = fields.subject ? esc(fields.subject) : '(no subject)';
   const rows = [
+    ...(reference ? [row('Reference', esc(reference))] : []),
     row('Name', esc(fields.name)),
     row('Email', esc(fields.email)),
     row('Phone', fields.phone ? esc(fields.phone) : '(not provided)'),
@@ -79,14 +80,16 @@ interface SendContactEmailArgs {
   fields: ContactFields;
   files: Express.Multer.File[];
   replyTo: string;
+  /** Optional enquiry reference, echoed in the subject and body. */
+  reference?: string;
 }
 
 /** Send the notification email to the firm, with the uploaded files attached. */
-export async function sendContactEmail({ fields, files, replyTo }: SendContactEmailArgs): Promise<void> {
+export async function sendContactEmail({ fields, files, replyTo, reference }: SendContactEmailArgs): Promise<void> {
   const safeName = esc(fields.name);
   const safeSubject = fields.subject ? esc(fields.subject) : '';
   // Keep the subject line short and single-line (esc already strips control chars).
-  const subject = `New contact form: ${safeName}${safeSubject ? ` — ${safeSubject}` : ''}`.slice(0, 100);
+  const subject = `New contact form: ${safeName}${safeSubject ? ` — ${safeSubject}` : ''}${reference ? ` [${reference}]` : ''}`.slice(0, 120);
 
   const transporter = createTransport();
   await transporter.sendMail({
@@ -94,7 +97,7 @@ export async function sendContactEmail({ fields, files, replyTo }: SendContactEm
     to: config.CONTACT_TO_EMAIL,
     replyTo,
     subject,
-    html: buildContactHtml(fields),
+    html: buildContactHtml(fields, reference),
     attachments: files.map((file) => ({
       filename: file.originalname,
       content: file.buffer,
@@ -106,23 +109,67 @@ export async function sendContactEmail({ fields, files, replyTo }: SendContactEm
 interface SendAutoReplyArgs {
   to: string;
   name: string;
+  /** Echo of the client's subject line (optional). */
+  subject?: string;
+  /** Enquiry reference number (optional). */
+  reference?: string;
 }
 
-/** Send a short acknowledgement email to the person who submitted the form. */
-export async function sendAutoReply({ to, name }: SendAutoReplyArgs): Promise<void> {
+/**
+ * Send the no-reply acknowledgement email to the person who submitted the
+ * form. Sent from the dedicated NO_REPLY_EMAIL address (falling back to
+ * CONTACT_FROM_EMAIL), with replies routed to the firm's inbox and
+ * RFC 3834 auto-reply headers so mail loops and out-of-office storms
+ * cannot occur.
+ */
+export async function sendAutoReply({ to, name, subject, reference }: SendAutoReplyArgs): Promise<void> {
   const transporter = createTransport();
+  const fromAddress = config.NO_REPLY_EMAIL || config.CONTACT_FROM_EMAIL;
+  const from = `${config.FIRM_NAME} (No Reply) <${fromAddress}>`;
   const safeName = esc(name);
+  const subjectLine = subject ? esc(subject) : '(no subject)';
+  const referenceLine = reference ? esc(reference) : null;
+  const inbox = esc(config.CONTACT_TO_EMAIL);
+
   const html = `
-      <div style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#222;">
-        <h2 style="margin:0 0 12px;">Thank you, ${safeName}</h2>
-        <p style="margin:0 0 10px;">We have received your message and will respond within 24 hours.</p>
-        <p style="margin:0;">Kind regards,<br />The Legal Team</p>
+      <div style="font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.6;color:#222;max-width:600px;margin:0 auto;">
+        <div style="background:#1e3a8a;padding:20px 24px;border-radius:8px 8px 0 0;">
+          <div style="color:#f5c518;font-size:18px;font-weight:bold;">${esc(config.FIRM_NAME)}</div>
+          <div style="color:#ffffff;font-size:12px;">Timely and Affordable Legal Services</div>
+        </div>
+        <div style="padding:24px;border:1px solid #ddd;border-top:none;border-radius:0 0 8px 8px;">
+          <h2 style="margin:0 0 12px;font-size:18px;">Thank you, ${safeName}</h2>
+          <p style="margin:0 0 12px;">We have received your enquiry and a member of our legal team will respond within <strong>24 hours</strong> (Monday–Friday).</p>
+          ${
+            referenceLine
+              ? `<p style="margin:0 0 12px;">Your enquiry reference is <strong>${referenceLine}</strong> — please quote it in any follow-up.</p>`
+              : ''
+          }
+          <p style="margin:0 0 4px;color:#555;">Subject: ${subjectLine}</p>
+          <h3 style="margin:16px 0 8px;font-size:15px;">What happens next?</h3>
+          <ol style="margin:0 0 12px;padding-left:20px;color:#333;">
+            <li>An advocate reviews your message and any attachments.</li>
+            <li>We contact you on the email or phone number you provided.</li>
+            <li>If needed, we schedule a consultation at our Thika office.</li>
+          </ol>
+          <p style="margin:0 0 12px;">Need us sooner? Call/WhatsApp <strong>+254 704 780 934</strong> or write to <strong>${inbox}</strong>.</p>
+          <p style="margin:0;padding-top:12px;border-top:1px solid #eee;font-size:12px;color:#777;">This is an automated message from an unmonitored mailbox — please do not reply to it. To reach us, write to ${inbox}.</p>
+          <p style="margin:12px 0 0;">Kind regards,<br /><strong>${esc(config.FIRM_NAME)}</strong><br />Equity Plaza, Commercial Street, 4th Floor Wing B Rm 420, Thika</p>
+        </div>
       </div>`;
 
   await transporter.sendMail({
-    from: config.CONTACT_FROM_EMAIL,
+    from,
     to,
-    subject: 'We received your message',
+    // Replies from the client must reach a human, never bounce off no-reply.
+    replyTo: config.CONTACT_TO_EMAIL,
+    subject: reference
+      ? `We received your enquiry [${reference}]`
+      : 'We received your enquiry',
     html,
+    headers: {
+      'Auto-Submitted': 'auto-replied',
+      'X-Auto-Response-Suppress': 'All',
+    },
   });
 }

@@ -238,7 +238,7 @@ const Contact = () => {
       if (response.ok) {
         toast({
           title: "Message sent successfully!",
-          description: "We'll respond within 24 hours.",
+          description: "We'll respond within 24 hours. A confirmation email is on its way to your inbox.",
         });
         setFormData(emptyFormData);
         setHoneypot("");
@@ -340,6 +340,7 @@ const Contact = () => {
                       <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0" aria-hidden />
                       <p className="text-green-800 dark:text-green-200 font-medium">
                         Your message has been sent successfully. We'll respond within 24 hours.
+                        A confirmation email from our no-reply address is on its way to your inbox.
                       </p>
                     </div>
                   )}

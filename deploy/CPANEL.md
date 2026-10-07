@@ -86,6 +86,7 @@ Still on the app's edit screen, use **Add Variable** to set:
 | `SMTP_PASS` | *(the mailbox's password)* |
 | `CONTACT_TO_EMAIL` | `info@mwauramurokiadvocates.co.ke` |
 | `CONTACT_FROM_EMAIL` | `info@mwauramurokiadvocates.co.ke` |
+| `NO_REPLY_EMAIL` | `noreply@mwauramurokiadvocates.co.ke` (create this mailbox/forward in cPanel → Email Accounts; falls back to `CONTACT_FROM_EMAIL` if omitted) |
 | `TURNSTILE_SECRET_KEY` | *(your Turnstile secret — omit if you skipped it)* |
 
 These SMTP values are TrueHost's official settings for website forms

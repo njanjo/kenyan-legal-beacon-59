@@ -29,7 +29,7 @@ const mediaItems: MediaItem[] = [
     description: 'Human rights violation case documentation',
     source: 'YouTube',
     date: '2024',
-    thumbnail: '/uploads/00794513-1237-4309-b855-598e2c8c5109.png'
+    thumbnail: '/uploads/00794513-1237-4309-b855-598e2c8c5109.webp'
   },
   {
     id: '2',

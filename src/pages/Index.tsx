@@ -1,11 +1,15 @@
+import { Suspense, lazy } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Scale, FileText, Shield, Users, Building, Heart, Phone, MessageCircle, Award, Gavel, Briefcase, Landmark } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import DownloadsSection from "@/components/DownloadsSection";
 import PartnersSection from "@/components/PartnersSection";
 import SEO, { SITE_URL, attorneySchema } from "@/components/SEO";
+
+// pdf-lib is ~500 KB — load the downloads section on demand so the
+// homepage first paint doesn't pay for PDF generation capability.
+const DownloadsSection = lazy(() => import("@/components/DownloadsSection"));
 
 /** Decorative fluted columns motif (courthouse portico) — watermarked, legal-themed. */
 const ColumnsMotif = ({ className = "" }: { className?: string }) => (
@@ -191,10 +195,10 @@ const Index = () => {
             />
 
             <img
-              src="/uploads/attorney-cutout.png"
+              src="/uploads/attorney-cutout.webp"
               alt="Francis Mwaura Muroki – Principal Advocate, lawyer in Thika Kenya"
-              width={900}
-              height={1357}
+              width={768}
+              height={1158}
               loading="eager"
               fetchPriority="high"
               decoding="async"
@@ -419,7 +423,9 @@ const Index = () => {
       <PartnersSection />
 
       {/* Downloads Section */}
-      <DownloadsSection />
+      <Suspense fallback={null}>
+        <DownloadsSection />
+      </Suspense>
 
       {/* Enhanced Contact CTA Section */}
       <section className="py-12 sm:py-16 bg-navy-900 dark:bg-navy-950 text-white">

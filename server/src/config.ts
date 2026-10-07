@@ -43,6 +43,16 @@ export const config = {
   CONTACT_TO_EMAIL: readString('CONTACT_TO_EMAIL'),
   CONTACT_FROM_EMAIL: readString('CONTACT_FROM_EMAIL'),
 
+  /**
+   * Dedicated no-reply sender for the client acknowledgement email.
+   * Falls back to CONTACT_FROM_EMAIL when unset. Create this mailbox
+   * (or forwarder) in cPanel so SPF/DKIM align with the firm's domain.
+   */
+  NO_REPLY_EMAIL: readString('NO_REPLY_EMAIL'),
+
+  /** Display name used in the no-reply acknowledgement ("Firm (No Reply)"). */
+  FIRM_NAME: readString('FIRM_NAME', 'Mwaura Muroki Associates & Advocates'),
+
   /** May be empty in dev; an empty secret disables verification (turnstile.ts). */
   TURNSTILE_SECRET_KEY: readString('TURNSTILE_SECRET_KEY'),
 

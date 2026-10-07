@@ -1,4 +1,5 @@
 import express, { type NextFunction, type Request, type Response, type RequestHandler } from 'express';
+import compression from 'compression';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -56,6 +57,11 @@ export function createApp(): express.Express {
   // Must be set before any middleware that inspects the client IP (rate limiter).
   app.set('trust proxy', 1);
   app.disable('x-powered-by');
+
+  // Gzip responses (JS/CSS/HTML/JSON) — the single biggest transfer-size win
+  // on slow mobile networks. Runs before static + routes; small payloads
+  // and already-compressed images/PDFs pass through untouched.
+  app.use(compression());
 
   // This API also serves the built SPA on cPanel/Passenger deployments, so the
   // CSP must allow the site's own assets: Google Fonts (stylesheet + font
@@ -162,8 +168,12 @@ export function createApp(): express.Express {
     }
 
     // 6. Send the notification email.
+    // A short reference (e.g. MM-2026-A1B2C3) is shared by the firm
+    // notification and the client's no-reply acknowledgement so the
+    // two can be matched later.
+    const reference = `MM-${new Date().getFullYear()}-${Date.now().toString(36).toUpperCase().slice(-6)}`;
     try {
-      await sendContactEmail({ fields, files, replyTo: fields.email });
+      await sendContactEmail({ fields, files, replyTo: fields.email, reference });
     } catch (err) {
       // Log only the error message and the target env var name — never the
       // message body, file names or file contents.
@@ -175,9 +185,9 @@ export function createApp(): express.Express {
       return;
     }
 
-    // 7. Best-effort auto-reply — must never fail the request.
+    // 7. Best-effort no-reply acknowledgement — must never fail the request.
     try {
-      await sendAutoReply({ to: fields.email, name: fields.name });
+      await sendAutoReply({ to: fields.email, name: fields.name, subject: fields.subject, reference });
     } catch (err) {
       const reason = err instanceof Error ? err.message : 'unknown error';
       console.warn(`Auto-reply failed (env CONTACT_FROM_EMAIL): ${reason}`);

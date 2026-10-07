@@ -1,12 +1,12 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { Scale, Globe, Gavel, Landmark, Users, HeartHandshake, type LucideIcon } from "lucide-react";
-import kenyaJudiciaryLogo from "@/assets/kenya-judiciary-logo.png";
-import ibaLogo from "@/assets/iba-logo.png";
-import lawSocietyKenyaLogo from "@/assets/law-society-kenya-logo.png";
-import eastAfricaLawSocietyLogo from "@/assets/east-africa-law-society-logo.png";
-import paralegalSocietyKenyaLogo from "@/assets/paralegal-society-kenya-logo.png";
-import kituoChaSheriaLogo from "@/assets/kituo-cha-sheria-logo.png";
+import kenyaJudiciaryLogo from "@/assets/kenya-judiciary-logo.webp";
+import ibaLogo from "@/assets/iba-logo.webp";
+import lawSocietyKenyaLogo from "@/assets/law-society-kenya-logo.webp";
+import eastAfricaLawSocietyLogo from "@/assets/east-africa-law-society-logo.webp";
+import paralegalSocietyKenyaLogo from "@/assets/paralegal-society-kenya-logo.webp";
+import kituoChaSheriaLogo from "@/assets/kituo-cha-sheria-logo.webp";
 
 interface Partner {
   name: string;
