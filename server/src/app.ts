@@ -65,9 +65,10 @@ export function createApp(): express.Express {
 
   // This API also serves the built SPA on cPanel/Passenger deployments, so the
   // CSP must allow the site's own assets: Google Fonts (stylesheet + font
-  // files), the Cloudflare Turnstile widget (script + iframe), and data/blob
-  // images. Inline styles are allowed for component libraries that emit
-  // style attributes; scripts stay strictly same-origin + Turnstile.
+  // files), the Cloudflare Turnstile widget (script + iframe), Google Maps
+  // embed (iframe), and data/blob images. Inline styles are allowed for
+  // component libraries that emit style attributes; scripts stay strictly
+  // same-origin + Turnstile.
   app.use(
     helmet({
       contentSecurityPolicy: {
@@ -76,7 +77,12 @@ export function createApp(): express.Express {
           baseUri: ["'self'"],
           objectSrc: ["'none'"],
           scriptSrc: ["'self'", 'https://challenges.cloudflare.com'],
-          frameSrc: ["'self'", 'https://challenges.cloudflare.com'],
+          frameSrc: [
+            "'self'",
+            'https://challenges.cloudflare.com',
+            'https://www.google.com',
+            'https://maps.google.com',
+          ],
           styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
           fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com'],
           imgSrc: ["'self'", 'data:', 'blob:'],
