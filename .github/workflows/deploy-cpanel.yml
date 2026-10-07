@@ -56,7 +56,9 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT || '21' }}
-          protocol: ftp
+          protocol: ftps
+          security: loose
+          timeout: 60000
           local-dir: ./deploy-stage/
           server-dir: ${{ secrets.FTP_SERVER_DIR || '/mwaura-app/' }}
           dangerous-clean-slate: false
