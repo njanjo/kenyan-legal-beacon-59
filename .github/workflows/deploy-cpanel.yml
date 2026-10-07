@@ -1,0 +1,68 @@
+name: Deploy to Truehost cPanel
+
+# Auto-deploys on every push to main.
+# First-time setup (one-off, in cPanel):
+#   1. Create the Node.js app (app root: mwaura-app, startup: server/dist/index.js).
+#   2. Upload deploy/out/cpanel-app.zip once manually so node_modules + .env exist.
+#   3. Add GitHub repo secrets: FTP_HOST, FTP_USERNAME, FTP_PASSWORD,
+#      (optional) FTP_PORT, FTP_SERVER_DIR, VITE_TURNSTILE_SITE_KEY.
+# After that, every push to main only syncs built files and restarts Passenger.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install frontend deps
+        run: npm ci
+
+      - name: Build frontend (includes SEO prerender)
+        run: npm run build
+        env:
+          VITE_TURNSTILE_SITE_KEY: ${{ secrets.VITE_TURNSTILE_SITE_KEY }}
+
+      - name: Install API deps
+        run: npm ci --prefix server
+
+      - name: Build API
+        run: npm run build --prefix server
+
+      - name: Stage deploy files
+        run: |
+          rm -rf deploy-stage
+          mkdir -p deploy-stage/server deploy-stage/tmp
+          cp -r dist deploy-stage/dist
+          cp -r server/dist deploy-stage/server/dist
+          cp server/package.json deploy-stage/package.json
+          # Touching tmp/restart.txt tells Passenger to restart the Node app
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > deploy-stage/tmp/restart.txt
+          ls -R deploy-stage | head -30
+
+      - name: FTP deploy to cPanel app root
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT || '21' }}
+          protocol: ftp
+          local-dir: ./deploy-stage/
+          server-dir: ${{ secrets.FTP_SERVER_DIR || '/mwaura-app/' }}
+          dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/.github*
+            **/node_modules/**
+            .env
+            **/.env
