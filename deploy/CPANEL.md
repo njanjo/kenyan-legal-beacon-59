@@ -129,13 +129,21 @@ mixed-content-free assets require it.
 1. Re-run `deploy\build-cpanel.ps1`.
 2. File Manager → delete the old `dist/` and `server/dist/` (or just overwrite).
 3. Upload + extract the new zip again.
-4. **Restart** the app in Setup Node.js App.
+ 4. **Restart** the app in Setup Node.js App.
+
+> After any update that adds or changes a server dependency (you'll see
+> `server/package.json` in the commit, or `stderr.log` says
+> `Cannot find module '...'`): in **Setup Node.js App** click
+> **Run NPM Install** first, then **Restart**.
 
 ## Troubleshooting
 
 - **503 / Passenger error page** → the app crashed on boot.
   Read **`mwaura-app/stderr.log`** (File Manager, next to `package.json`);
   the exact error is there. After any fix: **Restart**.
+  - `Cannot find module 'X'` → the host's `node_modules` is older than the
+    deployed code. Click **Run NPM Install** in Setup Node.js App, then
+    **Restart**.
 - **Page loads but `/api/*` 404s** → startup file wrong or `server/dist`
   missing; the startup file must be `server/dist/index.js`.
 - **Emails fail ("Failed to send your message")** →

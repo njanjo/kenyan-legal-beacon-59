@@ -45,6 +45,11 @@ jobs:
           cp -r dist deploy-stage/dist
           cp -r server/dist deploy-stage/server/dist
           cp server/package.json deploy-stage/package.json
+          # Ship the lockfile too so cPanel's "Run NPM Install" resolves the
+          # exact dependency tree (required after any deploy that adds/updates
+          # a dependency, e.g. compression). The app boots from the host's
+          # node_modules, which FTP never touches.
+          cp server/package-lock.json deploy-stage/package-lock.json
           # Touching tmp/restart.txt tells Passenger to restart the Node app
           date -u +"%Y-%m-%dT%H:%M:%SZ" > deploy-stage/tmp/restart.txt
           ls -R deploy-stage | head -30
