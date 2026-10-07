@@ -1,0 +1,22 @@
+{
+  "name": "Mwaura Muroki Associates & Advocates",
+  "short_name": "Mwaura Muroki",
+  "description": "Timely and affordable legal services in Thika & Kenya.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a1633",
+  "theme_color": "#1e3a8a",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}

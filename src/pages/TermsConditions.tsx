@@ -1,10 +1,17 @@
 
 import { Scale, ArrowLeft, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
+import SEO, { SITE_URL } from "@/components/SEO";
 
 const TermsConditions = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-navy-50 to-navy-100 dark:from-navy-950 dark:to-navy-950">
+      <SEO
+        title="Terms & Conditions | Mwaura Muroki Associates"
+        description="Terms and conditions for using the Mwaura Muroki Associates & Advocates website."
+        canonical={`${SITE_URL}/terms-conditions`}
+        noindex
+      />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}

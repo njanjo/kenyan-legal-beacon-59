@@ -5,6 +5,7 @@ import { Scale, Award, BookOpen, Users, Briefcase, MapPin, Calendar, Mail, Phone
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import SEO, { SITE_URL } from "@/components/SEO";
 
 const About = () => {
   const specializations = [
@@ -63,6 +64,21 @@ const About = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="About Francis Mwaura Muroki | Advocate of the High Court of Kenya, Thika"
+        description="Meet Francis Mwaura Muroki, Principal Advocate & founder of Mwaura Muroki Associates (Thika, est. 2022). Licensed by LSK, Young Male Lawyer of the Year 2024, LSK Thika Vice Secretary, Kenya Times columnist."
+        canonical={`${SITE_URL}/about`}
+        keywords="Francis Mwaura Muroki, advocate Thika, lawyer Kenya profile, LSK Thika, young lawyer Kenya award"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "Person",
+          name: "Francis Mwaura Muroki",
+          jobTitle: "Principal Advocate",
+          worksFor: { "@type": "Organization", name: "Mwaura Muroki Associates & Advocates", url: SITE_URL },
+          address: { "@type": "PostalAddress", streetAddress: "Equity Plaza, Commercial Street, 4th Floor Wing B Room 420", addressLocality: "Thika", addressCountry: "KE" },
+          telephone: "+254704780934",
+        }}
+      />
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-navy-900 to-navy-700 dark:from-navy-950 dark:to-navy-700 text-white py-16">
         <div className="container mx-auto px-4">

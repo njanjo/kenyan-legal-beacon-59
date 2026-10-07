@@ -2,6 +2,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Gavel, FileText, Shield, Heart, Users, Brain, Briefcase, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
+import SEO, { SITE_URL } from "@/components/SEO";
+
+const slugify = (s: string) =>
+  s.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
 const Services = () => {
   const services = [
@@ -100,6 +104,28 @@ const Services = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Legal Services in Kenya – Litigation, Contracts, Family, Sports Law | Mwaura Muroki"
+        description="Full legal services in Thika & Kenya: commercial litigation, contract drafting & negotiation, mediation & arbitration, child custody & family law, sports law, legal research, mental health law."
+        canonical={`${SITE_URL}/services`}
+        keywords="commercial litigation Kenya, contract drafting Kenya, dispute resolution Thika, family lawyer Thika custody maintenance adoption, sports law Kenya, mental health law Kenya, legal research Kenya"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          itemListElement: services.map((s, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            item: {
+              "@type": "Service",
+              name: s.title,
+              description: s.description,
+              provider: { "@type": "Attorney", name: "Mwaura Muroki Associates & Advocates", url: SITE_URL },
+              areaServed: "Kenya",
+              url: `${SITE_URL}/services#${slugify(s.title)}`,
+            },
+          })),
+        }}
+      />
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-navy-900 to-navy-700 dark:from-navy-950 dark:to-navy-700 text-white py-16">
         <div className="container mx-auto px-4 text-center">
@@ -120,7 +146,8 @@ const Services = () => {
               return (
                 <Card
                   key={index}
-                  className={`transition-all duration-300 hover:border-blue-700/40 hover:shadow-xl hover:shadow-blue-700/10 dark:hover:border-gold-400/40 ${
+                  id={slugify(service.title)}
+                  className={`scroll-mt-24 transition-all duration-300 hover:border-blue-700/40 hover:shadow-xl hover:shadow-blue-700/10 dark:hover:border-gold-400/40 ${
                     isLast ? "lg:col-span-2" : ""
                   }`}
                 >

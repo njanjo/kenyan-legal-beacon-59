@@ -54,18 +54,18 @@ const Footer = () => {
           </div>
 
           {/* Legal Services */}
-          <div>
+          <nav aria-label="Legal services">
             <h3 className="font-semibold text-lg mb-4">Legal Services</h3>
             <ul className="space-y-2 text-blue-100">
-              <li>Commercial Litigation</li>
-              <li>Contract Drafting & Negotiation</li>
-              <li>Dispute Resolution</li>
-              <li>Family Law (Custody, Maintenance, Adoption)</li>
-              <li>Sports Law</li>
-              <li>Legal Research</li>
-              <li>Mental Health Law</li>
+              <li><Link to="/services#commercial-litigation" className="hover:text-white transition-colors">Commercial Litigation in Kenya</Link></li>
+              <li><Link to="/services#contract-drafting-and-negotiation" className="hover:text-white transition-colors">Contract Drafting &amp; Negotiation</Link></li>
+              <li><Link to="/services#dispute-resolution" className="hover:text-white transition-colors">Dispute Resolution &amp; Arbitration</Link></li>
+              <li><Link to="/services#family-law" className="hover:text-white transition-colors">Family Law (Custody, Maintenance, Adoption)</Link></li>
+              <li><Link to="/services#sports-law" className="hover:text-white transition-colors">Sports Law Kenya</Link></li>
+              <li><Link to="/services#legal-research" className="hover:text-white transition-colors">Legal Research</Link></li>
+              <li><Link to="/services#mental-health-law" className="hover:text-white transition-colors">Mental Health Law</Link></li>
             </ul>
-          </div>
+          </nav>
 
           {/* Contact Info & Social Media */}
           <div>
@@ -102,10 +102,17 @@ const Footer = () => {
                 </div>
               </div>
               
-              <div className="flex items-center space-x-2">
-                <MapPin className="w-4 h-4 text-yellow-400" />
-                <span className="text-blue-100">Thika, Kenya</span>
-              </div>
+              <address className="not-italic">
+                <div className="flex items-start space-x-2">
+                  <MapPin className="w-4 h-4 text-yellow-400 mt-1 flex-shrink-0" />
+                  <span className="text-blue-100 text-sm">
+                    Equity Plaza, Commercial Street,<br />
+                    4th Floor Wing B Room 420,<br />
+                    Thika, Kenya
+                  </span>
+                </div>
+              </address>
+              <p className="text-blue-200 text-xs mt-2">Mon–Fri 8:00am–5:00pm · Sat 9:00am–1:00pm</p>
 
               {/* Social Media Links */}
               <div className="mt-4">

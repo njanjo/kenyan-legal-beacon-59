@@ -1,6 +1,7 @@
 import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
 import { Scale } from "lucide-react";
+import SEO, { SITE_URL } from "@/components/SEO";
 
 const NotFound = () => {
   const location = useLocation();
@@ -14,6 +15,12 @@ const NotFound = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-navy-50 to-navy-100 dark:from-navy-950 dark:to-navy-950 px-4">
+      <SEO
+        title="Page Not Found | Mwaura Muroki Associates"
+        description="The page you requested could not be found."
+        canonical={SITE_URL}
+        noindex
+      />
       <div className="text-center">
         <Scale className="w-12 h-12 text-navy-700 dark:text-gold-400 mx-auto mb-6" />
         <h1 className="font-display text-7xl font-bold text-navy-900 dark:text-gold-400 mb-4">

@@ -8,6 +8,7 @@ import { Phone, Mail, MapPin, Clock, MessageCircle, CheckCircle, AlertCircle, Fa
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import SEO, { SITE_URL } from "@/components/SEO";
 
 declare global {
   interface Window {
@@ -284,6 +285,27 @@ const Contact = () => {
       transition={{ duration: 0.5 }}
       className="min-h-screen bg-background page-transition"
     >
+      <SEO
+        title="Contact Advocate in Thika | Book a Consultation – Mwaura Muroki Associates"
+        description="Contact Mwaura Muroki Associates & Advocates, Equity Plaza Commercial Street 4th Floor Wing B Rm 420, Thika. Call/WhatsApp +254 704 780 934. Mon–Fri 8am–5pm, Sat 9am–1pm."
+        canonical={`${SITE_URL}/contact`}
+        keywords="contact lawyer Thika, book advocate consultation Kenya, law firm Thika address, Equity Plaza Thika lawyer"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "ContactPage",
+          mainEntity: {
+            "@type": "Attorney",
+            name: "Mwaura Muroki Associates & Advocates",
+            telephone: "+254704780934",
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "Equity Plaza, Commercial Street, 4th Floor Wing B Room 420",
+              addressLocality: "Thika",
+              addressCountry: "KE",
+            },
+          },
+        }}
+      />
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-navy-900 to-navy-700 dark:from-navy-950 dark:to-navy-700 text-white py-16">
         <div className="container mx-auto px-4 text-center">
@@ -587,6 +609,14 @@ const Contact = () => {
                         <MapPin className="w-4 h-4" />
                         Open in Google Maps
                       </a>
+                      <iframe
+                        title="Mwaura Muroki Associates office map – Equity Plaza, Thika"
+                        src="https://www.google.com/maps?q=Equity+Plaza+Commercial+Street+Thika+Kenya&output=embed"
+                        className="mt-3 h-56 w-full rounded-md border-0"
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        allowFullScreen
+                      />
                     </div>
                   </div>
                 </CardContent>

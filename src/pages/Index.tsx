@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import DownloadsSection from "@/components/DownloadsSection";
 import PartnersSection from "@/components/PartnersSection";
+import SEO, { SITE_URL, attorneySchema } from "@/components/SEO";
 
 /** Decorative fluted columns motif (courthouse portico) — watermarked, legal-themed. */
 const ColumnsMotif = ({ className = "" }: { className?: string }) => (
@@ -121,6 +122,21 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title="Lawyer in Thika & Kenya | Commercial, Family & Sports Law – Mwaura Muroki Associates"
+        description="Mwaura Muroki Associates & Advocates – timely, affordable lawyers in Thika serving Nairobi & Kenya. Commercial litigation, contracts, dispute resolution, family law, sports law & mental health law. Call +254 704 780 934."
+        canonical={SITE_URL + "/"}
+        keywords="lawyer Thika, advocate Thika, law firm Kenya, commercial litigation Kenya, family lawyer Kenya, sports lawyer Kenya, contract lawyer Nairobi, dispute resolution Kenya, Francis Mwaura Muroki"
+        schema={[
+          attorneySchema,
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Mwaura Muroki Associates & Advocates",
+            url: SITE_URL + "/",
+          },
+        ]}
+      />
       {/* Hero Section — full-bleed navy canvas, portrait blended left, legal motif backdrop */}
       <section className="relative isolate min-h-[94vh] overflow-hidden bg-gradient-to-br from-navy-950 via-navy-900 to-navy-950 dark:from-navy-950 dark:via-navy-950 dark:to-navy-900 text-white">
         {/* Atmosphere: soft gold + court-blue glows */}
@@ -176,10 +192,11 @@ const Index = () => {
 
             <img
               src="/uploads/attorney-cutout.png"
-              alt="Francis Mwaura Muroki, Principal Advocate"
+              alt="Francis Mwaura Muroki – Principal Advocate, lawyer in Thika Kenya"
               width={900}
               height={1357}
-              loading="lazy"
+              loading="eager"
+              fetchPriority="high"
               decoding="async"
               className="relative mx-auto block aspect-[900/1357] w-full max-w-[26rem] object-cover object-top saturate-[0.9] brightness-[0.97] contrast-[0.97]"
             />

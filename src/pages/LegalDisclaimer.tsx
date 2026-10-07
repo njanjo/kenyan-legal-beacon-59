@@ -1,10 +1,17 @@
 
 import { Scale, ArrowLeft, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
+import SEO, { SITE_URL } from "@/components/SEO";
 
 const LegalDisclaimer = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-navy-50 to-navy-100 dark:from-navy-950 dark:to-navy-950">
+      <SEO
+        title="Legal Disclaimer | Mwaura Muroki Associates"
+        description="Legal disclaimer: website information is general information only, not legal advice."
+        canonical={`${SITE_URL}/legal-disclaimer`}
+        noindex
+      />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}

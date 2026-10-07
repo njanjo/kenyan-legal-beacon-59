@@ -1,10 +1,17 @@
 
 import { Scale, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import SEO, { SITE_URL } from "@/components/SEO";
 
 const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-navy-50 to-navy-100 dark:from-navy-950 dark:to-navy-950">
+      <SEO
+        title="Privacy Policy | Mwaura Muroki Associates"
+        description="Privacy policy for Mwaura Muroki Associates & Advocates under Kenya's Data Protection Act 2019."
+        canonical={`${SITE_URL}/privacy-policy`}
+        noindex
+      />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}

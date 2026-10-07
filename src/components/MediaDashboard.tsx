@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import SEO, { SITE_URL } from '@/components/SEO';
 
 interface MediaItem {
   id: string;
@@ -132,6 +133,12 @@ const MediaDashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-navy-950 via-navy-900 to-navy-950 p-6">
+      <SEO
+        title="Media Center – Legal Insights & Videos | Mwaura Muroki Associates"
+        description="Watch and read legal insights from Mwaura Muroki Associates: human rights documentation, constitutional analysis, hustler economy commentary and professional legal updates from Thika, Kenya."
+        canonical={`${SITE_URL}/media`}
+        keywords="Kenya legal news, Mwaura Muroki videos, human rights Kenya, constitutional law Kenya insights"
+      />
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
