@@ -186,6 +186,12 @@ const Footer = () => {
         <div className="border-t border-blue-800 mt-8 pt-8 text-center text-blue-100">
           <p>&copy; {new Date().getFullYear()} Mwaura Muroki Associates & Advocates. All rights reserved.</p>
           <p className="mt-2 text-sm">
+            Developed &amp; Powered by{" "}
+            <a href="mailto:vontritechnologies@gmail.com" className="text-blue-100 hover:text-white transition-colors">
+              Vontri Technologies
+            </a>
+          </p>
+          <p className="mt-2 text-sm">
             Licensed Advocate of the High Court of Kenya | Member of Law Society of Kenya (LSK)
           </p>
           <div className="mt-4 flex flex-wrap justify-center gap-4 text-sm">
