@@ -1,7 +1,17 @@
 import dotenv from 'dotenv';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 // Load environment variables once, at module evaluation time.
+// 1. .env in the working directory (dev: `server/`; cPanel/Passenger: the
+//    application root). Passenger-provided variables already exist in
+//    process.env, and dotenv never overwrites those — so cPanel's
+//    "Environment Variables" always win over a shipped .env file.
+// 2. server/.env resolved next to this file — fallback in case the process
+//    working directory is not where we expect it.
 dotenv.config();
+const moduleDir = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: path.resolve(moduleDir, '..', '.env') });
 
 function readString(key: string, fallback = ''): string {
   const value = process.env[key];

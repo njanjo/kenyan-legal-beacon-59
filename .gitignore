@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# cPanel package output (deploy/build-cpanel.ps1)
+deploy/out/
+
 # Environment variables (never commit secrets)
 .env
 .env.*

@@ -1,4 +1,7 @@
 import express, { type NextFunction, type Request, type Response, type RequestHandler } from 'express';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import helmet from 'helmet';
 import { rateLimit } from 'express-rate-limit';
 import multer from 'multer';
@@ -53,7 +56,29 @@ export function createApp(): express.Express {
   // Must be set before any middleware that inspects the client IP (rate limiter).
   app.set('trust proxy', 1);
   app.disable('x-powered-by');
-  app.use(helmet());
+
+  // This API also serves the built SPA on cPanel/Passenger deployments, so the
+  // CSP must allow the site's own assets: Google Fonts (stylesheet + font
+  // files), the Cloudflare Turnstile widget (script + iframe), and data/blob
+  // images. Inline styles are allowed for component libraries that emit
+  // style attributes; scripts stay strictly same-origin + Turnstile.
+  app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: ["'self'"],
+          baseUri: ["'self'"],
+          objectSrc: ["'none'"],
+          scriptSrc: ["'self'", 'https://challenges.cloudflare.com'],
+          frameSrc: ["'self'", 'https://challenges.cloudflare.com'],
+          styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+          fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com'],
+          imgSrc: ["'self'", 'data:', 'blob:'],
+          connectSrc: ["'self'"],
+        },
+      },
+    }),
+  );
 
   app.get('/api/health', (_req: Request, res: Response) => {
     res.json({ status: 'ok' });
@@ -161,10 +186,46 @@ export function createApp(): express.Express {
     res.status(200).json({ success: true });
   });
 
-  // JSON 404 for any other API route.
+  // JSON 404 for any other API route — runs before the static SPA so API
+  // paths never fall through to index.html.
   app.use('/api/*', (_req: Request, res: Response) => {
     res.status(404).json({ error: 'Not found' });
   });
+
+  // ---- Static SPA (cPanel/Passenger deployment) -------------------------
+  // The frontend build sits in <project>/dist (two levels up from this
+  // compiled file at server/dist). Override with STATIC_DIR if relocated.
+  // Locally in dev the dist folder may be absent — then this block is skipped
+  // entirely and the Vite dev server serves the UI as before.
+  const moduleDir = path.dirname(fileURLToPath(import.meta.url));
+  const distDir = process.env.STATIC_DIR
+    ? path.resolve(process.env.STATIC_DIR)
+    : path.resolve(moduleDir, '..', '..', 'dist');
+
+  if (fs.existsSync(path.join(distDir, 'index.html'))) {
+    app.use(
+      express.static(distDir, {
+        index: false,
+        setHeaders: (res, filePath) => {
+          if (filePath.endsWith('index.html')) {
+            res.setHeader('Cache-Control', 'no-cache');
+          } else if (filePath.includes(`${path.sep}assets${path.sep}`)) {
+            // Vite fingerprints everything under assets/ — safe to cache hard.
+            res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+          } else {
+            res.setHeader('Cache-Control', 'public, max-age=3600');
+          }
+        },
+      }),
+    );
+
+    // History-mode fallback: any GET that survived the API 404 above gets the
+    // SPA shell, so deep links like /contact survive a refresh.
+    app.get('*', (_req: Request, res: Response) => {
+      res.setHeader('Cache-Control', 'no-cache');
+      res.sendFile(path.join(distDir, 'index.html'));
+    });
+  }
 
   // Final error handler (must keep 4 parameters so Express treats it as one).
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -62,7 +62,11 @@ See [server/README.md](server/README.md) for endpoints, validation rules and err
 curl http://127.0.0.1:4000/api/health   # {"status":"ok"}
 ```
 
-## Production deployment (nginx + PM2)
+## Production deployment
+
+- **cPanel shared hosting** (Setup Node.js App): see **[deploy/CPANEL.md](deploy/CPANEL.md)** —
+  build a zip with `powershell -File deploy\build-cpanel.ps1` and follow the guide.
+- **VPS (nginx + PM2)**:
 
 Prerequisites on the server: Node >= 18, pm2 (`npm i -g pm2`), nginx, certbot.
 
