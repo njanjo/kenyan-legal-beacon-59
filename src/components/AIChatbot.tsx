@@ -309,9 +309,9 @@ const AIChatbot = () => {
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           >
-            <Card className="w-[calc(100vw-2rem)] max-w-96 h-[28rem] shadow-2xl border bg-white/95 backdrop-blur-sm dark:bg-gray-900/95 border-gray-200 dark:border-gray-700">
+            <Card className="flex w-[calc(100vw-2rem)] max-w-96 flex-col h-[min(28rem,calc(100dvh-9rem))] shadow-2xl border bg-white/95 backdrop-blur-sm dark:bg-gray-900/95 border-gray-200 dark:border-gray-700">
               {/* Chat Header */}
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-navy-800 dark:bg-navy-900 text-white rounded-t-lg">
+              <CardHeader className="flex shrink-0 flex-row items-center justify-between space-y-0 pb-2 bg-navy-800 dark:bg-navy-900 text-white rounded-t-lg">
                 <div className="flex items-center space-x-2">
                   <Bot className="w-5 h-5 text-gold-400" />
                   <CardTitle className="text-sm font-medium">Legal Research Assistant</CardTitle>
@@ -340,7 +340,7 @@ const AIChatbot = () => {
 
               {/* Chat Content */}
               {!chatState.isMinimized && (
-                <CardContent className="flex flex-col h-80 p-0">
+                <CardContent className="flex min-h-0 flex-1 flex-col p-0">
                   {/* Messages Container */}
                   <div className="flex-1 overflow-y-auto p-4 space-y-3">
                     {chatState.messages.map((message) => (

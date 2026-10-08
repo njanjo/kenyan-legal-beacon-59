@@ -226,11 +226,11 @@ const About = () => {
                   </div>
                   <div className="flex items-center gap-2">
                     <Mail className="w-4 h-4 text-gray-500" />
-                    <div className="flex flex-col">
-                      <a href="mailto:mwauramurokiadvocates@gmail.com" className="text-blue-700 dark:text-gold-400 hover:underline text-sm">
+                    <div className="flex flex-col min-w-0">
+                      <a href="mailto:mwauramurokiadvocates@gmail.com" className="text-blue-700 dark:text-gold-400 hover:underline text-sm break-all">
                         mwauramurokiadvocates@gmail.com
                       </a>
-                      <a href="mailto:mwaurafmuroki@yahoo.com" className="text-blue-700 dark:text-gold-400 hover:underline text-sm">
+                      <a href="mailto:mwaurafmuroki@yahoo.com" className="text-blue-700 dark:text-gold-400 hover:underline text-sm break-all">
                         mwaurafmuroki@yahoo.com
                       </a>
                     </div>
@@ -318,7 +318,7 @@ const About = () => {
                     className="relative flex items-start gap-6"
                   >
                     {/* Timeline dot */}
-                    <div className="flex-shrink-0 w-16 h-16 bg-navy-700 dark:bg-gold-500 dark:text-navy-950 text-white rounded-full flex items-center justify-center font-bold text-sm z-10">
+                    <div className="flex-shrink-0 w-16 h-16 bg-navy-700 dark:bg-gold-500 dark:text-navy-950 text-white rounded-full flex items-center justify-center font-bold text-[10px] sm:text-xs text-center leading-tight px-1 z-10">
                       {item.year}
                     </div>
                     

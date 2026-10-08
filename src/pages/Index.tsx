@@ -268,7 +268,7 @@ const Index = () => {
               <Button
                 asChild
                 size="lg"
-                className="bg-gold-400 text-navy-950 hover:bg-gold-300 font-bold shadow-lg shadow-gold-400/20 transition-all duration-300"
+                className="w-full justify-center bg-gold-400 text-navy-950 hover:bg-gold-300 font-bold shadow-lg shadow-gold-400/20 transition-all duration-300 sm:w-auto"
               >
                 <Link to="/contact">Book a Consultation</Link>
               </Button>
@@ -276,7 +276,7 @@ const Index = () => {
                 asChild
                 size="lg"
                 variant="outline"
-                className="border-white/60 bg-white/10 text-white font-bold backdrop-blur-sm transition-all duration-300 hover:bg-white hover:text-navy-900"
+                className="w-full justify-center border-white/60 bg-white/10 text-white font-bold backdrop-blur-sm transition-all duration-300 hover:bg-white hover:text-navy-900 sm:w-auto"
               >
                 <a href="tel:+254704780934">
                   <Phone className="h-5 w-5" />
@@ -468,20 +468,20 @@ const Index = () => {
             Contact us today for a consultation and let us help you navigate your legal challenges
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button asChild size="lg" className="bg-gold-400 text-navy-950 hover:bg-gold-300 font-bold shadow-lg transition-all duration-300">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-stretch sm:items-center">
+            <Button asChild size="lg" className="w-full sm:w-auto justify-center bg-gold-400 text-navy-950 hover:bg-gold-300 font-bold shadow-lg transition-all duration-300">
               <Link to="/contact">Book Consultation</Link>
             </Button>
 
-            <div className="flex flex-col sm:flex-row items-center gap-4">
-              <Button asChild size="lg" variant="outline" className="border-white/60 text-white hover:bg-white hover:text-navy-900 bg-white/10 font-bold">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+              <Button asChild size="lg" variant="outline" className="w-full sm:w-auto justify-center border-white/60 text-white hover:bg-white hover:text-navy-900 bg-white/10 font-bold">
                 <a href="tel:+254704780934" className="flex items-center gap-2">
                   <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
                   Call Now
                 </a>
               </Button>
 
-              <Button asChild size="lg" variant="outline" className="border-white/60 text-white hover:bg-white hover:text-navy-900 bg-white/10 font-bold">
+              <Button asChild size="lg" variant="outline" className="w-full sm:w-auto justify-center border-white/60 text-white hover:bg-white hover:text-navy-900 bg-white/10 font-bold">
                 <Link to="/contact" className="flex items-center gap-2">
                   <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
                   Send Message

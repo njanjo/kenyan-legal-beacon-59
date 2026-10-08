@@ -800,7 +800,7 @@ const DownloadsSection = () => {
                               Fill Online
                             </Button>
                           </DialogTrigger>
-                          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-navy-950/95 backdrop-blur-lg border-gray-700/50">
+                          <DialogContent className="w-[calc(100%-2rem)] max-w-4xl max-h-[90vh] overflow-y-auto bg-navy-950/95 backdrop-blur-lg border-gray-700/50">
                             <DialogHeader>
                               <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-gold-400 to-gold-500 bg-clip-text text-transparent">
                                 {doc.title}
