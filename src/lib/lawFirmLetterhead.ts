@@ -182,10 +182,11 @@ function ensureSpace(ctx: Ctx, needed: number) {
 }
 
 function drawTitleBlock(ctx: Ctx, title: string, refCode: string, dateStr: string) {
-  const { page, fonts } = ctx;
-  let y = ctx.cursorY;
+  const { fonts } = ctx;
   ensureSpace(ctx, 76);
-  y = ctx.cursorY;
+  // NOTE: capture the page AFTER ensureSpace — it may have added a new page.
+  const page = ctx.page;
+  const y = ctx.cursorY;
   drawCentered(page, title.toUpperCase(), y, fonts.serifBold, 15, NAVY);
   const tw = textWidth(fonts.serifBold, title.toUpperCase(), 15);
   page.drawLine({
@@ -194,22 +195,25 @@ function drawTitleBlock(ctx: Ctx, title: string, refCode: string, dateStr: strin
     thickness: 1.5,
     color: GOLD,
   });
-  y -= 26;
-  page.drawText(`REF: ${refCode}`, { x: MARGIN, y, size: 9, font: fonts.sansBold, color: NAVY_SOFT });
+  const metaY = y - 26;
+  page.drawText(`REF: ${refCode}`, { x: MARGIN, y: metaY, size: 9, font: fonts.sansBold, color: NAVY_SOFT });
   const dateLabel = `DATE: ${dateStr}`;
   page.drawText(dateLabel, {
     x: PAGE_W - MARGIN - textWidth(fonts.sans, dateLabel, 9),
-    y,
+    y: metaY,
     size: 9,
     font: fonts.sans,
     color: MUTED,
   });
-  ctx.cursorY = y - 24;
+  ctx.cursorY = metaY - 24;
 }
 
-function drawSectionHeading(ctx: Ctx, heading: string) {
-  const { page, fonts } = ctx;
-  ensureSpace(ctx, 40);
+function drawSectionHeading(ctx: Ctx, heading: string, keepWithNext = 0) {
+  const { fonts } = ctx;
+  // keepWithNext reserves room for the first field so a heading is never
+  // orphaned at the bottom of a page while its content starts the next one.
+  ensureSpace(ctx, 40 + keepWithNext);
+  const page = ctx.page;
   const y = ctx.cursorY;
   const label = heading.toUpperCase();
   page.drawText(label, { x: MARGIN, y, size: 10.5, font: fonts.sansBold, color: NAVY });
@@ -223,11 +227,12 @@ function drawSectionHeading(ctx: Ctx, heading: string) {
 }
 
 function drawField(ctx: Ctx, field: LetterheadField) {
-  const { page, fonts } = ctx;
+  const { fonts } = ctx;
   const clean = field.value && field.value.trim() ? field.value.trim() : "Not provided";
   const lines = wrapText(clean, fonts.sans, 10, CONTENT_W - 20);
   const boxH = lines.length * 13 + 14;
   ensureSpace(ctx, boxH + 34);
+  const page = ctx.page;
   let y = ctx.cursorY;
   page.drawText(field.label.toUpperCase(), { x: MARGIN, y, size: 8.5, font: fonts.sansBold, color: MUTED });
   y -= 6;
@@ -249,8 +254,9 @@ function drawField(ctx: Ctx, field: LetterheadField) {
 }
 
 function drawSignatories(ctx: Ctx, signatories: Signatory[]) {
-  const { page, fonts } = ctx;
+  const { fonts } = ctx;
   ensureSpace(ctx, 110);
+  let page = ctx.page;
   let y = ctx.cursorY;
   page.drawText("SIGNATURES", { x: MARGIN, y, size: 10.5, font: fonts.sansBold, color: NAVY });
   page.drawLine({
@@ -264,6 +270,8 @@ function drawSignatories(ctx: Ctx, signatories: Signatory[]) {
   const colW = (CONTENT_W - 40) / 2;
   for (let i = 0; i < signatories.length; i += 2) {
     ensureSpace(ctx, 74);
+    // Re-capture: ensureSpace may have added a new page mid-block.
+    page = ctx.page;
     y = ctx.cursorY;
     const row = signatories.slice(i, i + 2);
     row.forEach((sig, col) => {
@@ -278,8 +286,9 @@ function drawSignatories(ctx: Ctx, signatories: Signatory[]) {
 }
 
 function drawSealAndNotice(ctx: Ctx, notice: string) {
-  const { page, fonts } = ctx;
+  const { fonts } = ctx;
   ensureSpace(ctx, 120);
+  const page = ctx.page;
   const y = ctx.cursorY;
 
   // Official seal box (right) beside the notice (left)
@@ -354,6 +363,19 @@ export function formatLongDate(d = new Date()): string {
   return d.toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
 }
 
+/** Vertical space a filled field block will occupy (for orphan control). */
+function filledFieldBlockHeight(ctx: Ctx, value: string): number {
+  const clean = value && value.trim() ? value.trim() : "Not provided";
+  const lines = wrapText(clean, ctx.fonts.sans, 10, CONTENT_W - 20);
+  return lines.length * 13 + 14 + 34;
+}
+
+/** Vertical space a blank field block will occupy (for orphan control). */
+function blankFieldBlockHeight(field: BlankField): number {
+  if (field.checkboxOptions && field.checkboxOptions.length > 0) return 44;
+  return (field.lines ?? 1) * LINE_GAP + 26;
+}
+
 export interface LetterheadInput {
   title: string;
   refPrefix: string;
@@ -377,9 +399,150 @@ export async function buildLetterheadPdf(input: LetterheadInput): Promise<Uint8A
   newPage(ctx);
   drawTitleBlock(ctx, input.title, makeRefCode(input.refPrefix), formatLongDate());
   for (const section of input.sections) {
-    drawSectionHeading(ctx, section.heading);
+    const first = section.fields[0];
+    drawSectionHeading(ctx, section.heading, first ? filledFieldBlockHeight(ctx, first.value) : 0);
     for (const field of section.fields) drawField(ctx, field);
     ctx.cursorY -= 6;
+  }
+  drawSignatories(ctx, input.signatories);
+  drawSealAndNotice(ctx, input.notice);
+  drawFooters(ctx);
+  return doc.save();
+}
+
+/* ------------------------------------------------------------------ */
+/* Blank printable templates (filled in by hand)                       */
+/* ------------------------------------------------------------------ */
+
+export interface BlankField {
+  label: string;
+  /** Ruled handwriting lines. Defaults to 1. */
+  lines?: number;
+  /** Renders tick-boxes instead of ruled lines. */
+  checkboxOptions?: string[];
+}
+
+export interface BlankSection {
+  heading: string;
+  fields: BlankField[];
+}
+
+export interface BlankTemplateInput {
+  title: string;
+  formCode: string;
+  instructions: string[];
+  sections: BlankSection[];
+  signatories: Signatory[];
+  notice: string;
+}
+
+const RULE_COLOR = rgb(0.68, 0.69, 0.72);
+const LINE_GAP = 20;
+
+function drawBlankTitleBlock(ctx: Ctx, title: string, formCode: string) {
+  const { fonts } = ctx;
+  ensureSpace(ctx, 76);
+  const page = ctx.page;
+  const y = ctx.cursorY;
+  drawCentered(page, title.toUpperCase(), y, fonts.serifBold, 15, NAVY);
+  const tw = textWidth(fonts.serifBold, title.toUpperCase(), 15);
+  page.drawLine({
+    start: { x: PAGE_W / 2 - tw / 2, y: y - 6 },
+    end: { x: PAGE_W / 2 + tw / 2, y: y - 6 },
+    thickness: 1.5,
+    color: GOLD,
+  });
+  const codeLabel = `FORM NO.: ${formCode}`;
+  page.drawText(codeLabel, { x: MARGIN, y: y - 26, size: 9, font: fonts.sansBold, color: NAVY_SOFT });
+  const dateLabel = "Date: ______ / ______ / ____________";
+  page.drawText(dateLabel, {
+    x: PAGE_W - MARGIN - textWidth(fonts.sans, dateLabel, 9),
+    y: y - 26,
+    size: 9,
+    font: fonts.sans,
+    color: MUTED,
+  });
+  ctx.cursorY = y - 44;
+}
+
+function drawInstructions(ctx: Ctx, instructions: string[]) {
+  const { fonts } = ctx;
+  const wrapped: string[][] = instructions.map((step, i) =>
+    wrapText(`${i + 1}.  ${step}`, fonts.sans, 8.5, CONTENT_W - 24),
+  );
+  const boxH = wrapped.reduce((sum, lines) => sum + lines.length * 12, 0) + 42;
+  ensureSpace(ctx, boxH);
+  const page = ctx.page;
+  const y = ctx.cursorY;
+  page.drawRectangle({
+    x: MARGIN,
+    y: y - boxH,
+    width: CONTENT_W,
+    height: boxH,
+    color: GOLD_LIGHT,
+    borderColor: GOLD,
+    borderWidth: 1,
+  });
+  page.drawText("BEFORE YOU BEGIN", { x: MARGIN + 12, y: y - 18, size: 9, font: fonts.sansBold, color: NAVY });
+  let ty = y - 34;
+  for (const lines of wrapped) {
+    for (const line of lines) {
+      page.drawText(line, { x: MARGIN + 12, y: ty, size: 8.5, font: fonts.sans, color: INK });
+      ty -= 12;
+    }
+    ty -= 2;
+  }
+  ctx.cursorY = y - boxH - 14;
+}
+
+function drawBlankField(ctx: Ctx, field: BlankField) {
+  const { fonts } = ctx;
+  if (field.checkboxOptions && field.checkboxOptions.length > 0) {
+    ensureSpace(ctx, 44);
+    const page = ctx.page;
+    const y = ctx.cursorY;
+    page.drawText(field.label.toUpperCase(), { x: MARGIN, y, size: 8.5, font: fonts.sansBold, color: MUTED });
+    let x = MARGIN;
+    const oy = y - 20;
+    for (const option of field.checkboxOptions) {
+      page.drawRectangle({ x, y: oy - 2, width: 10, height: 10, borderColor: INK, borderWidth: 1 });
+      page.drawText(option, { x: x + 15, y: oy, size: 9.5, font: fonts.sans, color: INK });
+      x += textWidth(fonts.sans, option, 9.5) + 42;
+    }
+    ctx.cursorY = oy - 18;
+    return;
+  }
+  const count = field.lines ?? 1;
+  ensureSpace(ctx, count * LINE_GAP + 26);
+  const page = ctx.page;
+  const y = ctx.cursorY;
+  page.drawText(field.label.toUpperCase(), { x: MARGIN, y, size: 8.5, font: fonts.sansBold, color: MUTED });
+  for (let i = 0; i < count; i++) {
+    const ly = y - 14 - i * LINE_GAP;
+    page.drawLine({ start: { x: MARGIN, y: ly }, end: { x: MARGIN + CONTENT_W, y: ly }, thickness: 0.8, color: RULE_COLOR });
+  }
+  ctx.cursorY = y - 14 - (count - 1) * LINE_GAP - 16;
+}
+
+/** Builds a blank, print-ready manual-fill template and returns its bytes. */
+export async function buildBlankTemplatePdf(input: BlankTemplateInput): Promise<Uint8Array> {
+  const doc = await PDFDocument.create();
+  const fonts: Fonts = {
+    serif: await doc.embedFont(StandardFonts.TimesRoman),
+    serifBold: await doc.embedFont(StandardFonts.TimesRomanBold),
+    sans: await doc.embedFont(StandardFonts.Helvetica),
+    sansBold: await doc.embedFont(StandardFonts.HelveticaBold),
+    sansItalic: await doc.embedFont(StandardFonts.HelveticaOblique),
+  };
+  const ctx: Ctx = { doc, fonts, pages: [], page: null as unknown as PDFPage, cursorY: 0 };
+  newPage(ctx);
+  drawBlankTitleBlock(ctx, input.title, input.formCode);
+  drawInstructions(ctx, input.instructions);
+  for (const section of input.sections) {
+    const first = section.fields[0];
+    drawSectionHeading(ctx, section.heading, first ? blankFieldBlockHeight(first) : 0);
+    for (const field of section.fields) drawBlankField(ctx, field);
+    ctx.cursorY -= 4;
   }
   drawSignatories(ctx, input.signatories);
   drawSealAndNotice(ctx, input.notice);

@@ -819,7 +819,7 @@ const DownloadsSection = () => {
                           className="w-full border-gray-600 text-gray-300 hover:bg-gray-800/50 hover:border-gold-500/50 hover:text-gold-300 transition-all duration-300"
                         >
                           <Download className="w-4 h-4 mr-2" />
-                          Download Template
+                          Download Printable Template
                         </Button>
                       </>
                     )}

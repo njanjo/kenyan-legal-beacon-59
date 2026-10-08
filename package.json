@@ -9,6 +9,7 @@
     "dev:all": "concurrently -n web,api -c blue,green \"npm run dev\" \"npm run dev --prefix server\"",
     "build": "vite build && node scripts/seo-prerender.mjs",
     "build:dev": "vite build --mode development && node scripts/seo-prerender.mjs",
+    "generate:templates": "node scripts/generate-blank-templates.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
