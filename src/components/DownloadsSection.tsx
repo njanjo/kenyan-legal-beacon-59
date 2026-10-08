@@ -8,8 +8,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Download, FileText, Edit3, MessageCircle, Loader2, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
-import { PDFDocument, rgb } from "pdf-lib";
 import { saveAs } from "file-saver";
+import { buildLetterheadPdf, type LetterheadSection } from "@/lib/lawFirmLetterhead";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -66,6 +66,124 @@ type DocumentItem = {
   schema?: z.ZodType;
 };
 
+const ELECTRONIC_NOTICE =
+  "This document was generated electronically by Mwaura Muroki Associates & Advocates. " +
+  "It requires proper handwritten signatures to be legally binding and does not constitute legal advice. " +
+  "For legal advice and consultation, please contact our office immediately.";
+
+interface BlueprintField {
+  key: string;
+  label: string;
+}
+
+interface BlueprintSection {
+  heading: string;
+  fields: BlueprintField[];
+}
+
+interface DocumentBlueprint {
+  title: string;
+  refPrefix: string;
+  sections: BlueprintSection[];
+  signatories: { role: string; caption: string }[];
+}
+
+// Titles must match the `title` of each entry in `documents` below.
+const DOCUMENT_BLUEPRINTS: Record<string, DocumentBlueprint> = {
+  consultation: {
+    title: "Legal Consultation Form",
+    refPrefix: "CONS",
+    sections: [
+      {
+        heading: "Personal Details",
+        fields: [
+          { key: "fullName", label: "Full Name" },
+          { key: "email", label: "Email Address" },
+          { key: "phone", label: "Phone Number" },
+          { key: "preferredDate", label: "Preferred Consultation Date" },
+        ],
+      },
+      {
+        heading: "Matter Details",
+        fields: [
+          { key: "urgency", label: "Urgency Level" },
+          { key: "legalMatter", label: "Describe Your Legal Matter" },
+        ],
+      },
+    ],
+    signatories: [{ role: "Client", caption: "Client signature & date" }],
+  },
+  clientinfo: {
+    title: "Client Information Sheet",
+    refPrefix: "CLI",
+    sections: [
+      {
+        heading: "Personal Information",
+        fields: [
+          { key: "fullName", label: "Full Name" },
+          { key: "idNumber", label: "ID / Passport Number" },
+          { key: "email", label: "Email Address" },
+          { key: "phone", label: "Phone Number" },
+          { key: "address", label: "Physical Address" },
+          { key: "occupation", label: "Occupation" },
+          { key: "employer", label: "Employer" },
+        ],
+      },
+      {
+        heading: "Emergency Contact",
+        fields: [
+          { key: "emergencyContactName", label: "Full Name" },
+          { key: "emergencyContactPhone", label: "Phone Number" },
+          { key: "emergencyContactRelationship", label: "Relationship" },
+        ],
+      },
+    ],
+    signatories: [{ role: "Client", caption: "Client signature & date" }],
+  },
+  powerattorney: {
+    title: "Power of Attorney Form",
+    refPrefix: "POA",
+    sections: [
+      {
+        heading: "The Principal (Donor)",
+        fields: [
+          { key: "principalName", label: "Full Name" },
+          { key: "principalId", label: "ID Number" },
+          { key: "principalAddress", label: "Physical Address" },
+        ],
+      },
+      {
+        heading: "The Agent (Attorney)",
+        fields: [
+          { key: "agentName", label: "Full Name" },
+          { key: "agentId", label: "ID Number" },
+          { key: "agentAddress", label: "Physical Address" },
+        ],
+      },
+      {
+        heading: "Grant of Authority",
+        fields: [
+          { key: "powers", label: "Powers Granted" },
+          { key: "startDate", label: "Effective From" },
+          { key: "endDate", label: "Effective Until" },
+        ],
+      },
+      {
+        heading: "Attestation",
+        fields: [
+          { key: "witnessName", label: "Witness Full Name" },
+          { key: "witnessId", label: "Witness ID Number" },
+        ],
+      },
+    ],
+    signatories: [
+      { role: "Principal (Donor)", caption: "Signature & date" },
+      { role: "Agent (Attorney)", caption: "Signature & date" },
+      { role: "Witness", caption: "Witness signature & date" },
+    ],
+  },
+};
+
 const DownloadsSection = () => {
   const [isGenerating, setIsGenerating] = useState(false);
 
@@ -119,259 +237,35 @@ const DownloadsSection = () => {
   const generatePDF = async (formData: Record<string, unknown>, documentType: string) => {
     setIsGenerating(true);
     try {
-      // Create a new PDF document
-      const pdfDoc = await PDFDocument.create();
-      const page = pdfDoc.addPage([612, 792]); // US Letter size
-      const { height, width } = page.getSize();
-      const fontSize = 11;
-      const titleFontSize = 16;
-      const headerFontSize = 14;
-      
-      // Professional letterhead with enhanced design
-      // Main company name with larger font
-      page.drawText('MWAURA MUROKI ASSOCIATES & ADVOCATES', {
-        x: 50,
-        y: height - 30,
-        size: 18,
-        color: rgb(0.05, 0.15, 0.5),
-      });
-      
-      // Subtitle
-      page.drawText('Advocates & Commissioners for Oaths', {
-        x: 50,
-        y: height - 50,
-        size: 12,
-        color: rgb(0.2, 0.3, 0.7),
-      });
-      
-      // Contact information with better formatting
-      page.drawText('Office: Equity Plaza Commercial Street, 4th Floor Wing B Room 420, Thika', {
-        x: 50,
-        y: height - 70,
-        size: 9,
-        color: rgb(0.4, 0.4, 0.4),
-      });
-      
-      page.drawText('Tel: +254 704 780 934 | Email: mwauramurokiadvocates@gmail.com', {
-        x: 50,
-        y: height - 85,
-        size: 9,
-        color: rgb(0.4, 0.4, 0.4),
-      });
-      
-      // Professional border design
-      page.drawRectangle({
-        x: 40,
-        y: height - 100,
-        width: width - 80,
-        height: 3,
-        color: rgb(0.05, 0.15, 0.5),
-      });
-      
-      // Watermark effect (simplified to avoid TypeScript issues)
-      page.drawText('CONFIDENTIAL LEGAL DOCUMENT', {
-        x: width / 2 - 120,
-        y: height / 2,
-        size: 35,
-        color: rgb(0.92, 0.92, 0.92),
-      });
-      
-      // Add title
-      page.drawText(`${documentType.toUpperCase()}`, {
-        x: 50,
-        y: height - 110,
-        size: titleFontSize,
-        color: rgb(0, 0.2, 0.6),
-      });
-      
-      // Add current date
-      const currentDate = new Date().toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-      });
-      page.drawText(`Date: ${currentDate}`, {
-        x: width - 150,
-        y: height - 110,
-        size: 10,
-        color: rgb(0.5, 0.5, 0.5),
-      });
-      
-      // Add form data with better formatting
-      let yPosition = height - 150;
-      Object.entries(formData).forEach(([key, value]) => {
-        // Format field names to be more readable
-        const label = key
-          .replace(/([A-Z])/g, ' $1')
-          .replace(/^./, str => str.toUpperCase())
-          .replace(/Id/g, 'ID')
-          .replace(/Email/g, 'Email Address');
-        
-        // Handle long text fields differently
-        if (key === 'legalMatter' || key === 'powers' || key === 'address') {
-          page.drawText(`${label}:`, {
-            x: 50,
-            y: yPosition,
-            size: fontSize,
-            color: rgb(0.2, 0.2, 0.6),
-          });
-          yPosition -= 20;
-          
-          // Split long text into multiple lines
-          const maxWidth = 500;
-          const words = String(value).split(' ');
-          let line = '';
-          
-          words.forEach((word) => {
-            const testLine = line + word + ' ';
-            if (testLine.length * 6 > maxWidth) {
-              page.drawText(line, {
-                x: 70,
-                y: yPosition,
-                size: fontSize,
-                color: rgb(0, 0, 0),
-              });
-              yPosition -= 18;
-              line = word + ' ';
-            } else {
-              line = testLine;
-            }
-          });
-          
-          if (line) {
-            page.drawText(line, {
-              x: 70,
-              y: yPosition,
-              size: fontSize,
-              color: rgb(0, 0, 0),
-            });
-            yPosition -= 25;
-          }
-        } else {
-          page.drawText(`${label}: ${value}`, {
-            x: 50,
-            y: yPosition,
-            size: fontSize,
-            color: rgb(0, 0, 0),
-          });
-          yPosition -= 20;
-        }
-        
-        // Add some extra space between sections
-        if (key === 'phone' || key === 'email' || key === 'agentId') {
-          yPosition -= 10;
-        }
-      });
-      
-      // Add signature section
-      // Guard against overflow: if content reaches the footer area, continue
-      // signatures and the stamp on a new page instead of overlapping.
-      const footerBoundary = 150;
-      let contentPage = page;
-      if (yPosition < footerBoundary + 130) {
-        contentPage = pdfDoc.addPage([612, 792]);
-        const { height: newHeight } = contentPage.getSize();
-        contentPage.drawText(`${documentType.toUpperCase()} - Signatures`, {
-          x: 50,
-          y: newHeight - 60,
-          size: headerFontSize,
-          color: rgb(0.05, 0.15, 0.5),
-        });
-        yPosition = newHeight - 100;
-      }
+      const blueprint =
+        Object.values(DOCUMENT_BLUEPRINTS).find((b) => b.title === documentType) ??
+        DOCUMENT_BLUEPRINTS.consultation;
 
-      yPosition -= 30;
-      contentPage.drawText('SIGNATURES:', {
-        x: 50,
-        y: yPosition,
-        size: headerFontSize,
-        color: rgb(0.2, 0.2, 0.6),
+      const asText = (value: unknown) =>
+        value === undefined || value === null || String(value).trim() === ""
+          ? "Not provided"
+          : String(value);
+
+      const sections: LetterheadSection[] = blueprint.sections.map((section) => ({
+        heading: section.heading,
+        fields: section.fields.map((field) => ({ label: field.label, value: asText(formData[field.key]) })),
+      }));
+
+      // Branded letterhead PDF: navy header, contact strip, sectioned fields,
+      // signature blocks, official seal and paginated footers.
+      const pdfBytes = await buildLetterheadPdf({
+        title: blueprint.title,
+        refPrefix: blueprint.refPrefix,
+        sections,
+        signatories: blueprint.signatories,
+        notice: ELECTRONIC_NOTICE,
       });
-      
-      yPosition -= 40;
-      contentPage.drawText('Client Signature: ________________________    Date: ______________', {
-        x: 50,
-        y: yPosition,
-        size: fontSize,
-        color: rgb(0, 0, 0),
-      });
-      
-      yPosition -= 30;
-      contentPage.drawText('Witness Signature: _______________________    Date: ______________', {
-        x: 50,
-        y: yPosition,
-        size: fontSize,
-        color: rgb(0, 0, 0),
-      });
-      
-      // Professional footer with enhanced design
-      contentPage.drawLine({
-        start: { x: 50, y: 100 },
-        end: { x: width - 50, y: 100 },
-        thickness: 1,
-        color: rgb(0.7, 0.7, 0.7),
-      });
-      
-      contentPage.drawText('IMPORTANT LEGAL NOTICE', {
-        x: 50,
-        y: 85,
-        size: 10,
-        color: rgb(0.7, 0.2, 0.2),
-      });
-      
-      contentPage.drawText('This document was generated electronically and requires proper signatures to be legally binding.', {
-        x: 50,
-        y: 70,
-        size: 8,
-        color: rgb(0.5, 0.5, 0.5),
-      });
-      
-      contentPage.drawText('For legal advice and consultation, please contact our office immediately.', {
-        x: 50,
-        y: 55,
-        size: 8,
-        color: rgb(0.5, 0.5, 0.5),
-      });
-      
-      contentPage.drawText(`© ${new Date().getFullYear()} Mwaura Muroki Associates & Advocates - All Rights Reserved`, {
-        x: 50,
-        y: 30,
-        size: 8,
-        color: rgb(0.6, 0.6, 0.6),
-      });
-      
-      // Professional stamp placeholder
-      contentPage.drawRectangle({
-        x: width - 150,
-        y: 120,
-        width: 100,
-        height: 60,
-        borderColor: rgb(0.7, 0.7, 0.7),
-        borderWidth: 1,
-      });
-      
-      contentPage.drawText('OFFICIAL SEAL', {
-        x: width - 135,
-        y: 155,
-        size: 8,
-        color: rgb(0.6, 0.6, 0.6),
-      });
-      
-      contentPage.drawText('& SIGNATURE', {
-        x: width - 135,
-        y: 145,
-        size: 8,
-        color: rgb(0.6, 0.6, 0.6),
-      });
-      
-      // Generate PDF
-      const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes as unknown as BlobPart], { type: 'application/pdf' });
-      
+
       // Download PDF with timestamp
       const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
       saveAs(blob, `${documentType.toLowerCase().replace(/\s+/g, '-')}-${timestamp}.pdf`);
-      
+
       toast.success("PDF generated and downloaded successfully!");
     } catch (error) {
       console.error('Error generating PDF:', error);
