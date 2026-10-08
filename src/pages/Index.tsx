@@ -1,6 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Scale, FileText, Shield, Users, Building, Heart, Phone, MessageCircle, Award, Gavel, Briefcase, Landmark, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -103,6 +103,21 @@ const Index = () => {
       title: "Justice",
       description: "Dedicated commitment to achieving fair and just outcomes"
     }
+  ];
+
+  // Trust-strip credentials: data-driven so adding/removing one never
+  // means touching markup in three places.
+  const trustStats = [
+    {
+      icon: Gavel,
+      title: "High Court",
+      subtitle: "Advocate of Kenya",
+    },
+    {
+      icon: Award,
+      title: "LSK",
+      subtitle: "Member",
+    },
   ];
 
   // Awards and recognitions with enhanced interactivity
@@ -270,33 +285,33 @@ const Index = () => {
               </Button>
             </div>
 
-            {/* Trust indicator strip */}
-            <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 text-sm text-blue-100">
+            {/* Trust indicator strip — single line on 360px+ screens, wraps only on very small ones */}
+            <div className="mt-10 flex flex-wrap items-center gap-2 text-xs text-blue-100 min-[360px]:flex-nowrap sm:mt-12 sm:gap-x-8 sm:text-sm">
               <Link
                 to="/services"
                 aria-label="Explore all 7 practice areas"
-                className="group inline-flex min-h-[44px] items-center gap-2.5 rounded-full border border-gold-400/50 bg-gold-400/10 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:border-gold-300 hover:bg-gold-400/20 hover:shadow-lg hover:shadow-gold-400/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-300 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-950 active:scale-[0.98]"
+                className="group inline-flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-full border border-gold-400/50 bg-gold-400/10 px-3 py-2 text-xs font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:border-gold-300 hover:bg-gold-400/20 hover:shadow-lg hover:shadow-gold-400/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-300 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-950 active:scale-[0.98] sm:gap-2.5 sm:px-5 sm:py-2.5 sm:text-sm"
               >
-                <Briefcase className="h-5 w-5 text-gold-400 transition-transform duration-300 group-hover:scale-110" />
-                <span>
-                  <span className="font-display text-lg font-semibold">7</span> Practice Areas
+                <Briefcase className="h-4 w-4 shrink-0 text-gold-400 transition-transform duration-300 group-hover:scale-110 sm:h-5 sm:w-5" />
+                <span className="whitespace-nowrap">
+                  <span className="font-display text-sm font-semibold sm:text-lg">7</span> Practice Areas
                 </span>
-                <ArrowRight className="h-4 w-4 text-gold-400 transition-transform duration-300 group-hover:translate-x-1" />
+                <ArrowRight className="hidden h-4 w-4 shrink-0 text-gold-400 transition-transform duration-300 group-hover:translate-x-1 min-[480px]:block" />
               </Link>
-              <div className="flex items-center gap-2.5 border-l border-white/10 pl-8">
-                <Gavel className="h-5 w-5 text-gold-400" />
-                <span>
-                  <span className="block font-display text-lg font-semibold text-white">High Court</span>
-                  Advocate of Kenya
-                </span>
-              </div>
-              <div className="flex items-center gap-2.5 border-l border-white/10 pl-8">
-                <Award className="h-5 w-5 text-gold-400" />
-                <span>
-                  <span className="block font-display text-lg font-semibold text-white">LSK</span>
-                  Member
-                </span>
-              </div>
+              {trustStats.map((stat) => (
+                <div
+                  key={stat.title}
+                  className="flex shrink-0 items-center gap-1.5 sm:gap-2.5 sm:border-l sm:border-white/10 sm:pl-8"
+                >
+                  <stat.icon className="h-4 w-4 shrink-0 text-gold-400 sm:h-5 sm:w-5" />
+                  <span className="whitespace-nowrap">
+                    <span className="block font-display text-sm font-semibold text-white sm:text-lg">
+                      {stat.title}
+                    </span>
+                    <span className="hidden min-[480px]:block">{stat.subtitle}</span>
+                  </span>
+                </div>
+              ))}
             </div>
           </motion.div>
         </div>

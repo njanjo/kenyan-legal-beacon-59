@@ -144,7 +144,7 @@ const AIChatbot = () => {
     await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 1200));
     
     // Find matching legal area
-    for (const [area, data] of Object.entries(legalKnowledgeBase)) {
+    for (const [, data] of Object.entries(legalKnowledgeBase)) {
       if (data.keywords.some(keyword => message.includes(keyword))) {
         const responses = data.responses;
         return responses[Math.floor(Math.random() * responses.length)];

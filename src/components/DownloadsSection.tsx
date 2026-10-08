@@ -1,14 +1,11 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Download, FileText, Edit3, Send, MessageCircle, Loader2, CheckCircle, AlertCircle, Sparkles } from "lucide-react";
+import { Download, FileText, Edit3, MessageCircle, Loader2, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { PDFDocument, rgb } from "pdf-lib";
@@ -56,10 +53,6 @@ const powerOfAttorneySchema = z.object({
   witnessId: z.string().min(6, "Witness ID is required"),
 });
 
-type ConsultationFormData = z.infer<typeof consultationFormSchema>;
-type ClientInfoFormData = z.infer<typeof clientInfoSchema>;
-type PowerOfAttorneyFormData = z.infer<typeof powerOfAttorneySchema>;
-
 type DocumentItem = {
   id: string;
   title: string;
@@ -75,7 +68,6 @@ type DocumentItem = {
 
 const DownloadsSection = () => {
   const [isGenerating, setIsGenerating] = useState(false);
-  const [activeForm, setActiveForm] = useState<string | null>(null);
 
   const documents: DocumentItem[] = [
     {
@@ -413,7 +405,6 @@ const DownloadsSection = () => {
     const handleSubmit = (data: Record<string, unknown>) => {
       onSubmit(data);
       form.reset();
-      setActiveForm(null);
     };
 
     const renderFormFields = () => {
@@ -786,7 +777,6 @@ const DownloadsSection = () => {
             <Button
               type="button"
               variant="outline"
-              onClick={() => setActiveForm(null)}
               className="border-gray-600 text-gray-300 hover:bg-gray-700"
             >
               Cancel
@@ -910,7 +900,6 @@ const DownloadsSection = () => {
                         <Dialog>
                           <DialogTrigger asChild>
                             <Button 
-                              onClick={() => setActiveForm(doc.id)}
                               className="w-full bg-gold-500 hover:bg-gold-400 text-navy-950 font-semibold border-none shadow-lg hover:shadow-gold-500/25 transition-all duration-300"
                             >
                               <Edit3 className="w-4 h-4 mr-2" />

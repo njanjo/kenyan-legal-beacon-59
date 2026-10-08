@@ -1,5 +1,5 @@
 
-import { Scale, ArrowLeft, Cookie } from "lucide-react";
+import { ArrowLeft, Cookie } from "lucide-react";
 import { Link } from "react-router-dom";
 import SEO, { SITE_URL } from "@/components/SEO";
 

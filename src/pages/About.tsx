@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Scale, Award, BookOpen, Users, Briefcase, MapPin, Calendar, Mail, Phone, MessageCircle, Gavel, FileText, Shield, Heart, Brain } from "lucide-react";
+import { Scale, Award, BookOpen, Users, Briefcase, MapPin, Mail, Phone, MessageCircle, Gavel, FileText, Shield, Heart, Brain } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";

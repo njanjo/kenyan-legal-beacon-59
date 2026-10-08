@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Play, ExternalLink, Image, Music, Video, FileText } from 'lucide-react';
+import { Search, Play, ExternalLink, Image, Video, FileText } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
