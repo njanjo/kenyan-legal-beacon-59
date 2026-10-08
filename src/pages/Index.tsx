@@ -1,7 +1,7 @@
 import { Suspense, lazy } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Scale, FileText, Shield, Users, Building, Heart, Phone, MessageCircle, Award, Gavel, Briefcase, Landmark } from "lucide-react";
+import { Scale, FileText, Shield, Users, Building, Heart, Phone, MessageCircle, Award, Gavel, Briefcase, Landmark, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import PartnersSection from "@/components/PartnersSection";
@@ -272,12 +272,16 @@ const Index = () => {
 
             {/* Trust indicator strip */}
             <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 text-sm text-blue-100">
-              <Link to="/services" className="group flex items-center gap-2.5 rounded-lg transition-colors hover:text-white" aria-label="View all 7 practice areas">
+              <Link
+                to="/services"
+                aria-label="Explore all 7 practice areas"
+                className="group inline-flex min-h-[44px] items-center gap-2.5 rounded-full border border-gold-400/50 bg-gold-400/10 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:border-gold-300 hover:bg-gold-400/20 hover:shadow-lg hover:shadow-gold-400/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-300 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-950 active:scale-[0.98]"
+              >
                 <Briefcase className="h-5 w-5 text-gold-400 transition-transform duration-300 group-hover:scale-110" />
                 <span>
-                  <span className="block font-display text-lg font-semibold text-white underline decoration-gold-400/50 decoration-2 underline-offset-4 group-hover:decoration-gold-300">7</span>
-                  Practice Areas
+                  <span className="font-display text-lg font-semibold">7</span> Practice Areas
                 </span>
+                <ArrowRight className="h-4 w-4 text-gold-400 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
               <div className="flex items-center gap-2.5 border-l border-white/10 pl-8">
                 <Gavel className="h-5 w-5 text-gold-400" />
@@ -294,26 +298,6 @@ const Index = () => {
                 </span>
               </div>
             </div>
-
-            {/* Clickable practice-area shortcuts — each jumps to its Services section */}
-            <nav aria-label="Practice areas" className="mt-8 w-full">
-              <p className="text-xs font-semibold uppercase tracking-wider text-gold-300/90">
-                Explore our 7 practice areas
-              </p>
-              <ul className="mt-3 flex flex-wrap gap-2">
-                {legalServices.map((service) => (
-                  <li key={service.slug}>
-                    <Link
-                      to={`/services#${service.slug}`}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-3.5 py-1.5 text-sm font-medium text-blue-100 backdrop-blur-sm transition-all duration-300 hover:border-gold-400/70 hover:bg-gold-400/15 hover:text-white"
-                    >
-                      <service.icon className="h-3.5 w-3.5 text-gold-400" />
-                      {service.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
           </motion.div>
         </div>
 
