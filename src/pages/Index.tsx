@@ -30,40 +30,48 @@ const ColumnsMotif = ({ className = "" }: { className?: string }) => (
 
 const Index = () => {
   // Legal services data with improved structure
+  // Slugs mirror Services.tsx slugify() output so hero links land on the exact card.
   const legalServices = [
     {
       icon: Gavel,
       title: "Commercial Litigation",
+      slug: "commercial-litigation",
       description: "Expert representation in commercial disputes, contract breaches, and business litigation matters"
     },
     {
       icon: FileText,
       title: "Contract Drafting & Negotiation",
+      slug: "contract-drafting-and-negotiation",
       description: "Professional contract drafting, review, and negotiation services for businesses and individuals"
     },
     {
       icon: Shield,
       title: "Dispute Resolution",
+      slug: "dispute-resolution",
       description: "Alternative dispute resolution including mediation, arbitration, and conflict resolution"
     },
     {
       icon: Heart,
       title: "Family Law",
+      slug: "family-law",
       description: "Child custody, maintenance, adoption, and comprehensive family legal support"
     },
     {
       icon: Users,
       title: "Sports Law",
+      slug: "sports-law",
       description: "Legal representation for athletes, sports organizations, and sports-related contractual matters"
     },
     {
       icon: Scale,
       title: "Legal Research",
+      slug: "legal-research",
       description: "Comprehensive legal research services for complex legal matters and case preparation"
     },
     {
       icon: Building,
       title: "Mental Health Law",
+      slug: "mental-health-law",
       description: "Psychology-informed legal support with specialized understanding of mental health matters"
     }
   ];
@@ -229,8 +237,12 @@ const Index = () => {
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-blue-100 sm:text-xl">
-              "To provide Timely and Affordable Legal Services" — professional legal
-              representation with integrity, expertise, and dedication to justice.
+              <span className="block font-display text-xl sm:text-2xl italic text-gold-300">
+                &ldquo;To provide timely and affordable legal services.&rdquo;
+              </span>
+              <span className="mt-2 block">
+                Professional legal services in Kenya, delivered with integrity, expertise, and dedication to justice.
+              </span>
             </p>
 
             <p className="mt-7 font-display text-lg text-blue-100">
@@ -260,13 +272,13 @@ const Index = () => {
 
             {/* Trust indicator strip */}
             <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 text-sm text-blue-100">
-              <div className="flex items-center gap-2.5">
-                <Briefcase className="h-5 w-5 text-gold-400" />
+              <Link to="/services" className="group flex items-center gap-2.5 rounded-lg transition-colors hover:text-white" aria-label="View all 7 practice areas">
+                <Briefcase className="h-5 w-5 text-gold-400 transition-transform duration-300 group-hover:scale-110" />
                 <span>
-                  <span className="block font-display text-lg font-semibold text-white">7</span>
+                  <span className="block font-display text-lg font-semibold text-white underline decoration-gold-400/50 decoration-2 underline-offset-4 group-hover:decoration-gold-300">7</span>
                   Practice Areas
                 </span>
-              </div>
+              </Link>
               <div className="flex items-center gap-2.5 border-l border-white/10 pl-8">
                 <Gavel className="h-5 w-5 text-gold-400" />
                 <span>
@@ -282,6 +294,26 @@ const Index = () => {
                 </span>
               </div>
             </div>
+
+            {/* Clickable practice-area shortcuts — each jumps to its Services section */}
+            <nav aria-label="Practice areas" className="mt-8 w-full">
+              <p className="text-xs font-semibold uppercase tracking-wider text-gold-300/90">
+                Explore our 7 practice areas
+              </p>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {legalServices.map((service) => (
+                  <li key={service.slug}>
+                    <Link
+                      to={`/services#${service.slug}`}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-3.5 py-1.5 text-sm font-medium text-blue-100 backdrop-blur-sm transition-all duration-300 hover:border-gold-400/70 hover:bg-gold-400/15 hover:text-white"
+                    >
+                      <service.icon className="h-3.5 w-3.5 text-gold-400" />
+                      {service.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           </motion.div>
         </div>
 
@@ -359,7 +391,7 @@ const Index = () => {
                     </CardDescription>
                     <div className="flex flex-col sm:flex-row gap-2">
                       <Button asChild size="sm" className="flex-1">
-                        <Link to="/services">More Info</Link>
+                        <Link to={`/services#${service.slug}`}>More Info</Link>
                       </Button>
                       <Button asChild size="sm" variant="outline" className="flex-1">
                         <Link to="/contact">Book Consultation</Link>

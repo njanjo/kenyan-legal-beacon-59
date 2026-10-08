@@ -29,12 +29,14 @@ const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <img
-              src="/uploads/7ac751ff-dfac-4f6b-9e97-e9e8eb7fe3b8.png"
-              alt="Mwaura Muroki Associates Logo"
-              className="w-9 h-9 object-contain"
-            />
+          <Link to="/" className="group flex items-center space-x-2.5">
+            <span className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-navy-950 shadow-md shadow-navy-950/20 ring-1 ring-gold-400/70 transition-transform duration-300 group-hover:scale-105">
+              <img
+                src="/uploads/7ac751ff-dfac-4f6b-9e97-e9e8eb7fe3b8.png"
+                alt="Mwaura Muroki Associates Logo"
+                className="h-10 w-10 object-cover"
+              />
+            </span>
             <div className="flex flex-col">
               <span className="font-bold text-lg leading-tight text-foreground">Mwaura Muroki</span>
               <span className="text-xs text-muted-foreground leading-tight">Associates & Advocates</span>

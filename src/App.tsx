@@ -10,6 +10,7 @@ import { MotionConfig } from "framer-motion";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import ErrorBoundary from "./components/ErrorBoundary";
+import ScrollToTop from "./components/ScrollToTop";
 
 import CookieConsent from "./components/CookieConsent";
 import Index from "./pages/Index";
@@ -37,6 +38,7 @@ const App = () => (
         <Sonner />
         <MotionConfig reducedMotion="user">
           <BrowserRouter>
+            <ScrollToTop />
             <div className="min-h-screen flex flex-col">
               <Navigation />
               <main className="flex-1">
