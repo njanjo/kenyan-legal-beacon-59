@@ -20,7 +20,7 @@ const Footer = () => {
               <span className="font-bold text-xl leading-tight">Mwaura Muroki</span>
             </div>
             <p className="text-blue-100 mb-3">
-              Associates &amp; Advocates. &ldquo;To provide timely and affordable legal services.&rdquo; Professional legal services in Kenya, delivered with integrity, expertise, and dedication to justice.
+              Associates &amp; Advocates. &ldquo;To provide timely and effective legal services.&rdquo; Professional legal services in Kenya, delivered with integrity, expertise, and dedication to justice.
             </p>
             <div className="inline-flex items-center gap-2 text-xs text-blue-200">
               <Scale className="w-4 h-4 text-gold-400" />

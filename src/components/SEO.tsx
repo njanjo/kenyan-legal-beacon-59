@@ -75,7 +75,7 @@ export const attorneySchema = {
   url: SITE_URL,
   image: DEFAULT_OG_IMAGE,
   description:
-    "Timely and affordable legal services in Thika and across Kenya: commercial litigation, contract drafting, dispute resolution, family law, sports law, legal research and mental health law.",
+    "Timely and effective legal services in Thika and across Kenya: commercial litigation, contract drafting, dispute resolution, family law, sports law, legal research and mental health law.",
   telephone: PHONE,
   email: "mwauramurokiadvocates@gmail.com",
   priceRange: "KES",

@@ -21,7 +21,7 @@ const routes = [
     path: "",
     title: "Lawyer in Thika & Kenya | Commercial, Family & Sports Law – Mwaura Muroki Associates",
     description:
-      "Mwaura Muroki Associates & Advocates – timely, affordable lawyers in Thika serving Nairobi & Kenya. Commercial litigation, contracts, dispute resolution, family law, sports law & mental health law. Call +254 704 780 934.",
+      "Mwaura Muroki Associates & Advocates – timely, effective lawyers in Thika serving Nairobi & Kenya. Commercial litigation, contracts, dispute resolution, family law, sports law & mental health law. Call +254 704 780 934.",
     canonical: `${SITE}/`,
     robots: "index, follow, max-image-preview:large",
   },

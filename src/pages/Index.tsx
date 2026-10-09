@@ -86,12 +86,12 @@ const Index = () => {
     {
       icon: Shield,
       title: "Service Delivery",
-      description: "Timely and professional legal services with meticulous attention to detail"
+      description: "Timely and effective legal services with meticulous attention to detail"
     },
     {
       icon: FileText,
-      title: "Cost-Friendliness",
-      description: "Affordable legal services without compromising on quality"
+      title: "Effectiveness",
+      description: "Effective legal services without compromising on quality"
     },
     {
       icon: Users,
@@ -152,7 +152,7 @@ const Index = () => {
     <div className="min-h-screen">
       <SEO
         title="Lawyer in Thika & Kenya | Commercial, Family & Sports Law – Mwaura Muroki Associates"
-        description="Mwaura Muroki Associates & Advocates – timely, affordable lawyers in Thika serving Nairobi & Kenya. Commercial litigation, contracts, dispute resolution, family law, sports law & mental health law. Call +254 704 780 934."
+        description="Mwaura Muroki Associates & Advocates – timely, effective lawyers in Thika serving Nairobi & Kenya. Commercial litigation, contracts, dispute resolution, family law, sports law & mental health law. Call +254 704 780 934."
         canonical={SITE_URL + "/"}
         keywords="lawyer Thika, advocate Thika, law firm Kenya, commercial litigation Kenya, family lawyer Kenya, sports lawyer Kenya, contract lawyer Nairobi, dispute resolution Kenya, Francis Mwaura Muroki"
         schema={[
@@ -253,7 +253,7 @@ const Index = () => {
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-blue-100 sm:text-xl">
               <span className="block font-display text-xl sm:text-2xl italic text-gold-300">
-                &ldquo;To provide timely and affordable legal services.&rdquo;
+                &ldquo;To provide timely and effective legal services.&rdquo;
               </span>
               <span className="mt-2 block">
                 Professional legal services in Kenya, delivered with integrity, expertise, and dedication to justice.
@@ -330,7 +330,7 @@ const Index = () => {
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">Our Core Values</h2>
             <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
-              Guided by principles of <strong>Integrity, Service Delivery, Cost-Friendliness, Accessibility, and Justice</strong>
+              Guided by principles of <strong>Integrity, Service Delivery, Effectiveness, Accessibility, and Justice</strong>
             </p>
           </div>
 

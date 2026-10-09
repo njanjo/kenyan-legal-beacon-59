@@ -12,7 +12,7 @@ import { PDFDocument, PDFFont, PDFPage, rgb, StandardFonts, degrees } from "pdf-
 export const FIRM = {
   name: "MWAURA MUROKI",
   descriptor: "ASSOCIATES & ADVOCATES",
-  tagline: "To provide timely and affordable legal services.",
+  tagline: "To provide timely and effective legal services.",
   address: "Equity Plaza, Commercial Street, 4th Floor Wing B Room 420, Thika, Kenya",
   phone: "+254 704 780 934",
   email: "mwauramurokiadvocates@gmail.com",

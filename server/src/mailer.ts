@@ -39,7 +39,7 @@ const PHONE_LINK = 'tel:+254704780934';
 const WHATSAPP_LINK = 'https://wa.me/254704780934';
 const OFFICE_ADDRESS = 'Equity Plaza, Commercial Street, 4th Floor Wing B Rm 420, Thika';
 const OFFICE_HOURS = 'Mon\u2013Fri 8:00am\u20135:00pm \u00b7 Sat 9:00am\u20131:00pm';
-const TAGLINE = 'Timely and Affordable Legal Services';
+const TAGLINE = 'Timely and Effective Legal Services';
 
 const FONT_STACK = `-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif`;
 

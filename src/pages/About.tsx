@@ -94,7 +94,7 @@ const About = () => {
                 Principal Advocate &amp; Founder
               </p>
               <p className="text-lg text-blue-100 leading-relaxed">
-                "To provide Timely and Affordable Legal Services" - Dedicated to delivering professional legal representation 
+                "To provide Timely and Effective Legal Services" - Dedicated to delivering professional legal representation 
                 with integrity, expertise, and unwavering commitment to justice for clients across Kenya.
               </p>
             </motion.div>
@@ -150,8 +150,8 @@ const About = () => {
                   <p className="leading-relaxed">
                     As a licensed advocate of the High Court of Kenya and member of the Law Society of Kenya (LSK), 
                     Francis brings a unique blend of legal expertise and psychology-informed support to his practice. 
-                    His approach to law is grounded in the firm's core values of integrity, service delivery, 
-                    cost-friendliness, accessibility, and justice.
+                    His approach to law is grounded in the firm's core values of integrity, service delivery,
+                    effectiveness, accessibility, and justice.
                   </p>
                   
                   <p className="leading-relaxed">
@@ -362,7 +362,7 @@ const About = () => {
               </CardHeader>
               <CardContent>
                 <p className="leading-relaxed">
-                  "To provide Timely and Affordable Legal Services" - We are committed to making quality legal 
+                  "To provide Timely and Effective Legal Services" - We are committed to making quality legal 
                   representation accessible to all, while maintaining the highest standards of professional excellence 
                   and ethical practice.
                 </p>
@@ -388,7 +388,7 @@ const About = () => {
                   </li>
                   <li className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-gold-500 rounded-full"></div>
-                    <span>Cost-friendly legal solutions</span>
+                    <span>Effective legal solutions</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-gold-500 rounded-full"></div>
